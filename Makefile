@@ -21,9 +21,7 @@ clean:
 
 help:	
 	@echo
-	@echo "   cmd – run the snip command line client"
 	@echo "  test – run 'go test' for the entire project"
-	@echo "   web – run the snip web client"
 	@echo
 
 
