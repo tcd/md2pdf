@@ -1,15 +1,37 @@
 package main
 
 import (
-	"github.com/tcd/md2pdf/md2pdf"
+	"flag"
+	"fmt"
+	"os"
+	"strings"
 )
 
-const (
-	pdfOutDir  = "../../out/pdf/"
-	htmlOutDir = "../../out/html/"
-	readme     = "../../readme.md"
-)
+func init() {
+	flag.Usage = usage
+}
 
 func main() {
-	md2pdf.GitHubPDF(pdfOutDir + "github.pdf")
+	flag.Parse()
+}
+
+func usage() {
+	fmt.Println(titleString())
+	fmt.Printf("Usage: %s [OPTIONS] argument\n", os.Args[0])
+	flag.PrintDefaults()
+}
+
+func titleString() string {
+	lines := []string{
+		"		_  _____           _  __",
+		"		| |/ __  \\         | |/ _|",
+		"   _ __ ___   __| |`' / /'_ __   __| | |_",
+		"  | '_ ` _ \\ / _` |  / / | '_ \\ / _` |  _|",
+		"  | | | | | | (_| |./ /__| |_) | (_| | |",
+		"  |_| |_| |_|\\__,_|\\_____/ .__/ \\__,_|_|",
+		"			 | |",
+		"			 |_|",
+		"",
+	}
+	return strings.Join(lines, "\n")
 }
