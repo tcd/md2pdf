@@ -1,13 +1,8 @@
-.DEFAULT_GOAL := help
-
-SHELL := /bin/bash
+SHELL := /bin/sh
 PROJECT_DIR=$(shell pwd)
 PROJECT_NAME=$(shell basename $(PROJECT_DIR))
 
-test:
-	go test -v ./...
-
-cmd:	
+run:	
 	@cd ./cmd/$(PROJECT_NAME) && go run *.go
 
 all:
@@ -17,12 +12,10 @@ build:
 	@echo "Nothing to do for build"
 
 clean:
-	@echo "Nothing to do for clean"
+	go clean ./...
 
-help:	
-	@echo
-	@echo "  test – run 'go test' for the entire project"
-	@echo
+test:
+	go test -v ./...
 
 
-.PHONY: all build clean test help cmd
+.PHONY: all build clean test run
