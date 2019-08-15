@@ -1,3 +1,4 @@
 2019-08-08 Add formatting to headers (bold, code, italic, links, strikethrough)
 2019-08-14 Draw images inside of links.
 2019-08-14 Add syntax highlighting in codeblocks.
+2019-08-14 Support internal links.
