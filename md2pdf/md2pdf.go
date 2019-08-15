@@ -1,7 +1,6 @@
 package md2pdf
 
 import (
-	"fmt"
 	"io/ioutil"
 
 	bf "gopkg.in/russross/blackfriday.v2"
@@ -14,7 +13,7 @@ func Md2PDF(inPath, outPath string) error {
 		return err
 	}
 
-	err = Parse(htmlString, outPath)
+	err = parse(htmlString, outPath)
 	if err != nil {
 		return err
 	}
@@ -31,35 +30,36 @@ func Md2HTML(path string) (string, error) {
 
 	output := bf.Run(
 		bytes,
-		// bf.WithExtensions(bf.CommonExtensions|bf.Tables|bf.Strikethrough),
-		bf.WithExtensions(bf.CommonExtensions),
+		bf.WithExtensions(bf.NoIntraEmphasis|bf.Tables|bf.FencedCode|bf.Autolink|bf.Strikethrough|bf.SpaceHeadings|bf.HeadingIDs|bf.BackslashLineBreak),
 		bf.WithRenderer(bf.NewHTMLRenderer(
 			bf.HTMLRendererParameters{
-				Flags: bf.CommonHTMLFlags | bf.SkipHTML,
+				Flags: bf.UseXHTML | bf.SkipHTML,
 			})),
 	)
-	return string(output), nil
+
+	cleanOutput := cleanHTML(string(output))
+	return cleanOutput, nil
 }
 
 // Md2HTMLFile parses a markdown file with blackfriday and writes the output to a file.
-func Md2HTMLFile(inPath, outPath string) {
+func Md2HTMLFile(inPath, outPath string) error {
 	bytes, err := ioutil.ReadFile(inPath)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	output := bf.Run(
 		bytes,
-		// bf.WithExtensions(bf.CommonExtensions|bf.Tables|bf.Strikethrough),
-		bf.WithExtensions(bf.CommonExtensions),
+		bf.WithExtensions(bf.NoIntraEmphasis|bf.Tables|bf.FencedCode|bf.Autolink|bf.Strikethrough|bf.SpaceHeadings|bf.HeadingIDs|bf.BackslashLineBreak),
 		bf.WithRenderer(bf.NewHTMLRenderer(
 			bf.HTMLRendererParameters{
-				Flags: bf.CommonHTMLFlags | bf.SkipHTML,
+				Flags: bf.UseXHTML | bf.SkipHTML,
 			})),
 	)
 
 	err = ioutil.WriteFile(outPath, output, 0644)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
+	return nil
 }
