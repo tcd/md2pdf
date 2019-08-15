@@ -90,7 +90,7 @@ func H6(f *gofpdf.Fpdf, text string) {
 	f.Ln(6)
 }
 
-// HR write a Horizontal Rule to a gofpdf.Fpdf.
+// HR writes a Horizontal Rule to a gofpdf.Fpdf.
 func HR(f *gofpdf.Fpdf) {
 	x := f.GetX()
 	y := f.GetY()
@@ -98,4 +98,22 @@ func HR(f *gofpdf.Fpdf) {
 	f.SetDrawColor(191, 191, 191)
 	f.Line(x, y, x+pageWidth, y)
 	f.Ln(2)
+}
+
+// CodeBlock writes a `<pre>` style code block to a gofpdf.Fpdf.
+// TODO: syntax highlighting..............
+func CodeBlock(f *gofpdf.Fpdf, text string) {
+	oldCellMargin := f.GetCellMargin()
+	// _, lineHeight := f.GetFontSize()
+
+	f.SetFont("courier", "", 11)
+	f.SetFillColor(246, 248, 250)
+	f.SetCellMargin(4)
+
+	f.CellFormat(0, 4, "", "", 1, "TL", true, 0, "")
+	f.MultiCell(0, 5, text, "", "", true)
+	f.CellFormat(0, 4, "", "", 1, "TL", true, 0, "")
+	f.Ln(6)
+
+	f.SetCellMargin(oldCellMargin)
 }
