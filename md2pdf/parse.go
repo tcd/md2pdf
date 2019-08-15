@@ -88,6 +88,9 @@ func Parse(inputHTML, outputPath string) error {
 			if T1.Data == "h6" {
 				parseH6(pdf, tokenizer)
 			}
+			if T1.Data == "pre" {
+				parsePre(pdf, tokenizer)
+			}
 		}
 	}
 
@@ -199,10 +202,39 @@ func parseDel(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 
 }
 
-func parseCode(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+func parsePre(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 
-}
+	tt := z.Next()
+	if tt == html.StartTagToken {
+		T1 := z.Token()
+		if T1.Data == "code" {
+			for _, a := range T1.Attr {
+				if a.Key == "class" {
+					class := a.Val
+					fmt.Println(class) // Use this for syntax highlighting.
+				}
+			}
+			tt2 := z.Next()
+			if tt2 == html.TextToken {
+				content := z.Text()
+				CodeBlock(pdf, string(content))
+			}
+			// tt3 := z.Next()
+			// if tt3 == html.EndTagToken {
+			// 	if T1.Data == "code" {
+			// 		tt4 := z.Next()
+			// 		if tt4 == html.EndTagToken {
+			// 			if T1.Data == "pre" {
+			// 				CodeBlock(pdf, string(content))
+			// 			}
+			// 		}
+			// 	}
+			// }
+		}
+	}
 
-func parseHR(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
-
+	// if tt == html.TextToken {
+	// 	content := z.Text()
+	// 	CodeBlock(pdf, string(content))
+	// }
 }
