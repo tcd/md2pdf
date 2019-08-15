@@ -12,7 +12,8 @@ func init() {
 }
 
 func main() {
-	flag.Parse()
+	// flag.Parse()
+	runParse()
 }
 
 func usage() {
