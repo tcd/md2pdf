@@ -2,6 +2,7 @@ package md2pdf
 
 import (
 	"io/ioutil"
+	"os"
 
 	bf "gopkg.in/russross/blackfriday.v2"
 )
@@ -57,7 +58,9 @@ func Md2HTMLFile(inPath, outPath string) error {
 			})),
 	)
 
-	err = ioutil.WriteFile(outPath, output, 0644)
+	cleanOutput := cleanHTML(string(output))
+
+	err = ioutil.WriteFile(outPath, []byte(cleanOutput), os.FileMode(0644))
 	if err != nil {
 		return err
 	}
