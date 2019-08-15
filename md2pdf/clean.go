@@ -10,17 +10,20 @@ var escapes = map[string]string{
 	"&amp;":  "&",
 	"&lt;":   "<",
 	"&gt;":   ">",
-	// "&rdquo;":  `"`,
-	// "&rsquo;":  "'",
-	// "&mdash;":  "",
-	// "&ndash;":  "",
-	// "&copy;":   "",
-	// "&trade;":  "",
-	// "&reg;":    "",
-	// "&hellip;": "",
-	// "&frac12;": "",
-	// "&frac14;": "",
-	// "&frac34;": "",
+
+	// "&rdquo;":  `"`,    // ”
+	// "&ldquo;":  `"`,    // “
+	// "&rsquo;":  "'",    // ’
+	// "&lsquo;":  "'",    // ‘
+	// "&mdash;":  "--",   // —
+	// "&ndash;":  "-",    // –
+	// "&copy;":   "(c)",  // ©
+	// "&trade;":  "(tm)", // ™
+	// "&reg;":    "(r)",  // ®
+	// "&hellip;": "...",  // …
+	// "&frac12;": "1/2",  // ½
+	// "&frac14;": "1/4",  // ¼
+	// "&frac34;": "3/4",  // ¾
 }
 
 func cleanHTML(html string) string {
