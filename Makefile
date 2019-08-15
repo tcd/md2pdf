@@ -15,7 +15,7 @@ clean:
 	go clean ./...
 
 test:
-	go test -v ./...
+	@./scripts/test.sh
 
 
 .PHONY: all build clean test run
