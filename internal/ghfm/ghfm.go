@@ -117,3 +117,13 @@ func CodeBlock(f *gofpdf.Fpdf, text string) {
 
 	f.SetCellMargin(oldCellMargin)
 }
+
+// BasicP writes the contents of a paragraph without rendering
+// any enclosed elements.
+func BasicP(f *gofpdf.Fpdf, text string) {
+	f.SetFont("helvetica", "", 12)
+	f.SetFillColor(255, 255, 255)
+	f.SetTextColor(36, 41, 46)
+	f.Write(6, text)
+	f.Ln(11)
+}
