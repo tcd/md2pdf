@@ -1,8 +1,6 @@
 package ghfm
 
 import (
-	"log"
-
 	"github.com/jung-kurt/gofpdf"
 )
 
@@ -114,7 +112,6 @@ func (tc TableContent) Widths(f *gofpdf.Fpdf) []float64 {
 				longest = cell
 			}
 		}
-		log.Println(longest)
 		widths[i] = f.GetStringWidth(longest) * 1.5
 	}
 	return widths
