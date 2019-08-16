@@ -16,6 +16,19 @@ Nullam vestibulum sagittis ultrices. In dignissim non justo quis iaculis. Etiam 
 Curabitur quis convallis risus, in tristique felis. In facilisis arcu sagittis egestas semper. Sed eu ex at dolor pellentesque eleifend. Nam metus leo, dictum quis ultricies sed, vulputate et erat. Integer vel fringilla nunc. Ut vulputate pellentesque ante, vel sodales nunc consequat ut. Aenean dictum tristique sem, a gravida erat pretium ut. Sed sagittis pulvinar ipsum nec fermentum. Donec gravida, metus ut ultrices consequat, est felis pharetra nulla, eget sodales arcu sem pellentesque dui.`
 }
 
+func loremList() []string {
+	return []string{
+		"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod " +
+			"tempor incididunt ut labore et dolore magna aliqua.",
+		"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut " +
+			"aliquip ex ea commodo consequat.",
+		"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum " +
+			"dolore eu fugiat nulla pariatur.",
+		"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui " +
+			"officia deserunt mollit anim id est laborum.",
+	}
+}
+
 func cbContent() string {
 	return `# H1
 ## H2
