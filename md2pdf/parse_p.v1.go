@@ -2,7 +2,6 @@ package md2pdf
 
 import (
 	"bytes"
-	"fmt"
 
 	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/ghfm"
@@ -73,6 +72,7 @@ func (t Tag) ConsolidateContents() string {
 }
 
 func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+	var imageTokens []html.Token
 	topLevel := Tag{
 		Kind: "p",
 	}
@@ -91,6 +91,11 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		if ct.Type == html.EndTagToken {
 			if ct.Data == "p" {
 				break
+			}
+		}
+		if ct.Type == html.SelfClosingTagToken {
+			if ct.Data == "img" {
+				imageTokens = append(imageTokens, ct)
 			}
 		}
 
@@ -117,8 +122,12 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		}
 	}
 
-	fmt.Println(topLevel.ConsolidateContents())
 	ghfm.BasicP(pdf, topLevel.ConsolidateContents())
+	if len(imageTokens) > 0 {
+		for _, t := range imageTokens {
+			parseImg(pdf, t)
+		}
+	}
 }
 
 func parseChild(z *html.Tokenizer, above *Tag) bool {
@@ -151,27 +160,4 @@ func parseChild(z *html.Tokenizer, above *Tag) bool {
 		}
 	}
 	return false
-}
-
-func parseImg(token html.Token) Tag {
-	var src, alt, title string
-	for _, a := range token.Attr {
-		if a.Key == "src" {
-			src = a.Val
-		}
-		if a.Key == "alt" {
-			alt = a.Val
-		}
-		if a.Key == "title" {
-			title = a.Val
-		}
-	}
-	return Tag{
-		Kind: "img",
-		Attributes: map[string]string{
-			"src":   src,
-			"alt":   alt,
-			"title": title,
-		},
-	}
 }

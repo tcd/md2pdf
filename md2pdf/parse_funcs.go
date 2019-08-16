@@ -14,6 +14,16 @@ func parseStrong(pdf *gofpdf.Fpdf, z *html.Tokenizer) {}
 
 func parseDel(pdf *gofpdf.Fpdf, z *html.Tokenizer) {}
 
+func parseImg(pdf *gofpdf.Fpdf, token html.Token) {
+	var src string
+	for _, a := range token.Attr {
+		if a.Key == "src" {
+			src = a.Val
+		}
+	}
+	Image(pdf, src)
+}
+
 func parsePre(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 	tt := z.Next()
 	if tt == html.StartTagToken {

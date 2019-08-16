@@ -2,10 +2,6 @@ package ghfm
 
 import (
 	"fmt"
-	"net/http"
-	"os"
-	"path"
-	"strings"
 	"time"
 
 	"github.com/jung-kurt/gofpdf"
@@ -203,74 +199,3 @@ func list(f *gofpdf.Fpdf) {
 
 // https://github.com/jung-kurt/gofpdf/blob/master/fpdf_test.go#L606
 func table(f *gofpdf.Fpdf) {}
-
-// Write a JPEG, PNG or GIF to a gofpdf.Fpdf.
-func image1(f *gofpdf.Fpdf, src, title, link string) {
-	//
-	res, err := http.Get(src)
-	if err != nil {
-		fmt.Println("Unable to fetch image: ", src)
-	}
-	defer res.Body.Close()
-
-	if err == nil {
-		var opt gofpdf.ImageOptions
-		x, y := f.GetXY()
-
-		// ext :=
-		switch strings.ToLower(path.Ext(src)) {
-		case ".png":
-			opt.ImageType = "png"
-			opt.ReadDpi = true
-		case ".jpg":
-			opt.ImageType = "jpg"
-			opt.ReadDpi = false
-		case ".jpeg":
-			opt.ImageType = "jpeg"
-			opt.ReadDpi = false
-		case ".gif":
-			opt.ImageType = "gif"
-			opt.ReadDpi = false
-		default:
-			fmt.Fprintf(os.Stderr, "Only jpg, png, & gif formats are supported 😔")
-		}
-
-		_ = f.RegisterImageOptionsReader(title, opt, res.Body)
-		res.Body.Close()
-		f.ImageOptions(title, x, y, 0, 0, false, opt, 0, "")
-		f.ImageOptions(
-			title, // path to image
-			x,     // x
-			y,     // y
-			0,     // width
-			0,     // height
-			false, // flow;  If flow is true, the current y value is advanced after placing the image and a page break may be made if necessary
-			opt,   // options
-			0,     // link
-			"",    // linkStr
-		)
-	}
-
-	// f.Image(
-	// 	src,   // path to image
-	// 	10,    // x
-	// 	10,    // y
-	// 	48,    // width
-	// 	48,    // height
-	// 	false, // flow;  If flow is true, the current y value is advanced after placing the image and a page break may be made if necessary
-	// 	"",    // tp; (case insensitive): "JPG", "JPEG", "PNG" and "GIF". If empty, the type is inferred from the file extension.
-	// 	0,     // link
-	// 	"",    // linkStr
-	// )
-	// f.Text(50, 20, title)
-}
-
-// used for a local image file
-func imgLocal() {
-
-}
-
-// used for an image url
-func imgRemote() {
-
-}

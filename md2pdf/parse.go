@@ -20,7 +20,7 @@ func parse(inputHTML, outputPath string) error {
 		tt := tokenizer.Next()
 
 		if tt == html.ErrorToken {
-			break
+			break // End of document
 		}
 
 		if tt == html.SelfClosingTagToken {
@@ -28,6 +28,12 @@ func parse(inputHTML, outputPath string) error {
 
 			if T1.Data == "hr" {
 				ghfm.HR(pdf)
+			}
+			if T1.Data == "br" {
+				// decide how to deal with these?
+			}
+			if T1.Data == "img" {
+				parseImg(pdf, T1)
 			}
 		}
 
@@ -58,12 +64,20 @@ func parse(inputHTML, outputPath string) error {
 			if T1.Data == "p" {
 				parseP(pdf, tokenizer)
 			}
+			if T1.Data == "blockquote" {
+				// parseBlockquote(pdf, tokenizer)
+			}
+			if T1.Data == "ol" || T1.Data == "ul" {
+				// parseList(pdf, tokenizer)
+			}
+			if T1.Data == "dl" {
+				// Deal with definition lists?
+			}
+			if T1.Data == "table" {
+				// parseTable(pdf, tokenizer)
+			}
 		}
 	}
 
-	err := pdf.OutputFileAndClose(outputPath)
-	if err != nil {
-		return err
-	}
-	return nil
+	return pdf.OutputFileAndClose(outputPath)
 }
