@@ -5,3 +5,4 @@
 2019-08-14 Ignore html inside codeblocks.
 2019-08-15 Break pages in a more pleasing way.
 2019-08-15 Support links in images.
+2019-08-15 Figure out a good way to deal with images wrapped in paragraphs.
