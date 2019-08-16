@@ -1,13 +1,14 @@
 package ghfm
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/jung-kurt/gofpdf"
 )
 
 // Table writes a table to a gofpdf.Fpdf.
 func Table(f *gofpdf.Fpdf, table TableContent) {
+	f.SetFont("helvetica", "", 12)
 	oldCellMargin := f.GetCellMargin()
 	oldLineWidth := f.GetLineWidth()
 	headers := table.Headers()
@@ -20,19 +21,19 @@ func Table(f *gofpdf.Fpdf, table TableContent) {
 	f.SetDrawColor(223, 226, 229) // border color
 	f.SetLineWidth(0.3)           // outline width
 	f.SetFillColor(255, 255, 255) // background color
-	f.SetCellMargin(4)
+	f.SetCellMargin(3)
 
 	for i, header := range headers {
 		f.CellFormat(
-			widths[i]+2, // width
-			10,          // height
-			header,      // textStr
-			"1",         // borderStr; 1 for full border.
-			0,           // ln; position after the call.
-			"CM",        // alignStr; "L", "C" or "R" + "T", "M", "B" or "A" (left, center, right + top, middle, bottom, baseline)
-			false,       // fill
-			0,           // link
-			"",          // linkStr
+			widths[i], // width
+			10,        // height
+			header,    // textStr
+			"1",       // borderStr; 1 for full border.
+			0,         // ln; position after the call.
+			"CM",      // alignStr; "L", "C" or "R" + "T", "M", "B" or "A" (left, center, right + top, middle, bottom, baseline)
+			false,     // fill
+			0,         // link
+			"",        // linkStr
 		)
 	}
 	f.Ln(-1)
@@ -44,7 +45,7 @@ func Table(f *gofpdf.Fpdf, table TableContent) {
 	for _, row := range body {
 		for i, col := range row {
 			f.CellFormat(
-				widths[i]+2,
+				widths[i],
 				10,
 				col,
 				"1",
@@ -107,8 +108,8 @@ func (tc TableContent) GetColumn(index int) []string {
 
 // Widths returns the the output of GetStringWidth for the longest cell in each column.
 func (tc TableContent) Widths(f *gofpdf.Fpdf) []float64 {
-	widths := make([]float64, len(tc.Rows))
-	for i := 0; i <= tc.ColCount(); i++ {
+	widths := make([]float64, tc.ColCount())
+	for i := 0; i < tc.ColCount(); i++ {
 		col := tc.GetColumn(i)
 		longest := ""
 		for _, cell := range col {
@@ -116,23 +117,8 @@ func (tc TableContent) Widths(f *gofpdf.Fpdf) []float64 {
 				longest = cell
 			}
 		}
-		widths[i] = f.GetStringWidth(longest)
+		log.Println(longest)
+		widths[i] = f.GetStringWidth(longest) * 1.5
 	}
 	return widths
-}
-
-// Check for problems with the data in a TableContent.
-func (tc TableContent) Check() error {
-	var err error
-	if len(tc.Rows) == 0 {
-		err = fmt.Errorf("table: No rows")
-	} else {
-		if len(tc.Headers()) == 0 {
-			err = fmt.Errorf("table: No headers")
-		}
-	}
-	if len(tc.Alignments) != tc.ColCount() {
-		err = fmt.Errorf("table: Not enough alignment strings")
-	}
-	return err
 }
