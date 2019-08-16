@@ -10,7 +10,6 @@ var escapes = map[string]string{
 	"&amp;":  "&",
 	"&lt;":   "<",
 	"&gt;":   ">",
-
 	// "&rdquo;":  `"`,    // ”
 	// "&ldquo;":  `"`,    // “
 	// "&rsquo;":  "'",    // ’
