@@ -7,14 +7,6 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
-func setup(f *gofpdf.Fpdf) {
-	f.AddPage()
-	f.SetFont("helvetica", "", 16)
-	f.SetMargins(10, 13, 10)
-	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
-}
-
 func setMetaData(f *gofpdf.Fpdf, author, title string) {
 	f.SetTitle(title, true)
 	f.SetAuthor(author, true)
