@@ -15,14 +15,12 @@ func Table(f *gofpdf.Fpdf, table TableContent) {
 	widths := table.Widths(f)
 	body := table.Body()
 
-	// table head
 	f.SetFont("helvetica", "B", 12)
 	f.SetTextColor(36, 41, 46)    // text color
 	f.SetDrawColor(223, 226, 229) // border color
 	f.SetLineWidth(0.3)           // outline width
 	f.SetFillColor(255, 255, 255) // background color
 	f.SetCellMargin(3)
-
 	for i, header := range headers {
 		f.CellFormat(
 			widths[i], // width
@@ -38,7 +36,6 @@ func Table(f *gofpdf.Fpdf, table TableContent) {
 	}
 	f.Ln(-1)
 
-	// table bbody
 	f.SetFont("helvetica", "", 12)
 	f.SetFillColor(246, 248, 250)
 	fill := false
@@ -106,7 +103,7 @@ func (tc TableContent) GetColumn(index int) []string {
 	return columns
 }
 
-// Widths returns the the output of GetStringWidth for the longest cell in each column.
+// Widths returns the width needed to hold the longest cell in each column.
 func (tc TableContent) Widths(f *gofpdf.Fpdf) []float64 {
 	widths := make([]float64, tc.ColCount())
 	for i := 0; i < tc.ColCount(); i++ {
