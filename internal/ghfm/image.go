@@ -100,7 +100,6 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
 		0,              // link
 		"",             // linkStr
 	)
-
 }
 
 func remoteImageInfo(imageURL string) (width, height int, format string, err error) {
