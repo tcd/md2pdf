@@ -2,3 +2,6 @@
 2019-08-14 Draw images inside of links.
 2019-08-14 Add syntax highlighting in codeblocks.
 2019-08-14 Support internal links.
+2019-08-14 Ignore html inside codeblocks.
+2019-08-15 Break pages in a more pleasing way.
+2019-08-15 Support links in images.
