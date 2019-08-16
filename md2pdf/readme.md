@@ -7,21 +7,23 @@
 - Emphasis
   - Bold
   - Italic
+  - Code
   - Strikethrough
 - Links
 - Lists
-  - Nested
   - Unordered
   - Ordered
+  - Nested
   - Definition lists
 - Images
+  - Links in images
 - Code
   - Inline Code (backticks)
   - Fenced Code Blocks
 - Tables
 - Blockquotes
 - Footnotes
-- Horizontal Rule
+- ~~Horizontal Rule~~
 
 ## gofpdf
 
@@ -50,17 +52,6 @@
 | Letter      | 216 x 292 mm    | 8.5 x 11.0 in   |
 | Legal       | 216 x 356 mm    | 8.5 x 14.0 in   |
 | Tabloid     | 279 x 432 mm    |  11 x 17 in     |
-
-## Unit Conversion
-
-### point, millimeter, inch (According to Google)
-
-- 1pt = 0.352778mm (divide the length value by 2.835)
-- 1pt = 0.0138889in (divide the length value by 72)
-- 1mm = 0.0393701in (divide the length value by 25.4)
-- 1mm = 2.83465pt (multiply the length value by 2.835)
-- 1in = 72pt (multiply the length value by 72)
-- 1in = 25.4mm (multiply the length value by 25.4)
 
 ---
 
