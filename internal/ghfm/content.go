@@ -229,3 +229,27 @@ func youTubeContent1() string {
 func youTubeContent2() string {
 	return "[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)"
 }
+
+func tableContent1() TableContent {
+	return TableContent{
+		Rows: [][]string{
+			{"Tables", "Are", "Cool"},
+			{"col 3 is", "right-aligned", "$1600"},
+			{"col 2 is", "centered", "$12"},
+			{"zebra stripes", "are neat", "$1"},
+		},
+		Alignments: []string{"L", "C", "R"},
+	}
+}
+
+func tableContent2() TableContent {
+	return TableContent{
+		Rows: [][]string{
+			{"Markdown", "Less", "Pretty"},
+			{"col 3 is", "right-aligned", "$1600"},
+			{"still", "renders", "nicely"},
+			{"1", "2", "3"},
+		},
+		Alignments: []string{"L", "L", "L"},
+	}
+}
