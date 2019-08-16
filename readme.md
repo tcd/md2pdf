@@ -1,31 +1,15 @@
 # md2pdf
+[![GitHub issues](https://img.shields.io/github/issues/tcd/md2pdf.svg)](https://github.com/tcd/md2pdf/issues)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftcd%2Fmd2pdf.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftcd%2Fmd2pdf?ref=badge_shield)
+[![License](https://img.shields.io/github/license/tcd/md2pdf.svg)](https://github.com/tcd/md2pdf/blob/master/LICENSE)
 
 
-## Markdown Specs
+Generate PDFs from markdown files on the command line.
 
 - [GitHub Flavored Markdown](https://github.github.com/gfm/)
-
-## Dependencies
-
-### Parsing
-
 - [russross/blackfriday](https://github.com/russross/blackfriday) - Blackfriday: a markdown processor for Go
   - [Depado/bfchroma](https://github.com/Depado/bfchroma) - Integrating Chroma syntax highlighter as a Blackfriday renderer 
-  - [shurcooL/github_flavored_markdown](https://github.com/shurcooL/github_flavored_markdown) - GitHub Flavored Markdown renderer with fenced code block highlighting, clickable header anchor links.
-
-### Rendering
-
 - [jung-kurt/gofpdf](https://github.com/jung-kurt/gofpdf) - A PDF document generator with high level support for text, drawing and images
-- Usage Examples
-  - [ajstarks/deck](https://github.com/ajstarks/deck/blob/master/cmd/pdfdeck/pdfdeck.go)
-  - [sprucehealth/gofpdf](https://godoc.org/github.com/sprucehealth/gofpdf)
-  - [johnfercher/maroto](https://github.com/johnfercher/maroto)
-
-### Styling
-
-- [sindresorhus/github-markdown-css](https://github.com/sindresorhus/github-markdown-css) - The minimal amount of CSS to replicate the GitHub Markdown style
-
 ---
 
 
