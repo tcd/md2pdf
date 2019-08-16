@@ -4,14 +4,14 @@ package ghfm
 import "github.com/jung-kurt/gofpdf"
 
 const (
-	pageWidth = 196 // mm
+	pageWidth = 176 // (216 - 40 for margins)
 )
 
 // Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
 func Setup(f *gofpdf.Fpdf) {
 	f.AddPage()
 	f.SetFont("helvetica", "", 16)
-	f.SetMargins(10, 13, 10)
+	f.SetMargins(20, 13, 20)
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 }
@@ -29,7 +29,7 @@ func H1(f *gofpdf.Fpdf, text string) {
 	y := f.GetY()
 	f.SetLineWidth(0.09)
 	f.SetDrawColor(191, 191, 191)
-	f.Line(x, y, x+196, y)
+	f.Line(x, y, x+pageWidth, y)
 	f.Ln(6)
 }
 
@@ -104,7 +104,6 @@ func HR(f *gofpdf.Fpdf) {
 // TODO: syntax highlighting..............
 func CodeBlock(f *gofpdf.Fpdf, text string) {
 	oldCellMargin := f.GetCellMargin()
-	// _, lineHeight := f.GetFontSize()
 
 	f.SetFont("courier", "", 11)
 	f.SetFillColor(246, 248, 250)
