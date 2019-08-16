@@ -59,7 +59,6 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
 
 	x, y := f.GetXY()
 
-	fmt.Printf("%dx%d, %q", width, height, src)
 	f.ImageOptions(
 		src,            // path to image
 		x,              // x
@@ -90,7 +89,6 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
 
 	x, y := f.GetXY()
 
-	fmt.Printf("%dx%d, %q", width, height, src)
 	f.ImageOptions(
 		src,            // path to image
 		x,              // x
