@@ -246,7 +246,6 @@ func tableContent2() TableContent {
 	return TableContent{
 		Rows: [][]string{
 			{"Markdown", "Less", "Pretty"},
-			{"col 3 is", "right-aligned", "$1600"},
 			{"still", "renders", "nicely"},
 			{"1", "2", "3"},
 		},
