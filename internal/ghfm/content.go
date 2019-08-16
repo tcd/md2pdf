@@ -252,3 +252,18 @@ func tableContent2() TableContent {
 		Alignments: []string{"L", "L", "L"},
 	}
 }
+
+var tocContent = []string{
+	"Headers",
+	"Emphasis",
+	"Lists",
+	"Links",
+	"Images",
+	"Code and Syntax Highlighting",
+	"Tables",
+	"Blockquotes",
+	"Inline HTML",
+	"Horizontal Rule",
+	"Line Breaks",
+	"YouTube Videos",
+}
