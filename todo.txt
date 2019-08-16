@@ -6,3 +6,5 @@
 2019-08-15 Break pages in a more pleasing way.
 2019-08-15 Support links in images.
 2019-08-15 Figure out a good way to deal with images wrapped in paragraphs.
+2019-08-16 Add formatting to tables (bold, code, italic, links, strikethrough)
+2019-08-16 Add formatting to lists (bold, code, italic, links, strikethrough)
