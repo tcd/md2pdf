@@ -157,7 +157,7 @@ func code2(f *gofpdf.Fpdf, text string) {
 }
 
 // WriteLinkString is the gofpdf function for writing links.
-func link1(f *gofpdf.Fpdf, text string, href string) {
+func Link1(f *gofpdf.Fpdf, text string, href string) {
 	fontSize, lineHeight := f.GetFontSize()
 	f.SetTextColor(3, 102, 214)
 	f.SetFont("helvetica", "", fontSize)
