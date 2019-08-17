@@ -4,6 +4,7 @@
 
 - Paragraphs
 - Headers
+  - Links
 - Emphasis
   - Bold
   - Italic
@@ -32,6 +33,7 @@
 ### Example Projects
 
 - [jtunison/stopgo](https://github.com/jtunison/stopgo)
+- [mandolyte/mdtopdf](https://github.com/mandolyte/mdtopdf)
 
 ### Fonts
 

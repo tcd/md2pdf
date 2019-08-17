@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/tcd/md2pdf/internal/parse"
 	bf "gopkg.in/russross/blackfriday.v2"
 )
 
@@ -14,7 +15,7 @@ func Md2PDF(inPath, outPath string) error {
 		return err
 	}
 
-	err = parse(htmlString, outPath)
+	err = parse.HTML(htmlString, outPath)
 	if err != nil {
 		return err
 	}
