@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/jung-kurt/gofpdf"
-	. "github.com/tcd/md2pdf/internal/content"
-	. "github.com/tcd/md2pdf/internal/render"
+	. "github.com/tcd/md2pdf/internal/content" // I know I shouldn't use dot imports.
+	. "github.com/tcd/md2pdf/internal/render"  // I know I shouldn't use dot imports.
 )
 
 // GitHubPDF attempts to recreate this page (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) as a pdf.
@@ -42,7 +42,7 @@ func GitHubPDF(outPath string) {
 	UnorderedList(pdf, ListContent3)
 	H2(pdf, "Links")
 	CodeBlock(pdf, LinksContent())
-	link1(pdf, "I'm an inline-style link", "https://www.google.com")
+	Link1(pdf, "I'm an inline-style link", "https://www.google.com")
 	H2(pdf, "Images")
 	CodeBlock(pdf, ImagesContent())
 	BasicP(pdf, "Here's our logo (hover to see the title text):")
@@ -89,7 +89,7 @@ func GitHubPDF(outPath string) {
 	BasicP(pdf, "Or, in pure Markdown, but losing the image sizing and border:")
 	CodeBlock(pdf, YouTubeContent2())
 	BasicP(pdf, "Referencing a bug by #bugID in your git commit links it to the slip. For example #1.")
-	link1(pdf, "Original Markdown Cheatsheet", "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet")
+	Link1(pdf, "Original Markdown Cheatsheet", "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet")
 
 	err := pdf.OutputFileAndClose(outPath)
 	if err != nil {
