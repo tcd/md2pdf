@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/tcd/md2pdf/internal/md2pdf"
 )
 
@@ -12,15 +14,15 @@ const (
 	pdfOutDir    = "../../out/pdf/"
 	htmlOutDir   = "../../out/html/"
 	readme       = "../../readme.md"
-	mdCheatsheet = "../../static/markdown-cheatsheet.md"
+	mdCheatsheet = "../../testdata/markdown/markdown-cheatsheet.md"
 )
 
 func runParse() {
-	md2pdf.GitHubPDF(pdfOutDir + "list2.pdf")
+	// md2pdf.GitHubPDF(pdfOutDir + ".pdf")
 	// parse.GenAST()
 
-	// err := md2pdf.Md2PDF(mdCheatsheet, pdfOutDir+"newest.pdf")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
+	err := md2pdf.Md2PDF(mdCheatsheet, pdfOutDir+"newest.pdf")
+	if err != nil {
+		fmt.Println(err)
+	}
 }
