@@ -1,4 +1,4 @@
-package ghfm
+package render
 
 import (
 	"fmt"
@@ -21,12 +21,12 @@ func br(f *gofpdf.Fpdf) {
 
 // Write a segment of plain text.
 func span1(f *gofpdf.Fpdf, text string) {
-	_, lineHeight := f.GetFontSize()
 	f.SetFont("helvetica", "", 12)
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 	f.SetCellMargin(0)
 
+	_, lineHeight := f.GetFontSize()
 	f.CellFormat(
 		0,          // width; If 0, the cell extends up to the right margin.
 		lineHeight, // height;
@@ -156,8 +156,19 @@ func code2(f *gofpdf.Fpdf, text string) {
 	)
 }
 
-func link(f *gofpdf.Fpdf, text string, href string) {
+// WriteLinkString is the gofpdf function for writing links.
+func link1(f *gofpdf.Fpdf, text string, href string) {
 	fontSize, lineHeight := f.GetFontSize()
+	f.SetTextColor(3, 102, 214)
+	f.SetFont("helvetica", "", fontSize)
+	htmlLink := fmt.Sprintf(`<a href="%s">%s</a>`, href, text)
+	html := f.HTMLBasicNew()
+	html.Write(lineHeight, htmlLink)
+}
+
+// WriteLinkString is the gofpdf function for writing links.
+func link2(f *gofpdf.Fpdf, text string, href string) {
+	fontSize, _ := f.GetFontSize()
 	f.SetTextColor(3, 102, 214)
 	f.SetFont("helvetica", "", fontSize)
 
@@ -172,22 +183,4 @@ func link(f *gofpdf.Fpdf, text string, href string) {
 	// 	0,          // link;  Identifier returned by AddLink() or 0 for no internal link.
 	// 	"",         // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
 	// )
-	htmlLink := fmt.Sprintf(`<a href="%s">%s</a>`, href, text)
-	html := f.HTMLBasicNew()
-	html.Write(lineHeight, htmlLink)
 }
-
-// https://github.com/ajstarks/deck/blob/master/cmd/pdfdeck/pdfdeck.go#L270
-func list(f *gofpdf.Fpdf) {
-	const fontHt = 12
-	lineHt := f.PointToUnitConvert(fontHt)
-	for j := 1; j < 12; j++ {
-		f.SetFont("zapfdingbats", "", fontHt/4)
-		f.CellFormat(5, lineHt, "\x6c", "", 0, "R", false, 0, "")
-		f.SetFont("times", "", 18)
-		f.CellFormat(5, lineHt, fmt.Sprintf(" Item %d", j), "", 1, "L", false, 0, "")
-	}
-}
-
-// https://github.com/jung-kurt/gofpdf/blob/master/fpdf_test.go#L606
-func table(f *gofpdf.Fpdf) {}
