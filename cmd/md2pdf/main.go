@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/tcd/md2pdf/internal/ghfm"
-	"github.com/tcd/md2pdf/md2pdf"
+	"github.com/tcd/md2pdf/internal/md2pdf"
 )
 
 func main() {
@@ -19,11 +16,11 @@ const (
 )
 
 func runParse() {
-	ghfm.GitHubPDF(pdfOutDir + "table3.pdf")
+	md2pdf.GitHubPDF(pdfOutDir + "list2.pdf")
 	// parse.GenAST()
 
-	err := md2pdf.Md2PDF(mdCheatsheet, pdfOutDir+"github3.pdf")
-	if err != nil {
-		fmt.Println(err)
-	}
+	// err := md2pdf.Md2PDF(mdCheatsheet, pdfOutDir+"newest.pdf")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 }
