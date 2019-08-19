@@ -40,23 +40,13 @@ func HTML(inputHTML, outputPath string) error {
 		if tt == html.StartTagToken {
 			T1 := tokenizer.Token()
 
-			if T1.Data == "h1" {
-				parseH1(pdf, tokenizer)
-			}
-			if T1.Data == "h2" {
-				parseH2(pdf, tokenizer)
-			}
-			if T1.Data == "h3" {
-				parseH3(pdf, tokenizer)
-			}
-			if T1.Data == "h4" {
-				parseH4(pdf, tokenizer)
-			}
-			if T1.Data == "h5" {
-				parseH5(pdf, tokenizer)
-			}
-			if T1.Data == "h6" {
-				parseH6(pdf, tokenizer)
+			if T1.Data == "h1" ||
+				T1.Data == "h2" ||
+				T1.Data == "h3" ||
+				T1.Data == "h4" ||
+				T1.Data == "h5" ||
+				T1.Data == "h6" {
+				parseHeader(pdf, tokenizer, T1)
 			}
 			if T1.Data == "pre" {
 				parsePre(pdf, tokenizer)
