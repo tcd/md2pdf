@@ -3,8 +3,6 @@ package content
 
 import (
 	"strings"
-
-	"github.com/tcd/md2pdf/internal/render"
 )
 
 // Lorem returns 10 sentences of Lorem Ipsum text.
@@ -249,31 +247,6 @@ func YouTubeContent1() string {
 // YouTubeContent2 returns a markdown link to a YouTube video.
 func YouTubeContent2() string {
 	return "[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)"
-}
-
-// TableContent1 returns TableContent data.
-func TableContent1() render.TableContent {
-	return render.TableContent{
-		Rows: [][]string{
-			{"Tables", "Are", "Cool"},
-			{"col 3 is", "right-aligned", "$1600"},
-			{"col 2 is", "centered", "$12"},
-			{"zebra stripes", "are neat", "$1"},
-		},
-		Alignments: []string{"L", "C", "R"},
-	}
-}
-
-// TableContent2 returns TableContent data.
-func TableContent2() render.TableContent {
-	return render.TableContent{
-		Rows: [][]string{
-			{"Markdown", "Less", "Pretty"},
-			{"still", "renders", "nicely"},
-			{"1", "2", "3"},
-		},
-		Alignments: []string{"L", "L", "L"},
-	}
 }
 
 // TocContent returns a slice of short strings.

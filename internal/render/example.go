@@ -1,11 +1,10 @@
-package md2pdf
+package render
 
 import (
 	"fmt"
 
 	"github.com/jung-kurt/gofpdf"
-	. "github.com/tcd/md2pdf/internal/content" // I know I shouldn't use dot imports.
-	. "github.com/tcd/md2pdf/internal/render"  // I know I shouldn't use dot imports.
+	"github.com/tcd/md2pdf/internal/content"
 )
 
 // GitHubPDF attempts to recreate this page (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) as a pdf.
@@ -14,12 +13,12 @@ func GitHubPDF(outPath string) {
 	Setup(pdf)
 
 	H1(pdf, "GitHub Markdown PDF demo")
-	BasicP(pdf, "This is intended as a quick reference and showcase. For more complete info, see John Gruber's original spec and the Github-flavored Markdown info page.")
-	BasicP(pdf, "Note that there is also a Cheatsheet specific to Markdown Here if that's what you're looking for. You can also check out more Markdown tools.")
+	FullP(pdf, PContent1)
+	FullP(pdf, PContent2)
 	H5(pdf, "Table of Contents")
-	OrderedList(pdf, TocContent)
+	OrderedList(pdf, content.TocContent)
 	H2(pdf, "Headers")
-	CodeBlock(pdf, HeaderContent())
+	CodeBlock(pdf, content.HeaderContent())
 	H1(pdf, "H1")
 	H2(pdf, "H2")
 	H3(pdf, "H3")
@@ -30,46 +29,80 @@ func GitHubPDF(outPath string) {
 	H1(pdf, "Alt-H1")
 	H2(pdf, "Alt-H2")
 	H2(pdf, "Emphasis")
-	CodeBlock(pdf, EmContent())
-	BasicP(pdf, "Emphasis, aka italics, with asterisks or underscores.")
-	BasicP(pdf, "Strong emphasis, aka bold, with asterisks or underscores.")
-	BasicP(pdf, "Combined emphasis with asterisks and underscores.")
-	BasicP(pdf, "Strikethrough uses two tildes. Scratch this.")
+	CodeBlock(pdf, content.EmContent())
+	FullP(pdf, PContentEmphasis)
+	FullP(pdf, PContentStrong)
+	FullP(pdf, PContentCombined)
+	FullP(pdf, PContentStrike)
 	H2(pdf, "Lists")
-	CodeBlock(pdf, ListContent())
-	OrderedList(pdf, ListContent1)
-	OrderedList(pdf, ListContent2)
-	UnorderedList(pdf, ListContent3)
+	CodeBlock(pdf, content.ListContent())
+	OrderedList(pdf, content.ListContent1)
+	OrderedList(pdf, content.ListContent2)
+	UnorderedList(pdf, content.ListContent3)
 	H2(pdf, "Links")
-	CodeBlock(pdf, LinksContent())
-	Link1(pdf, "I'm an inline-style link", "https://www.google.com")
+	CodeBlock(pdf, content.LinksContent())
+	FullP(pdf, []Text{Text{
+		Content: "I'm an inline-style link",
+		HREF:    "https://www.google.com/"},
+	})
+	FullP(pdf, []Text{Text{
+		Content: "Unfortunately, we can't put titles on pdf links :(",
+		HREF:    "https://www.google.com/"},
+	})
+	FullP(pdf, []Text{Text{
+		Content: "I'm a reference-style link",
+		HREF:    "https://www.mozilla.org"},
+	})
+	FullP(pdf, []Text{Text{
+		Content: "We also can't link to relative files :'(",
+		HREF:    ""},
+	})
+	FullP(pdf, []Text{Text{
+		Content: "You can use numbers for reference-style link definitions",
+		HREF:    "http://slashdot.org"},
+	})
+	FullP(pdf, []Text{
+		Text{Content: "Or leave it empty and use the "},
+		Text{Content: "link text itself", HREF: "http://www.reddit.com"},
+		Text{Content: "."},
+	})
+	FullP(pdf, []Text{
+		Text{Content: "URLs and URLs in angle brackets will automatically get turned into links. "},
+		Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
+		Text{Content: " or "},
+		Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
+		Text{Content: " and sometimes example.com (but not on Github, for example)."},
+	})
+	FullP(pdf, []Text{Text{Content: "Some text to show that the reference links can follow later."}})
 	H2(pdf, "Images")
-	CodeBlock(pdf, ImagesContent())
+	CodeBlock(pdf, content.ImagesContent())
 	BasicP(pdf, "Here's our logo (hover to see the title text):")
 	BasicP(pdf, "Inline-style: ")
 	Image(pdf, "https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png")
 	BasicP(pdf, "Reference-style:")
 	Image(pdf, "/Users/clay/go/src/github.com/tcd/md2pdf/static/images/icon48.png")
 	H2(pdf, "Code and Syntax Highlighting")
-	BasicP(pdf, "Code blocks are part of the Markdown spec, but syntax highlighting isn't. However, many renderers -- like Github's and Markdown Here -- support syntax highlighting. Which languages are supported and how those language names should be written will vary from renderer to renderer. Markdown Here supports highlighting for dozens of languages (and not-really-languages, like diffs and HTTP headers); to see the complete list, and how to write the language names, see the highlight.js demo page.")
-	CodeBlock(pdf, InlineCodeContent())
-	CodeBlock(pdf, SyntaxHighContent())
-	BasicP(pdf, "Blocks of code are either fenced by lines with three back-ticks ```, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.")
+	FullP(pdf, PContentCodeAndSyntax)
+	CodeBlock(pdf, "Inline `code` has `back-ticks around` it.")
+	FullP(pdf, inlineCodeContent1)
+	FullP(pdf, inlineCodeContent2)
+	CodeBlock(pdf, content.InlineCodeContent())
+	CodeBlock(pdf, content.SyntaxHighContent())
 	H2(pdf, "Tables")
 	BasicP(pdf, "Tables aren't part of the core Markdown spec, but they are part of GFM and Markdown Here supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.")
-	CodeBlock(pdf, TablesContent())
+	CodeBlock(pdf, content.TablesContent())
 	BasicP(pdf, "Colons can be used to align columns.")
 	Table(pdf, TableContent1())
 	BasicP(pdf, "There must be at least 3 dashes separating each header cell. The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.")
 	Table(pdf, TableContent2())
 	H2(pdf, "Blockquotes")
-	CodeBlock(pdf, BlockquoteContent())
+	CodeBlock(pdf, content.BlockquoteContent())
 	BasicBlockquote(pdf, "Blockquotes are very handy in email to emulate reply text. This line is part of the same quote.")
 	BasicP(pdf, "Quote break.")
 	BasicBlockquote(pdf, "This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can put Markdown into a blockquote.")
 	H2(pdf, "Inline HTML")
 	BasicP(pdf, "You can also use raw HTML in your Markdown, and it'll mostly work pretty well.")
-	CodeBlock(pdf, InlineHTMLContent())
+	CodeBlock(pdf, content.InlineHTMLContent())
 	H2(pdf, "Horizontal Rule")
 	BasicP(pdf, "Three or more...")
 	HR(pdf)
@@ -78,18 +111,21 @@ func GitHubPDF(outPath string) {
 	BasicP(pdf, "Asterisks")
 	HR(pdf)
 	BasicP(pdf, "Underscores")
-	CodeBlock(pdf, HRContent())
+	CodeBlock(pdf, content.HRContent())
 	H2(pdf, "Line Breaks")
 	BasicP(pdf, `My basic recommendation for learning how line breaks work is to experiment and discover -- hit <Enter> once (i.e., insert one newline), then hit it twice (i.e., insert two newlines), see what happens. You'll soon learn to get what you want. "Markdown Toggle" is your friend.`)
 	BasicP(pdf, "Here are some things to try out:")
-	CodeBlock(pdf, LineBreakContents())
+	CodeBlock(pdf, content.LineBreakContents())
 	H2(pdf, "YouTube Videos")
 	BasicP(pdf, "They can't be added directly but you can add an image with a link to the video like this:")
-	CodeBlock(pdf, YouTubeContent1())
+	CodeBlock(pdf, content.YouTubeContent1())
 	BasicP(pdf, "Or, in pure Markdown, but losing the image sizing and border:")
-	CodeBlock(pdf, YouTubeContent2())
+	CodeBlock(pdf, content.YouTubeContent2())
 	BasicP(pdf, "Referencing a bug by #bugID in your git commit links it to the slip. For example #1.")
-	Link1(pdf, "Original Markdown Cheatsheet", "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet")
+	FullP(pdf, []Text{Text{
+		Content: "Original Markdown Cheatsheet",
+		HREF:    "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"},
+	})
 
 	err := pdf.OutputFileAndClose(outPath)
 	if err != nil {
