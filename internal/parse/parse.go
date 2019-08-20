@@ -64,7 +64,7 @@ func HTML(inputHTML, outputPath string) error {
 				// Deal with definition lists?
 			}
 			if T1.Data == "table" {
-				// parseTable(pdf, tokenizer)
+				parseTable(pdf, tokenizer)
 			}
 		}
 	}
