@@ -35,10 +35,6 @@
 - [jtunison/stopgo](https://github.com/jtunison/stopgo)
 - [mandolyte/mdtopdf](https://github.com/mandolyte/mdtopdf)
 
-### Fonts
-
-- [Noto](https://www.google.com/get/noto/)
-
 ### Tools
 
 - [Hex to RGB](https://www.rapidtables.com/convert/color/hex-to-rgb.html)
@@ -55,23 +51,11 @@
 | Legal       | 216 x 356 mm    | 8.5 x 14.0 in   |
 | Tabloid     | 279 x 432 mm    |  11 x 17 in     |
 
----
-
-Total body size = 980
-
-padding l/r = 45
-980 - (45*2) = 890
-890 / 980 = .908163265
-
-Letter Total = 216mm
-Letter Padding l/r = 10mm
-Letter Content = 196mm
-
-Padding = bodymm * .045918367
-
-
 ## Fonts
 
 - [opentype.js.org](https://opentype.js.org/font-inspector.html)
 - [fontdrop.info](https://fontdrop.info)
 
+### Font Families
+
+- [Noto](https://www.google.com/get/noto/)
