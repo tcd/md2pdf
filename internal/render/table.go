@@ -66,6 +66,11 @@ type TableContent struct {
 	Alignments []string
 }
 
+// AddRows to TableContent.
+func (tc *TableContent) AddRows(cols ...[]string) {
+	tc.Rows = append(tc.Rows, cols...)
+}
+
 // Headers returns the first slice of string in Rows.
 func (tc TableContent) Headers() []string {
 	if len(tc.Rows) != 0 {
