@@ -26,7 +26,7 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		}
 		if tt == html.StartTagToken {
 			newText := render.Text{}
-			parseChild(z, z.Token(), &newText, &this)
+			parseContent(z, z.Token(), newText, &this)
 		}
 		if tt == html.SelfClosingTagToken {
 			T2 := z.Token()
@@ -38,61 +38,10 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		}
 	}
 
-	render.FullP(pdf, this.Content)
+	render.FullP(pdf, this)
 	if len(imageTokens) > 0 {
 		for _, t := range imageTokens {
 			parseImg(pdf, t)
 		}
 	}
-}
-
-// Add a nested tags content to a Paragraph, return true if it finds a closing `</p>` tag.
-func parseChild(z *html.Tokenizer, startToken html.Token, parent *render.Text, topLevel *render.Contents) {
-	this := parent.Copy()
-	currentKind := startToken.Data
-
-	if currentKind == "a" {
-		for _, a := range startToken.Attr {
-			if a.Key == "href" {
-				this.HREF = a.Val
-			}
-		}
-	}
-	if currentKind == "strong" {
-		this.Bold = true
-	}
-	if currentKind == "em" {
-		this.Italic = true
-	}
-	if currentKind == "code" {
-		this.Code = true
-	}
-	if currentKind == "del" {
-		this.Strike = true
-	}
-
-	for {
-		tt := z.Next()
-		if tt == html.ErrorToken {
-			break
-		}
-		if tt == html.EndTagToken {
-			T2 := z.Token()
-			if T2.Data == currentKind {
-				break
-			}
-		}
-		if tt == html.StartTagToken {
-			T2 := z.Token()
-			parseChild(z, T2, this, topLevel)
-		}
-		if tt == html.TextToken {
-			this.Content = string(z.Text())
-		}
-		if tt == html.SelfClosingTagToken {
-			continue
-		}
-	}
-
-	topLevel.AddContent(*this)
 }
