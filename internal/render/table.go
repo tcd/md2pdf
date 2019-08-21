@@ -62,8 +62,13 @@ func Table(f *gofpdf.Fpdf, table TableContent) {
 
 // TableContent represents the contents of a table element.
 type TableContent struct {
-	Rows       [][]string
-	Alignments []string
+	Rows       [][]string `json:"rows"`
+	Alignments []string   `json:"alignments"`
+}
+
+// AddRow to TableContent.
+func (tc *TableContent) AddRow(cols []string) {
+	tc.Rows = append(tc.Rows, cols)
 }
 
 // AddRows to TableContent.
