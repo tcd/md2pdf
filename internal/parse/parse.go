@@ -58,7 +58,7 @@ func HTML(inputHTML, outputPath string) error {
 				// parseBlockquote(pdf, tokenizer)
 			}
 			if T1.Data == "ol" || T1.Data == "ul" {
-				// parseList(pdf, tokenizer)
+				parseList(pdf, tokenizer)
 			}
 			if T1.Data == "dl" {
 				// Deal with definition lists?
