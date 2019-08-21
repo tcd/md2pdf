@@ -7,6 +7,29 @@ import (
 	"github.com/tcd/md2pdf/internal/content"
 )
 
+// BlackfridayPDF attempts to recreate this page (https://github.com/russross/blackfriday/blob/v2/README.md) as a pdf.
+func BlackfridayPDF(outPath string) {
+	pdf := gofpdf.New("P", "mm", "Letter", "")
+	Setup(pdf)
+	SetMetaData(pdf, "Clay Dunston", "md2pdf blackfriday test")
+
+	H1(pdf, "Blackfriday")
+	FullP(pdf, bfParagraph1)
+	H2(pdf, "Versions")
+	BasicP(pdf, "Version 2 offers a number of improvements over v1:")
+	AnyList(pdf, bfVersionList())
+	H2(pdf, "Features")
+	BasicP(pdf, "All features of Sundown are supported, including:")
+	AnyList(pdf, bfFeaturesList())
+	AnyList(pdf, exampleList())
+	AnyList(pdf, nestedList())
+
+	err := pdf.OutputFileAndClose(outPath)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
 // GitHubPDF attempts to recreate this page (https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) as a pdf.
 func GitHubPDF(outPath string) {
 	pdf := gofpdf.New("P", "mm", "Letter", "")
