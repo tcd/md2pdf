@@ -11,12 +11,13 @@ import (
 func GitHubPDF(outPath string) {
 	pdf := gofpdf.New("P", "mm", "Letter", "")
 	Setup(pdf)
+	SetMetaData(pdf, "Clay Dunston", "md2pdf github test")
 
 	H1(pdf, "GitHub Markdown PDF demo")
 	FullP(pdf, PContent1)
 	FullP(pdf, PContent2)
 	H5(pdf, "Table of Contents")
-	OrderedList(pdf, content.TocContent)
+	// AnyList(pdf, content.TocContent)
 	H2(pdf, "Headers")
 	CodeBlock(pdf, content.HeaderContent())
 	H1(pdf, "H1")
@@ -36,44 +37,59 @@ func GitHubPDF(outPath string) {
 	FullP(pdf, PContentStrike)
 	H2(pdf, "Lists")
 	CodeBlock(pdf, content.ListContent())
-	OrderedList(pdf, content.ListContent1)
-	OrderedList(pdf, content.ListContent2)
-	UnorderedList(pdf, content.ListContent3)
 	H2(pdf, "Links")
 	CodeBlock(pdf, content.LinksContent())
-	FullP(pdf, []Text{Text{
-		Content: "I'm an inline-style link",
-		HREF:    "https://www.google.com/"},
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "I'm an inline-style link",
+			HREF:    "https://www.google.com/",
+		}},
 	})
-	FullP(pdf, []Text{Text{
-		Content: "Unfortunately, we can't put titles on pdf links :(",
-		HREF:    "https://www.google.com/"},
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "Unfortunately, we can't put titles on pdf links :(",
+			HREF:    "https://www.google.com/",
+		}},
 	})
-	FullP(pdf, []Text{Text{
-		Content: "I'm a reference-style link",
-		HREF:    "https://www.mozilla.org"},
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "I'm a reference-style link",
+			HREF:    "https://www.mozilla.org",
+		}},
 	})
-	FullP(pdf, []Text{Text{
-		Content: "We also can't link to relative files :'(",
-		HREF:    ""},
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "We also can't link to relative files :'(",
+			HREF:    "",
+		}},
 	})
-	FullP(pdf, []Text{Text{
-		Content: "You can use numbers for reference-style link definitions",
-		HREF:    "http://slashdot.org"},
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "You can use numbers for reference-style link definitions",
+			HREF:    "http://slashdot.org",
+		}},
 	})
-	FullP(pdf, []Text{
-		Text{Content: "Or leave it empty and use the "},
-		Text{Content: "link text itself", HREF: "http://www.reddit.com"},
-		Text{Content: "."},
+	FullP(pdf, Contents{
+		Content: []Text{
+			Text{Content: "Or leave it empty and use the "},
+			Text{Content: "link text itself", HREF: "http://www.reddit.com"},
+			Text{Content: "."},
+		},
 	})
-	FullP(pdf, []Text{
-		Text{Content: "URLs and URLs in angle brackets will automatically get turned into links. "},
-		Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
-		Text{Content: " or "},
-		Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
-		Text{Content: " and sometimes example.com (but not on Github, for example)."},
+	FullP(pdf, Contents{
+		Content: []Text{
+			Text{Content: "URLs and URLs in angle brackets will automatically get turned into links. "},
+			Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
+			Text{Content: " or "},
+			Text{Content: "http://www.example.com", HREF: "http://www.example.com"},
+			Text{Content: " and sometimes example.com (but not on Github, for example)."},
+		},
 	})
-	FullP(pdf, []Text{Text{Content: "Some text to show that the reference links can follow later."}})
+	FullP(pdf, Contents{
+		Content: []Text{Text{
+			Content: "Some text to show that the reference links can follow later.",
+		}},
+	})
 	H2(pdf, "Images")
 	CodeBlock(pdf, content.ImagesContent())
 	BasicP(pdf, "Here's our logo (hover to see the title text):")
@@ -122,9 +138,13 @@ func GitHubPDF(outPath string) {
 	BasicP(pdf, "Or, in pure Markdown, but losing the image sizing and border:")
 	CodeBlock(pdf, content.YouTubeContent2())
 	BasicP(pdf, "Referencing a bug by #bugID in your git commit links it to the slip. For example #1.")
-	FullP(pdf, []Text{Text{
-		Content: "Original Markdown Cheatsheet",
-		HREF:    "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"},
+	FullP(pdf, Contents{
+		Content: []Text{
+			Text{
+				Content: "Original Markdown Cheatsheet",
+				HREF:    "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet",
+			},
+		},
 	})
 
 	err := pdf.OutputFileAndClose(outPath)
