@@ -20,99 +20,108 @@ func BasicP(f *gofpdf.Fpdf, text string) {
 }
 
 // FullP will (when finished) write a paragraph with plain, bold, italic, bold/italic, and linked text.
-// Still working on strike and inline code.
-func FullP(f *gofpdf.Fpdf, text []Text) {
-	if len(text) == 0 {
+func FullP(f *gofpdf.Fpdf, content Contents) {
+	if len(content.Content) == 0 {
 		return
 	}
 
 	f.SetFont("helvetica", "", 12)
-	var lineHt float64 = 6
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 
-	for _, t := range text {
-		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
-		if t.Bold {
-			styles.WriteRune('B')
-		}
-		if t.Italic {
-			styles.WriteRune('I')
-		}
-		styleStr := styles.String()
-
-		if t.Strike {
-			Strike(f, t.Content, t.HREF)
-		} else if t.Code {
-			InlineCode(f, t.Content)
-		} else if t.HREF != "" {
-			f.SetFont("helvetica", styleStr, 12)
-			f.SetTextColor(3, 102, 214)
-			f.WriteLinkString(lineHt, t.Content, t.HREF)
-		} else {
-			Span(f, t.Content, styleStr)
-		}
-	}
+	drawParagraphContent(f, content)
 
 	f.Ln(10)
 }
 
-// Span writes a line of text plain text.
-// Intended for use in FullP, Blockquote, & CodeBlock.
-func Span(f *gofpdf.Fpdf, text string, styleStr string) {
+func drawParagraphContent(f *gofpdf.Fpdf, c Contents) {
+	for _, txt := range c.Content {
+		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
+		if txt.Bold {
+			styles.WriteRune('B')
+		}
+		if txt.Italic {
+			styles.WriteRune('I')
+		}
+		styleStr := styles.String()
+
+		if txt.Strike {
+			pStrike(f, txt.Content, txt.HREF)
+		} else if txt.Code {
+			pInlineCode(f, txt.Content, txt.HREF)
+		} else if txt.HREF != "" {
+			f.SetFont("helvetica", styleStr, 12)
+			f.SetTextColor(3, 102, 214)
+			f.WriteLinkString(6, txt.Content, txt.HREF)
+		} else {
+			pSpan(f, txt.Content, styleStr)
+		}
+	}
+}
+
+func pSpan(f *gofpdf.Fpdf, text string, styleStr string) {
 	f.SetFont("helvetica", styleStr, 12)
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 
-	// _, lineHt := f.GetFontSize()
-	// fmt.Println(lineHt)
 	var lineHt float64 = 6
 	f.Write(lineHt, text)
 }
 
-// InlineCode writes code with a grey background in courier font.
-func InlineCode(f *gofpdf.Fpdf, text string) {
-	f.SetFont("courier", "", 12)
-	// _, lineHeight := f.GetFontSize()
-	width := (f.GetStringWidth(text) * 1.1)
+func pInlineCode(f *gofpdf.Fpdf, text, href string) {
+	oldCellMargin := f.GetCellMargin()
 	f.SetFillColor(243, 243, 243)
-	// cellMargin := f.GetCellMargin()
-	// fmt.Println(cellMargin)
+	f.SetFont("courier", "", 12)
+	width := (f.GetStringWidth(text) * 1.05)
 
-	f.CellFormat(
-		width, // width; If 0, the cell extends up to the right margin.
-		6,     // height;
-		text,  // txtStr;
-		"",    // borderStr; "" (no border), "1" (full border), "L", "T", "R" and "B" (left, top, right and bottom)
-		0,     // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-		"LM",  // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-		true,  // fill; true for color, false for transparent
-		0,     // link;  Identifier returned by AddLink() or 0 for no internal link.
-		"",    // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
-	)
+	if len(href) != 0 {
+		f.SetTextColor(3, 102, 214)
+		f.CellFormat(
+			width, // width; If 0, the cell extends up to the right margin.
+			6,     // height;
+			text,  // txtStr;
+			"",    // borderStr; "" (no border), "1" (full border), "L", "T", "R" and "B" (left, top, right and bottom)
+			0,     // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
+			"LM",  // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
+			true,  // fill; true for color, false for transparent
+			0,     // link;  Identifier returned by AddLink() or 0 for no internal link.
+			href,  // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
+		)
+	} else {
+		f.CellFormat(
+			width, // width; If 0, the cell extends up to the right margin.
+			6,     // height;
+			text,  // txtStr;
+			"",    // borderStr; "" (no border), "1" (full border), "L", "T", "R" and "B" (left, top, right and bottom)
+			0,     // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
+			"LM",  // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
+			true,  // fill; true for color, false for transparent
+			0,     // link;  Identifier returned by AddLink() or 0 for no internal link.
+			"",    // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
+		)
+	}
+
+	f.SetCellMargin(oldCellMargin)
 }
 
 // Strike writes a line of text with a line through it.
-func Strike(f *gofpdf.Fpdf, text string, link string) {
+func pStrike(f *gofpdf.Fpdf, text string, href string) {
 	f.SetFont("helvetica", "", 12)
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 	width := f.GetStringWidth(text)
-	// fontSize, lineHt := f.GetFontSize()
 	var lineHt float64 = 6
-	// lineHt = 6
 
 	// Where the text starts, also where to start the strikethrough line.
 	x := f.GetX()
 	y := (f.GetY() + (lineHt / 2))
 
-	// f.SetLineWidth(1 / fontSize)
 	f.SetLineWidth(0.25)
 	f.SetDrawColor(36, 41, 46)
 
-	if len(link) != 0 {
+	if len(href) != 0 {
 		f.SetTextColor(3, 102, 214)
-		f.WriteLinkString(lineHt, text, link)
+		f.WriteLinkString(lineHt, text, href)
 	} else {
 		f.Write(lineHt, text)
 	}
