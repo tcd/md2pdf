@@ -3,7 +3,7 @@ package render
 import "github.com/jung-kurt/gofpdf"
 
 // CodeBlock writes a `<pre>` style code block to a gofpdf.Fpdf.
-// TODO: syntax highlighting..............
+// TODO: syntax highlighting.
 func CodeBlock(f *gofpdf.Fpdf, text string) {
 	oldCellMargin := f.GetCellMargin()
 
