@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parsePre(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+func parseCodeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 	tt := z.Next()
 	if tt == html.StartTagToken {
 		T1 := z.Token()

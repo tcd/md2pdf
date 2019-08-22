@@ -49,7 +49,7 @@ func HTML(inputHTML, outputPath string) error {
 				parseHeader(pdf, tokenizer, T1)
 			}
 			if T1.Data == "pre" {
-				parsePre(pdf, tokenizer)
+				parseCodeblock(pdf, tokenizer)
 			}
 			if T1.Data == "p" {
 				parseP(pdf, tokenizer)
