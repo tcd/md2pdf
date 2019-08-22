@@ -10,6 +10,9 @@ var escapes = map[string]string{
 	"&amp;":  "&",
 	"&lt;":   "<",
 	"&gt;":   ">",
+
+	"&#39;": "'",
+	"&#34;": `"`,
 	// "&rdquo;":  `"`,    // ”
 	// "&ldquo;":  `"`,    // “
 	// "&rsquo;":  "'",    // ’
@@ -25,18 +28,10 @@ var escapes = map[string]string{
 	// "&frac34;": "3/4",  // ¾
 }
 
-func cleanHTML(html string) string {
-	s1 := strings.ReplaceAll(html, "&quot;", `"`)
-	s2 := strings.ReplaceAll(s1, "&amp;", "&")
-	// s3 := strings.ReplaceAll(s2, "&lt;", "<")
-	// s4 := strings.ReplaceAll(s3, "&gt;", ">")
-	return s2
-
-	// r := strings.NewReplacer( // TODO: File an issue about strings.NewReplacer. It missed some '&lt;'s and '&gt;'s.
-	// 	"&quot;", `"`,
-	// 	"&amp;", "&",
-	// 	"&lt;", "<",
-	// 	"&gt;", ">",
-	// )
-	// return r.Replace(html)
+func cleanString(str string) string {
+	newStr := str[:]
+	for k, v := range escapes {
+		newStr = strings.ReplaceAll(newStr, k, v)
+	}
+	return newStr
 }
