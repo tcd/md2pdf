@@ -13,9 +13,8 @@ const (
 
 // Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
 func Setup(f *gofpdf.Fpdf) {
+	f.SetMargins(20, 15, 20)
 	f.AddPage()
-	f.SetFont("helvetica", "", 16)
-	f.SetMargins(20, 13, 20)
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
 }
