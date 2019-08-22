@@ -9,3 +9,4 @@
 2019-08-16 Add formatting to tables (bold, code, italic, links, strikethrough)
 2019-08-16 Add formatting to lists (bold, code, italic, links, strikethrough)
 2019-08-20 Handle markdown files with no top level header (h1).
+2019-08-23 Handle parsing list item contents wrapped in paragraphs.
