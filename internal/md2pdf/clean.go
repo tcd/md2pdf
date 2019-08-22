@@ -28,9 +28,9 @@ var escapes = map[string]string{
 func cleanHTML(html string) string {
 	s1 := strings.ReplaceAll(html, "&quot;", `"`)
 	s2 := strings.ReplaceAll(s1, "&amp;", "&")
-	s3 := strings.ReplaceAll(s2, "&lt;", "<")
-	s4 := strings.ReplaceAll(s3, "&gt;", ">")
-	return s4
+	// s3 := strings.ReplaceAll(s2, "&lt;", "<")
+	// s4 := strings.ReplaceAll(s3, "&gt;", ">")
+	return s2
 
 	// r := strings.NewReplacer( // TODO: File an issue about strings.NewReplacer. It missed some '&lt;'s and '&gt;'s.
 	// 	"&quot;", `"`,
