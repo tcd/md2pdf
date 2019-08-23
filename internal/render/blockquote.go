@@ -1,9 +1,13 @@
 package render
 
-import "github.com/jung-kurt/gofpdf"
+import (
+	"fmt"
+	"strings"
 
-// BasicBlockquote writes text to a blockquote without rendering
-// any enclosed elements.
+	"github.com/jung-kurt/gofpdf"
+)
+
+// BasicBlockquote writes text to a blockquote without rendering any enclosed elements.
 func BasicBlockquote(f *gofpdf.Fpdf, text string) {
 	oldCellMargin := f.GetCellMargin()
 
@@ -14,8 +18,16 @@ func BasicBlockquote(f *gofpdf.Fpdf, text string) {
 	f.SetCellMargin(4)
 
 	_, lineHeight := f.GetFontSize()
-	f.MultiCell(0, lineHeight*1.5, text, "L", "", false)
+	f.MultiCell(0, lineHeight*1.5, text, "LM", "", false)
 	f.Ln(6)
 
 	f.SetCellMargin(oldCellMargin)
+}
+
+// Blockquote does what BasicBlockquote don't.
+func Blockquote(f *gofpdf.Fpdf, content Contents) {
+	allContent := content.AllContent()
+	text := strings.TrimSpace(strings.Join(allContent, ""))
+	BasicBlockquote(f, text)
+	fmt.Println("Blockquote: ", len(content.Content))
 }
