@@ -1,6 +1,7 @@
-package md2pdf
+package render
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -18,6 +19,7 @@ var escapes = map[string]string{
 	// "&rsquo;":  "'",    // ’
 	// "&lsquo;":  "'",    // ‘
 	// "&mdash;":  "--",   // —
+	"—": "-",
 	// "&ndash;":  "-",    // –
 	// "&copy;":   "(c)",  // ©
 	// "&trade;":  "(tm)", // ™
@@ -33,5 +35,7 @@ func cleanString(str string) string {
 	for k, v := range escapes {
 		newStr = strings.ReplaceAll(newStr, k, v)
 	}
+	re := regexp.MustCompile(`\t+`)
+	newStr = re.ReplaceAllString(newStr, " ")
 	return newStr
 }
