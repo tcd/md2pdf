@@ -95,53 +95,23 @@ func AnyList(f *gofpdf.Fpdf, list List) {
 
 func levelOneBullett(f *gofpdf.Fpdf, lineHt float64) {
 	f.SetFont("zapfdingbats", "", 5)
-	f.CellFormat(
-		5,      // width
-		lineHt, // height
-		"\x6c", // ●
-		"",     // no border
-		0,      // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-		"RM",   // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-		false,  // no fill
-		0,      // no link
-		"",     // no linkStr
-	)
-	x := f.GetX()
-	f.SetLeftMargin(x)
+	bulletChar := "\x6c" // ●
+	f.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
+	f.SetLeftMargin(f.GetX())
 }
 
 func levelTwoBullet(f *gofpdf.Fpdf, lineHt float64) {
 	f.SetFont("zapfdingbats", "", 5)
-	f.CellFormat(
-		5,      // width
-		lineHt, // height
-		"\x6d", // ❍
-		"",     // no border
-		0,      // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-		"RM",   // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-		false,  // no fill
-		0,      // no link
-		"",     // no linkStr
-	)
-	x := f.GetX()
-	f.SetLeftMargin(x)
+	bulletChar := "\x6d" // ❍
+	f.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
+	f.SetLeftMargin(f.GetX())
 }
 
 func levelThreeBullet(f *gofpdf.Fpdf, lineHt float64) {
 	f.SetFont("zapfdingbats", "", 5)
-	f.CellFormat(
-		5,      // width
-		lineHt, // height
-		"\x6e", // ■
-		"",     // no border
-		0,      // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-		"RM",   // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-		false,  // no fill
-		0,      // no link
-		"",     // no linkStr
-	)
-	x := f.GetX()
-	f.SetLeftMargin(x)
+	bulletChar := "\x6e" // ■
+	f.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
+	f.SetLeftMargin(f.GetX())
 }
 
 func drawListItemContent(f *gofpdf.Fpdf, c Contents, lineHt float64) {
