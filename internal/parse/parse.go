@@ -52,16 +52,13 @@ func HTML(inputHTML, outputPath string) error {
 				parseCodeblock(pdf, tokenizer)
 			}
 			if T1.Data == "p" {
-				parseP(pdf, tokenizer)
+				parseP(pdf, tokenizer, false)
 			}
 			if T1.Data == "blockquote" {
-				// parseBlockquote(pdf, tokenizer)
+				parseP(pdf, tokenizer, true)
 			}
 			if T1.Data == "ol" || T1.Data == "ul" {
 				parseList(pdf, tokenizer)
-			}
-			if T1.Data == "dl" {
-				// Deal with definition lists?
 			}
 			if T1.Data == "table" {
 				parseTable(pdf, tokenizer)
@@ -80,6 +77,10 @@ func parseContent(
 ) {
 	this := parent.Copy()
 	currentKind := startToken.Data
+
+	if currentKind == "p" {
+		return
+	}
 
 	if currentKind == "a" {
 		for _, a := range startToken.Attr {

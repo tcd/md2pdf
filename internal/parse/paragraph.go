@@ -6,7 +6,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
 	var imageTokens []html.Token
 	this := render.Contents{}
 
@@ -16,8 +16,8 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 			break
 		}
 		if tt == html.EndTagToken {
-			T2 := z.Token()
-			if T2.Data == "p" {
+			T1 := z.Token()
+			if T1.Data == "p" || T1.Data == "blockquote" {
 				break
 			}
 		}
@@ -29,16 +29,22 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 			parseContent(z, z.Token(), newText, &this)
 		}
 		if tt == html.SelfClosingTagToken {
-			T2 := z.Token()
-			if T2.Data == "img" {
-				imageTokens = append(imageTokens, T2)
+			T1 := z.Token()
+			if T1.Data == "img" {
+				imageTokens = append(imageTokens, T1)
 			} else {
 				continue
 			}
 		}
 	}
 
-	render.FullP(pdf, this)
+	if blockquote {
+		// render.FullP(pdf, this)
+		render.Blockquote(pdf, this)
+	} else {
+		render.FullP(pdf, this)
+	}
+
 	if len(imageTokens) > 0 {
 		for _, t := range imageTokens {
 			parseImg(pdf, t)
