@@ -8,33 +8,33 @@ import (
 
 // BasicP writes the contents of a paragraph without rendering
 // any enclosed elements.
-func BasicP(f *gofpdf.Fpdf, text string) {
+func BasicP(pdf *gofpdf.Fpdf, text string) {
 	if len(text) == 0 {
 		return
 	}
-	f.SetFont("helvetica", "", 12)
-	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
-	f.Write(6, text)
-	f.Ln(10)
+	pdf.SetFont("helvetica", "", 12)
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetTextColor(36, 41, 46)
+	pdf.Write(6, text)
+	pdf.Ln(10)
 }
 
 // FullP will (when finished) write a paragraph with plain, bold, italic, bold/italic, and linked text.
-func FullP(f *gofpdf.Fpdf, content Contents) {
+func FullP(pdf *gofpdf.Fpdf, content Contents) {
 	if len(content.Content) == 0 {
 		return
 	}
 
-	f.SetFont("helvetica", "", 12)
-	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
+	pdf.SetFont("helvetica", "", 12)
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetTextColor(36, 41, 46)
 
-	drawParagraphContent(f, content)
+	drawParagraphContent(pdf, content)
 
-	f.Ln(10)
+	pdf.Ln(10)
 }
 
-func drawParagraphContent(f *gofpdf.Fpdf, c Contents) {
+func drawParagraphContent(pdf *gofpdf.Fpdf, c Contents) {
 	for _, txt := range c.Content {
 		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
 		if txt.Bold {
@@ -46,37 +46,37 @@ func drawParagraphContent(f *gofpdf.Fpdf, c Contents) {
 		styleStr := styles.String()
 
 		if txt.Strike {
-			pStrike(f, txt)
+			pStrike(pdf, txt)
 		} else if txt.Code {
-			pInlineCode(f, txt)
+			pInlineCode(pdf, txt)
 		} else {
-			pSpan(f, txt, styleStr)
+			pSpan(pdf, txt, styleStr)
 		}
 	}
 }
 
-func pSpan(f *gofpdf.Fpdf, txt Text, styleStr string) {
-	f.SetFont("helvetica", styleStr, 12)
-	f.SetFillColor(255, 255, 255)
+func pSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+	pdf.SetFont("helvetica", styleStr, 12)
+	pdf.SetFillColor(255, 255, 255)
 	if txt.HREF != "" {
-		f.SetTextColor(3, 102, 214)
-		f.WriteLinkString(6, txt.Content, txt.HREF)
+		pdf.SetTextColor(3, 102, 214)
+		pdf.WriteLinkString(6, txt.Content, txt.HREF)
 	} else {
-		f.SetTextColor(36, 41, 46)
-		f.Write(6, txt.Content)
+		pdf.SetTextColor(36, 41, 46)
+		pdf.Write(6, txt.Content)
 	}
 
 }
 
-func pInlineCode(f *gofpdf.Fpdf, txt Text) {
-	oldCellMargin := f.GetCellMargin()
-	f.SetFillColor(243, 243, 243)
-	f.SetFont("courier", "", 12)
-	width := (f.GetStringWidth(txt.Content) * 1.05)
+func pInlineCode(pdf *gofpdf.Fpdf, txt Text) {
+	oldCellMargin := pdf.GetCellMargin()
+	pdf.SetFillColor(243, 243, 243)
+	pdf.SetFont("courier", "", 12)
+	width := (pdf.GetStringWidth(txt.Content) * 1.05)
 
 	if txt.HREF != "" {
-		f.SetTextColor(3, 102, 214)
-		f.CellFormat(
+		pdf.SetTextColor(3, 102, 214)
+		pdf.CellFormat(
 			width,       // width; If 0, the cell extends up to the right margin.
 			6,           // height;
 			txt.Content, // txtStr;
@@ -88,7 +88,7 @@ func pInlineCode(f *gofpdf.Fpdf, txt Text) {
 			txt.HREF,    // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
 		)
 	} else {
-		f.CellFormat(
+		pdf.CellFormat(
 			width,       // width; If 0, the cell extends up to the right margin.
 			6,           // height;
 			txt.Content, // txtStr;
@@ -101,30 +101,30 @@ func pInlineCode(f *gofpdf.Fpdf, txt Text) {
 		)
 	}
 
-	f.SetCellMargin(oldCellMargin)
+	pdf.SetCellMargin(oldCellMargin)
 }
 
 // Strike writes a line of text with a line through it.
-func pStrike(f *gofpdf.Fpdf, txt Text) {
-	f.SetFont("helvetica", "", 12)
-	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
-	width := f.GetStringWidth(txt.Content)
+func pStrike(pdf *gofpdf.Fpdf, txt Text) {
+	pdf.SetFont("helvetica", "", 12)
+	pdf.SetFillColor(255, 255, 255)
+	pdf.SetTextColor(36, 41, 46)
+	width := pdf.GetStringWidth(txt.Content)
 	var lineHt float64 = 6
 
 	// Where the text starts, also where to start the strikethrough line.
-	x := f.GetX()
-	y := (f.GetY() + (lineHt / 2))
+	x := pdf.GetX()
+	y := (pdf.GetY() + (lineHt / 2))
 
-	f.SetLineWidth(0.25)
-	f.SetDrawColor(36, 41, 46)
+	pdf.SetLineWidth(0.25)
+	pdf.SetDrawColor(36, 41, 46)
 
 	if txt.HREF != "" {
-		f.SetTextColor(3, 102, 214)
-		f.WriteLinkString(lineHt, txt.Content, txt.HREF)
+		pdf.SetTextColor(3, 102, 214)
+		pdf.WriteLinkString(lineHt, txt.Content, txt.HREF)
 	} else {
-		f.Write(lineHt, txt.Content)
+		pdf.Write(lineHt, txt.Content)
 	}
 
-	f.Line(x, y, x+width, y)
+	pdf.Line(x, y, x+width, y)
 }
