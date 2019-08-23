@@ -49,23 +49,23 @@ func drawParagraphContent(f *gofpdf.Fpdf, c Contents) {
 			pStrike(f, txt)
 		} else if txt.Code {
 			pInlineCode(f, txt)
-		} else if txt.HREF != "" {
-			f.SetFont("helvetica", styleStr, 12)
-			f.SetTextColor(3, 102, 214)
-			f.WriteLinkString(6, txt.Content, txt.HREF)
 		} else {
-			pSpan(f, txt.Content, styleStr)
+			pSpan(f, txt, styleStr)
 		}
 	}
 }
 
-func pSpan(f *gofpdf.Fpdf, text string, styleStr string) {
+func pSpan(f *gofpdf.Fpdf, txt Text, styleStr string) {
 	f.SetFont("helvetica", styleStr, 12)
 	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
+	if txt.HREF != "" {
+		f.SetTextColor(3, 102, 214)
+		f.WriteLinkString(6, txt.Content, txt.HREF)
+	} else {
+		f.SetTextColor(36, 41, 46)
+		f.Write(6, txt.Content)
+	}
 
-	var lineHt float64 = 6
-	f.Write(lineHt, text)
 }
 
 func pInlineCode(f *gofpdf.Fpdf, txt Text) {
