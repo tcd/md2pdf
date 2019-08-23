@@ -23,6 +23,12 @@ func Md2PDF(inPath, outPath string) error {
 	return nil
 }
 
+// Defines the extensions that are used
+var extensions = bf.NoIntraEmphasis | bf.Tables | bf.FencedCode | bf.Autolink | bf.Strikethrough | bf.SpaceHeadings | bf.BackslashLineBreak | bf.HeadingIDs
+
+// Defines the HTML rendering flags that are used
+var flags = bf.UseXHTML | bf.SkipHTML
+
 // Md2HTML converts a markdown file to an html string.
 func Md2HTML(path string) (string, error) {
 	bytes, err := ioutil.ReadFile(path)
@@ -32,15 +38,13 @@ func Md2HTML(path string) (string, error) {
 
 	output := bf.Run(
 		bytes,
-		bf.WithExtensions(bf.NoIntraEmphasis|bf.Tables|bf.FencedCode|bf.Autolink|bf.Strikethrough|bf.SpaceHeadings|bf.HeadingIDs|bf.BackslashLineBreak),
-		bf.WithRenderer(bf.NewHTMLRenderer(
-			bf.HTMLRendererParameters{
-				Flags: bf.UseXHTML | bf.SkipHTML,
-			})),
+		bf.WithExtensions(extensions),
+		bf.WithRenderer(
+			bf.NewHTMLRenderer(bf.HTMLRendererParameters{Flags: flags}),
+		),
 	)
 
-	cleanOutput := cleanHTML(string(output))
-	return cleanOutput, nil
+	return string(output), nil
 }
 
 // Md2HTMLFile parses a markdown file with blackfriday and writes the output to a file.
@@ -52,16 +56,13 @@ func Md2HTMLFile(inPath, outPath string) error {
 
 	output := bf.Run(
 		bytes,
-		bf.WithExtensions(bf.NoIntraEmphasis|bf.Tables|bf.FencedCode|bf.Autolink|bf.Strikethrough|bf.SpaceHeadings|bf.HeadingIDs|bf.BackslashLineBreak),
-		bf.WithRenderer(bf.NewHTMLRenderer(
-			bf.HTMLRendererParameters{
-				Flags: bf.UseXHTML | bf.SkipHTML,
-			})),
+		bf.WithExtensions(extensions),
+		bf.WithRenderer(
+			bf.NewHTMLRenderer(bf.HTMLRendererParameters{Flags: flags}),
+		),
 	)
 
-	cleanOutput := cleanHTML(string(output))
-
-	err = ioutil.WriteFile(outPath, []byte(cleanOutput), os.FileMode(0644))
+	err = ioutil.WriteFile(outPath, []byte(output), os.FileMode(0644))
 	if err != nil {
 		return err
 	}
