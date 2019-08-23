@@ -46,3 +46,59 @@ func HexToRGB(s string) (r, g, b int, err error) {
 	b = int(bVal)
 	return
 }
+
+// DefaultFG rgb values.
+func DefaultFG() (r, g, b int) {
+	r = 36
+	g = 41
+	b = 46
+	return
+}
+
+// DefaultBG rgb values.
+func DefaultBG() (r, g, b int) {
+	r = 255
+	g = 255
+	b = 255
+	return
+}
+
+// LinkFG rgb values. (<a>)
+func LinkFG() (r, g, b int) {
+	r = 3
+	g = 102
+	b = 214
+	return
+}
+
+// CodeSpanBG rgb values. (<code>)
+func CodeSpanBG() (r, g, b int) {
+	r = 243
+	g = 243
+	b = 243
+	return
+}
+
+// TableCellBG rgb values.
+func TableCellBG() (r, g, b int) {
+	r = 246
+	g = 248
+	b = 250
+	return
+}
+
+// BlockquoteFG rgb values.
+func BlockquoteFG() (r, g, b int) {
+	r = 106
+	g = 115
+	b = 125
+	return
+}
+
+// BlockquoteBG rgb values.
+func BlockquoteBG() (r, g, b int) {
+	r = 223
+	g = 226
+	b = 229
+	return
+}

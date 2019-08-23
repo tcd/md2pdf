@@ -26,30 +26,3 @@ func SetMetaData(f *gofpdf.Fpdf, author, title string) {
 	f.SetCreator(author, true)
 	f.SetCreationDate(time.Now())
 }
-
-// ColorCodes has methods for returning color values.
-type ColorCodes uint8
-
-// DefaultFG rgb values.
-func (cc ColorCodes) DefaultFG() (r, g, b int) {
-	r = 36
-	g = 41
-	b = 46
-	return
-}
-
-// DefaultBG rgb values.
-func (cc ColorCodes) DefaultBG() (r, g, b int) {
-	r = 255
-	g = 255
-	b = 255
-	return
-}
-
-// LinkFG rgb values.
-func (cc ColorCodes) LinkFG() (r, g, b int) {
-	r = 3
-	g = 102
-	b = 214
-	return
-}
