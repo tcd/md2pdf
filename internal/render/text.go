@@ -28,6 +28,15 @@ func (c *Contents) AddStr(str string) {
 	c.Content = append(c.Content, text)
 }
 
+// AllContent returns all enclosed Text.Content.
+func (c Contents) AllContent() []string {
+	allContent := make([]string, len(c.Content))
+	for i, text := range c.Content {
+		allContent[i] = text.Content
+	}
+	return allContent
+}
+
 // Copy returns a pointer to a new Text struct with the same
 // values as the Text it was called from.
 // Except the Content field, that's empty.
