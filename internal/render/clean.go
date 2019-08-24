@@ -19,7 +19,7 @@ var escapes = map[string]string{
 	// "&rsquo;":  "'",    // ’
 	// "&lsquo;":  "'",    // ‘
 	// "&mdash;":  "--",   // —
-	"—": "-",
+	"—": "--",
 	// "&ndash;":  "-",    // –
 	// "&copy;":   "(c)",  // ©
 	// "&trade;":  "(tm)", // ™
