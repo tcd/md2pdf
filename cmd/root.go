@@ -9,12 +9,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	homedir "github.com/mitchellh/go-homedir"
-	"github.com/spf13/viper"
 	m2p "github.com/tcd/md2pdf/internal/md2pdf"
 )
-
-var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands.
 var rootCmd = &cobra.Command{
@@ -55,9 +51,6 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.md2pdf.yaml)")
 	rootCmd.PersistentFlags().Bool("html", false, "Generate HTML output instead of PDF")
 }
 
@@ -84,28 +77,4 @@ func parsePaths(inFile, ext string) (string, string) {
 
 	newFile := filepath.Join(cwd, newFileName)
 	return oldFile, newFile
-}
-
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		viper.SetConfigFile(cfgFile) // Use config file from the flag.
-	} else {
-		home, err := homedir.Dir() // Find home directory.
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-
-		// Search config in home directory with name ".md2pdf" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigName(".md2pdf")
-	}
-
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
-	}
 }
