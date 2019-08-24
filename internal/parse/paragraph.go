@@ -22,7 +22,7 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
 			}
 		}
 		if tt == html.TextToken {
-			this.AddContent(render.Text{Content: string(z.Text())})
+			this.AddStr(string(z.Text()))
 		}
 		if tt == html.StartTagToken {
 			newText := render.Text{}
@@ -39,7 +39,6 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
 	}
 
 	if blockquote {
-		// render.FullP(pdf, this)
 		render.Blockquote(pdf, this)
 	} else {
 		render.FullP(pdf, this)
