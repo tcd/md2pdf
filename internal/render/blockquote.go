@@ -1,7 +1,6 @@
 package render
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
@@ -29,5 +28,4 @@ func Blockquote(f *gofpdf.Fpdf, content Contents) {
 	allContent := content.AllContent()
 	text := strings.TrimSpace(strings.Join(allContent, ""))
 	BasicBlockquote(f, text)
-	fmt.Println("Blockquote: ", len(content.Content))
 }
