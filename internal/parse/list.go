@@ -45,8 +45,10 @@ func parseEntry(z *html.Tokenizer) render.ListItem {
 		if tt == html.TextToken {
 			content := string(z.Text())
 			if content != "\n" {
-				if content[len(content)-2:] == "\n\n" {
-					this.Contents.AddStr(content[:len(content)-2])
+				if len(content) >= 3 {
+					if content[len(content)-2:] == "\n\n" {
+						this.Contents.AddStr(content[:len(content)-2])
+					}
 				} else {
 					this.Contents.AddStr(content)
 				}
