@@ -79,6 +79,14 @@ func CodeSpanBG() (r, g, b int) {
 	return
 }
 
+// CodeBlockBG rgb values. (<code>)
+func CodeBlockBG() (r, g, b int) {
+	r = 246
+	g = 248
+	b = 250
+	return
+}
+
 // TableCellBG rgb values.
 func TableCellBG() (r, g, b int) {
 	r = 246
@@ -92,6 +100,14 @@ func BlockquoteFG() (r, g, b int) {
 	r = 106
 	g = 115
 	b = 125
+	return
+}
+
+// BlockquoteBorder rgb values.
+func BlockquoteBorder() (r, g, b int) {
+	r = 223
+	g = 226
+	b = 229
 	return
 }
 
