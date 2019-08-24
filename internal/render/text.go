@@ -37,8 +37,7 @@ func (c Contents) AllContent() []string {
 	return allContent
 }
 
-// Copy returns a pointer to a new Text struct with the same
-// values as the Text it was called from.
+// Copy returns a new Text struct with the same values as the Text it was called from.
 // Except the Content field, that's empty.
 func (txt Text) Copy() Text {
 	var newText Text
