@@ -131,7 +131,7 @@ func drawListItemContent(pdf *gofpdf.Fpdf, c Contents, lineHt float64) {
 		if txt.Strike {
 			liStrike(pdf, txt, styleStr)
 		} else if txt.Code {
-			liInlineCode(pdf, txt)
+			liInlineCode(pdf, txt, styleStr)
 		} else {
 			liSpan(pdf, txt, styleStr, lineHt)
 		}
@@ -151,12 +151,9 @@ func liSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string, lineHt float64) {
 	}
 }
 
-func liInlineCode(pdf *gofpdf.Fpdf, txt Text) {
-	oldCellMargin := pdf.GetCellMargin()
-	pdf.SetFillColor(243, 243, 243)
-	pdf.SetFont("courier", "", 12)
-	width := (pdf.GetStringWidth(txt.Content) * 1.05)
-	pdf.SetCellMargin(2)
+func liInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+	pdf.SetFont("courier", styleStr, 12)
+	pdf.SetFillColor(255, 255, 255)
 
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
@@ -168,32 +165,11 @@ func liInlineCode(pdf *gofpdf.Fpdf, txt Text) {
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.CellFormat(
-			width,       // width; If 0, the cell extends up to the right margin.
-			6,           // height;
-			txt.Content, // txtStr;
-			"",          // borderStr; "" (no border), "1" (full border), "L", "T", "R" and "B" (left, top, right and bottom)
-			0,           // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-			"LM",        // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-			true,        // fill; true for color, false for transparent
-			0,           // link;  Identifier returned by AddLink() or 0 for no internal link.
-			txt.HREF,    // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
-		)
+		pdf.WriteLinkString(6, txt.Content, txt.HREF)
 	} else {
-		pdf.CellFormat(
-			width,       // width; If 0, the cell extends up to the right margin.
-			6,           // height;
-			txt.Content, // txtStr;
-			"",          // borderStr; "" (no border), "1" (full border), "L", "T", "R" and "B" (left, top, right and bottom)
-			0,           // ln; 0 (to the right), 1 (to the beginning of the next line, like Ln()), and 2 (below).
-			"LM",        // alignStr; Default is left middle. "L", "C" or "R" (left, center, right) + "T", "M", "B" or "A" (top, middle, bottom, baseline)
-			true,        // fill; true for color, false for transparent
-			0,           // link;  Identifier returned by AddLink() or 0 for no internal link.
-			"",          // linkStr; A target URL or empty for no external link. A non-zero value for link takes precedence over linkStr.
-		)
+		pdf.SetTextColor(36, 41, 46)
+		pdf.Write(6, txt.Content)
 	}
-
-	pdf.SetCellMargin(oldCellMargin)
 }
 
 func liStrike(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
