@@ -5,7 +5,7 @@ PROJECT_DIR=$(shell pwd)
 PROJECT_NAME=$(shell basename $(PROJECT_DIR))
 
 build:
-	GO111MODULE=on $(GO) build -o build/md2pdf
+	GO111MODULE=on $(GO) build -o build/$(PROJECT_NAME)
 
 clean:
 	$(GO) clean ./...
