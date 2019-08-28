@@ -11,3 +11,5 @@
 2019-08-20 Handle markdown files with no top level header (h1).
 2019-08-23 Handle parsing list item contents wrapped in paragraphs.
 2019-08-23 Increase vertical margin for table body cells.
+2019-08-28 Read markdown from stdin.
+2019-08-28 Fetch markdown from a URL.
