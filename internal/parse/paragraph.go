@@ -59,7 +59,10 @@ func parseP(z *html.Tokenizer) (model.Contents, []html.Token) {
 			}
 		}
 		if tt == html.TextToken {
-			this.AddStr(string(z.Text()))
+			content := string(z.Text())
+			if content != "\n" {
+				this.AddStr(content)
+			}
 		}
 		if tt == html.StartTagToken {
 			newText := model.Text{}

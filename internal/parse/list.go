@@ -46,16 +46,13 @@ func parseEntry(z *html.Tokenizer) model.ListItem {
 		tt := z.Next()
 		if tt == html.TextToken {
 			content := string(z.Text())
-			this.Contents.AddStr(content)
-			// if content != "\n" {
-			// 	if len(content) >= 3 {
-			// 		if content[len(content)-2:] == "\n\n" {
-			// 			this.Contents.AddStr(content[:len(content)-2])
-			// 		}
-			// 	}
-			// } else {
-			// 	this.Contents.AddStr(content)
-			// }
+			if len(content) >= 3 {
+				if content[len(content)-2:] == "\n\n" {
+					this.Contents.AddStr(content[:len(content)-2])
+				} else {
+					this.Contents.AddStr(content)
+				}
+			}
 		}
 		if tt == html.EndTagToken {
 			T1 := z.Token()
