@@ -36,6 +36,9 @@ func FullP(pdf *gofpdf.Fpdf, content Contents) {
 
 func drawParagraphContent(pdf *gofpdf.Fpdf, c Contents) {
 	for _, txt := range c.Content {
+		if txt.Content == "" {
+			continue
+		}
 		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
 		if txt.Bold {
 			styles.WriteRune('B')
