@@ -4,6 +4,9 @@ GOBIN_DIR=${GOBIN}
 PROJECT_DIR=$(shell pwd)
 PROJECT_NAME=$(shell basename $(PROJECT_DIR))
 
+run:
+	@./scripts/generate.sh
+
 build:
 	GO111MODULE=on $(GO) build -o build/$(PROJECT_NAME)
 
