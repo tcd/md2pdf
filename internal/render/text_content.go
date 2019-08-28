@@ -15,7 +15,7 @@ type Contents struct {
 	Content []Text `json:"content"`
 }
 
-// AddContent to a to Contents.
+// AddContent to a Contents.
 func (c *Contents) AddContent(text Text) {
 	c.Content = append(c.Content, text)
 }
