@@ -1,9 +1,12 @@
 package render
 
-import "github.com/jung-kurt/gofpdf"
+import (
+	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
+)
 
 // H1 write a 1st level header to a gofpdf.Fpdf.
-func H1(f *gofpdf.Fpdf, contents Contents) {
+func H1(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 24)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
@@ -24,7 +27,7 @@ func H1(f *gofpdf.Fpdf, contents Contents) {
 }
 
 // H2 write a 2nd level header to a gofpdf.Fpdf.
-func H2(f *gofpdf.Fpdf, contents Contents) {
+func H2(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 18)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
@@ -45,7 +48,7 @@ func H2(f *gofpdf.Fpdf, contents Contents) {
 }
 
 // H3 write a 3rd level header to a gofpdf.Fpdf.
-func H3(f *gofpdf.Fpdf, contents Contents) {
+func H3(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 15)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
@@ -59,7 +62,7 @@ func H3(f *gofpdf.Fpdf, contents Contents) {
 }
 
 // H4 write a 4th level header to a gofpdf.Fpdf.
-func H4(f *gofpdf.Fpdf, contents Contents) {
+func H4(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 12)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
@@ -73,7 +76,7 @@ func H4(f *gofpdf.Fpdf, contents Contents) {
 }
 
 // H5 write a 5th level header to a gofpdf.Fpdf.
-func H5(f *gofpdf.Fpdf, contents Contents) {
+func H5(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 10.5)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
@@ -87,7 +90,7 @@ func H5(f *gofpdf.Fpdf, contents Contents) {
 }
 
 // H6 write a 6th level header to a gofpdf.Fpdf.
-func H6(f *gofpdf.Fpdf, contents Contents) {
+func H6(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 10.5)
 	f.SetTextColor(106, 115, 125)
 	_, lineHt := f.GetFontSize()

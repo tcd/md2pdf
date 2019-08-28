@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 )
 
 // BasicP writes the contents of a paragraph without rendering
@@ -20,7 +21,7 @@ func BasicP(pdf *gofpdf.Fpdf, text string) {
 }
 
 // FullP will (when finished) write a paragraph with plain, bold, italic, bold/italic, and linked text.
-func FullP(pdf *gofpdf.Fpdf, contents Contents) {
+func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 	if len(contents.Content) == 0 {
 		return
 	}
@@ -34,7 +35,7 @@ func FullP(pdf *gofpdf.Fpdf, contents Contents) {
 	pdf.Ln(10)
 }
 
-func drawParagraphContent(pdf *gofpdf.Fpdf, c Contents) {
+func drawParagraphContent(pdf *gofpdf.Fpdf, c model.Contents) {
 	for _, txt := range c.Content {
 		if txt.Text == "" {
 			continue
@@ -58,7 +59,7 @@ func drawParagraphContent(pdf *gofpdf.Fpdf, c Contents) {
 	}
 }
 
-func pSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+func pSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 	if txt.HREF != "" {
@@ -70,7 +71,7 @@ func pSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	}
 }
 
-func pInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 
@@ -92,7 +93,7 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 }
 
 // Strike writes a line of text with a line through it.
-func pStrike(pdf *gofpdf.Fpdf, txt Text) {
+func pStrike(pdf *gofpdf.Fpdf, txt model.Text) {
 	pdf.SetFont("helvetica", "", 12)
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)

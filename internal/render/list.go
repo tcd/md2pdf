@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 )
 
 const (
@@ -13,7 +14,7 @@ const (
 )
 
 // AnyList writes an unordered list with up to three levels of indentation to a gofpdf.Fpdf.
-func AnyList(pdf *gofpdf.Fpdf, list List) {
+func AnyList(pdf *gofpdf.Fpdf, list model.ListContent) {
 	pdf.SetLeftMargin(levelOneMargin)
 	pdf.SetRightMargin(21)
 	pdf.SetFont("helvetica", "", 12)
@@ -92,7 +93,7 @@ func levelThreeBullet(pdf *gofpdf.Fpdf, lineHt float64) {
 	pdf.SetLeftMargin(pdf.GetX())
 }
 
-func drawListItemContent(pdf *gofpdf.Fpdf, c Contents, lineHt float64) {
+func drawListItemContent(pdf *gofpdf.Fpdf, c model.Contents, lineHt float64) {
 	for _, txt := range c.Content {
 		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
 		if txt.Bold {
@@ -113,7 +114,7 @@ func drawListItemContent(pdf *gofpdf.Fpdf, c Contents, lineHt float64) {
 	}
 }
 
-func liSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string, lineHt float64) {
+func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, lineHt float64) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)
@@ -126,7 +127,7 @@ func liSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string, lineHt float64) {
 	}
 }
 
-func liInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 
@@ -147,7 +148,7 @@ func liInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	}
 }
 
-func liStrike(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
+func liStrike(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 	width := pdf.GetStringWidth(txt.Text)

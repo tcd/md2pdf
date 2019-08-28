@@ -2,6 +2,7 @@ package parse
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 	"github.com/tcd/md2pdf/internal/render"
 	"golang.org/x/net/html"
 )
@@ -17,9 +18,9 @@ func Codeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 	}
 }
 
-func parseCodeblock(z *html.Tokenizer) (render.Contents, string) {
+func parseCodeblock(z *html.Tokenizer) (model.Contents, string) {
 	tt := z.Next()
-	this := render.Contents{}
+	this := model.Contents{}
 	var class string
 
 	if tt == html.TextToken {

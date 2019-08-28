@@ -1,20 +1,20 @@
-package render
+package model
 
-// List is an array of ListItems.
-type List struct {
+// ListContent is an array of ListItems.
+type ListContent struct {
 	Items   []ListItem `json:"items"`
 	Ordered bool       `json:"ordered"`
 }
 
 // AddItems appends ListItems to a List's Items.
-func (ls *List) AddItems(listItem ...ListItem) {
+func (ls *ListContent) AddItems(listItem ...ListItem) {
 	ls.Items = append(ls.Items, listItem...)
 }
 
 // ListItem is a single list bullet, and may contain a nested list.
 type ListItem struct {
 	Contents `json:"contents"`
-	Children List `json:"children"`
+	Children ListContent `json:"children"`
 }
 
 // HasChildren returns true if a ListItem contains a nested list.

@@ -2,6 +2,7 @@ package parse
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 	"github.com/tcd/md2pdf/internal/render"
 	"golang.org/x/net/html"
 )
@@ -23,9 +24,9 @@ func Paragraph(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
 	}
 }
 
-func parseP(z *html.Tokenizer) (render.Contents, []html.Token) {
+func parseP(z *html.Tokenizer) (model.Contents, []html.Token) {
 	var imgTokens []html.Token
-	this := render.Contents{}
+	this := model.Contents{}
 
 	for {
 		tt := z.Next()
@@ -42,7 +43,7 @@ func parseP(z *html.Tokenizer) (render.Contents, []html.Token) {
 			this.AddStr(string(z.Text()))
 		}
 		if tt == html.StartTagToken {
-			newText := render.Text{}
+			newText := model.Text{}
 			parseContent(z, z.Token(), newText, &this)
 		}
 		if tt == html.SelfClosingTagToken {

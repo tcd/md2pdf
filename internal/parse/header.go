@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 	"github.com/tcd/md2pdf/internal/render"
 	"golang.org/x/net/html"
 )
@@ -33,9 +34,9 @@ func Header(pdf *gofpdf.Fpdf, z *html.Tokenizer, startToken html.Token) {
 	}
 }
 
-func parseHeader(z *html.Tokenizer, startToken html.Token) (headerLevel string, contents render.Contents, imgTokens []html.Token) {
+func parseHeader(z *html.Tokenizer, startToken html.Token) (headerLevel string, contents model.Contents, imgTokens []html.Token) {
 	headerLevel = startToken.Data
-	this := render.Contents{}
+	this := model.Contents{}
 
 	for {
 		tt := z.Next()
@@ -52,7 +53,7 @@ func parseHeader(z *html.Tokenizer, startToken html.Token) (headerLevel string, 
 			this.AddStr(string(z.Text()))
 		}
 		if tt == html.StartTagToken {
-			newText := render.Text{}
+			newText := model.Text{}
 			parseContent(z, z.Token(), newText, &this)
 		}
 		if tt == html.SelfClosingTagToken {

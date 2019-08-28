@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 )
 
 // BasicBlockquote writes text to a blockquote without rendering any enclosed elements.
@@ -24,7 +25,7 @@ func BasicBlockquote(f *gofpdf.Fpdf, text string) {
 }
 
 // Blockquote does what BasicBlockquote don't.
-func Blockquote(f *gofpdf.Fpdf, contents Contents) {
+func Blockquote(f *gofpdf.Fpdf, contents model.Contents) {
 	allContent := contents.AllContent()
 	text := strings.TrimSpace(strings.Join(allContent, ""))
 	BasicBlockquote(f, text)

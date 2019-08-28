@@ -2,6 +2,7 @@ package parse
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 	"github.com/tcd/md2pdf/internal/render"
 	"golang.org/x/net/html"
 )
@@ -12,8 +13,8 @@ func List(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 	render.AnyList(pdf, content)
 }
 
-func parseEntries(z *html.Tokenizer) render.List {
-	this := render.List{}
+func parseEntries(z *html.Tokenizer) model.ListContent {
+	this := model.ListContent{}
 	if z.Token().Data == "ol" {
 		this.Ordered = true
 	}
@@ -38,8 +39,8 @@ func parseEntries(z *html.Tokenizer) render.List {
 	return this
 }
 
-func parseEntry(z *html.Tokenizer) render.ListItem {
-	this := render.ListItem{}
+func parseEntry(z *html.Tokenizer) model.ListItem {
+	this := model.ListItem{}
 
 	for {
 		tt := z.Next()
@@ -65,7 +66,7 @@ func parseEntry(z *html.Tokenizer) render.ListItem {
 		if tt == html.StartTagToken {
 			T1 := z.Token()
 			if T1.Data != "ul" && T1.Data != "ol" {
-				blankContent := render.Text{}
+				blankContent := model.Text{}
 				parseContent(z, T1, blankContent, &this.Contents)
 			}
 			if T1.Data == "ul" || T1.Data == "ol" {

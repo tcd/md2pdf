@@ -1,15 +1,15 @@
 package parse
 
 import (
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/model"
 	"golang.org/x/net/html"
 )
 
 func parseContent(
 	z *html.Tokenizer,
 	startToken html.Token,
-	parent render.Text,
-	topLevel *render.Contents,
+	parent model.Text,
+	topLevel *model.Contents,
 ) {
 	this := parent.Copy()
 	currentKind := startToken.Data

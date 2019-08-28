@@ -2,11 +2,12 @@ package render
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 )
 
 // Table writes a table with nicely split lines to a gofpdf.Fpdf.
 // https://github.com/jung-kurt/gofpdf/blob/master/fpdf_test.go#L525
-func Table(f *gofpdf.Fpdf, table TableContent) {
+func Table(f *gofpdf.Fpdf, table model.TableContent) {
 	oldCellMargin := f.GetCellMargin()
 	oldLineWidth := f.GetLineWidth()
 

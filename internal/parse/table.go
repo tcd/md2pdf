@@ -2,6 +2,7 @@ package parse
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/model"
 	"github.com/tcd/md2pdf/internal/render"
 	"golang.org/x/net/html"
 )
@@ -12,8 +13,8 @@ func Table(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 	render.Table(pdf, tableContent)
 }
 
-func parseTable(z *html.Tokenizer) render.TableContent {
-	tableContent := render.TableContent{}
+func parseTable(z *html.Tokenizer) model.TableContent {
+	tableContent := model.TableContent{}
 
 	for {
 		tt := z.Next()
