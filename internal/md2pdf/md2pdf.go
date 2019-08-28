@@ -8,6 +8,12 @@ import (
 	bf "gopkg.in/russross/blackfriday.v2"
 )
 
+// Defines the extensions that are used
+var extensions = bf.NoIntraEmphasis | bf.Tables | bf.FencedCode | bf.Autolink | bf.Strikethrough | bf.SpaceHeadings | bf.BackslashLineBreak | bf.HeadingIDs
+
+// Defines the HTML rendering flags that are used
+var flags = bf.UseXHTML | bf.SkipHTML
+
 // Md2PDF converts a markdown file to a PDF file.
 func Md2PDF(inPath, outPath string) error {
 	htmlString, err := Md2HTML(inPath)
@@ -23,12 +29,6 @@ func Md2PDF(inPath, outPath string) error {
 
 	return nil
 }
-
-// Defines the extensions that are used
-var extensions = bf.NoIntraEmphasis | bf.Tables | bf.FencedCode | bf.Autolink | bf.Strikethrough | bf.SpaceHeadings | bf.BackslashLineBreak | bf.HeadingIDs
-
-// Defines the HTML rendering flags that are used
-var flags = bf.UseXHTML | bf.SkipHTML
 
 // Md2HTML converts a markdown file to an html string.
 func Md2HTML(path string) (string, error) {
