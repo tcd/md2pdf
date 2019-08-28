@@ -7,11 +7,17 @@ type Contents struct {
 
 // AddContent to a Contents.
 func (c *Contents) AddContent(text Text) {
+	if text.Text == "" {
+		return
+	}
 	c.Content = append(c.Content, text)
 }
 
 // AddStr adds a string with no styles to Contents.
 func (c *Contents) AddStr(str string) {
+	if str == "" {
+		return
+	}
 	text := Text{
 		Text: str,
 	}
