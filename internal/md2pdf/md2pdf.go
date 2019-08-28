@@ -15,7 +15,8 @@ func Md2PDF(inPath, outPath string) error {
 		return err
 	}
 
-	err = parse.HTML(htmlString, outPath)
+	elements := parse.Parse(htmlString, outPath)
+	err = elements.Render(outPath)
 	if err != nil {
 		return err
 	}

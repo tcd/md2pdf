@@ -1,15 +1,15 @@
 package parse
 
 import (
-	"github.com/jung-kurt/gofpdf"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// Image ...
-func Image(pdf *gofpdf.Fpdf, token html.Token) {
-	src := parseImg(token)
-	render.Image(pdf, src)
+// Image gathers the data needed to render an image.
+func Image(token html.Token) renderable.Image {
+	return renderable.Image{
+		Src: parseImg(token),
+	}
 }
 
 func parseImg(token html.Token) string {

@@ -1,36 +1,19 @@
 package parse
 
 import (
-	"log"
-
-	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// Header ...
-// TODO: Deal with styles in headers.
+// Header gathers the data needed to render a header.
 // TODO: Deal with images in headers.
-func Header(pdf *gofpdf.Fpdf, z *html.Tokenizer, startToken html.Token) {
+func Header(z *html.Tokenizer, startToken html.Token) renderable.Header {
 	level, content, _ := parseHeader(z, startToken)
 
-	switch level {
-	case "h1":
-		render.H1(pdf, content)
-	case "h2":
-		render.H2(pdf, content)
-	case "h3":
-		render.H3(pdf, content)
-	case "h4":
-		render.H4(pdf, content)
-	case "h5":
-		render.H5(pdf, content)
-	case "h6":
-		render.H6(pdf, content)
-	default:
-		log.Printf("Error parsing header with content: %v\n", content)
-		return
+	return renderable.Header{
+		Level:   level,
+		Content: content,
 	}
 }
 

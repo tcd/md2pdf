@@ -5,6 +5,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// recursively extract content from elements in list items, paragraphs, etc.
 func parseContent(
 	z *html.Tokenizer,
 	startToken html.Token,

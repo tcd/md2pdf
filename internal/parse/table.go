@@ -1,16 +1,16 @@
 package parse
 
 import (
-	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// Table ...
-func Table(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
-	tableContent := parseTable(z)
-	render.Table(pdf, tableContent)
+// Table gathers the data needed to render a table.
+func Table(z *html.Tokenizer) renderable.Table {
+	return renderable.Table{
+		Content: parseTable(z),
+	}
 }
 
 func parseTable(z *html.Tokenizer) model.TableContent {

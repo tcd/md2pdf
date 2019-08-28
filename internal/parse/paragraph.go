@@ -1,26 +1,45 @@
 package parse
 
 import (
-	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// Paragraph ...
-func Paragraph(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
+// AddParagraph adds a Paragraph Element and any contained Image Elements.
+func AddParagraph(e *renderable.Elements, z *html.Tokenizer) {
 	contents, imgTokens := parseP(z)
 
-	if blockquote {
-		render.Blockquote(pdf, contents)
-	} else {
-		render.FullP(pdf, contents)
-	}
+	e.Add(renderable.Paragraph{
+		Content: contents,
+	})
 
 	if len(imgTokens) > 0 {
 		for _, t := range imgTokens {
-			Image(pdf, t)
+			img := Image(t)
+			e.Add(img)
 		}
+	}
+}
+
+// Paragraph gathers the data needed to render a paragraph.
+func Paragraph(z *html.Tokenizer) renderable.Paragraph {
+	contents, _ := parseP(z)
+	return renderable.Paragraph{
+		Content: contents,
+	}
+	// if len(imgTokens) > 0 {
+	// 	for _, t := range imgTokens {
+	// 		Image(pdf, t)
+	// 	}
+	// }
+}
+
+// Blockquote gathers the data needed to render a blockquote.
+func Blockquote(z *html.Tokenizer) renderable.Blockquote {
+	contents, _ := parseP(z)
+	return renderable.Blockquote{
+		Content: contents,
 	}
 }
 

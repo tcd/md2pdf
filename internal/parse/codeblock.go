@@ -1,20 +1,18 @@
 package parse
 
 import (
-	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// Codeblock ...
-func Codeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+// Codeblock gathers the data needed to render a codeblock.
+func Codeblock(z *html.Tokenizer) renderable.Codeblock {
 	content, class := parseCodeblock(z)
 
-	if class == "language-no-highlight" || class == "" {
-		render.CodeBlock(pdf, content)
-	} else {
-		render.CodeBlock(pdf, content)
+	return renderable.Codeblock{
+		Class:   class,
+		Content: content,
 	}
 }
 

@@ -1,16 +1,16 @@
 package parse
 
 import (
-	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+	"github.com/tcd/md2pdf/internal/renderable"
 	"golang.org/x/net/html"
 )
 
-// List ...
-func List(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
-	content := parseEntries(z)
-	render.AnyList(pdf, content)
+// List gathers the data needed to render a list.
+func List(z *html.Tokenizer) renderable.List {
+	return renderable.List{
+		Content: parseEntries(z),
+	}
 }
 
 func parseEntries(z *html.Tokenizer) model.ListContent {
