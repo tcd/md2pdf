@@ -10,6 +10,24 @@ Small, fast, and free.
 
 ![fancy-gif](https://raw.githubusercontent.com/dunstontc/assets/master/gifs/fanciness.gif)
 
+## Installation
+
+### Building from Source
+
+```bash
+go get -u github.com/tcd/md2pdf
+cd $GOPATH/github.com/tcd/md2pdf
+make install # GO111MODULE=on go install
+```
+
+
+## Usage
+
+```sh
+# will generate markdown-file.pdf in your current directory.
+md2pdf path/to/markdown-file.md
+```
+
 ## Related Projects
 
 - [mandolyte/mdtopdf](https://github.com/mandolyte/mdtopdf) - Markdown to PDF 
