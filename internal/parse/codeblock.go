@@ -6,7 +6,18 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseCodeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+// Codeblock ...
+func Codeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+	content, class := parseCodeblock(z)
+
+	if class == "language-no-highlight" || class == "" {
+		render.CodeBlock(pdf, content)
+	} else {
+		render.CodeBlock(pdf, content)
+	}
+}
+
+func parseCodeblock(z *html.Tokenizer) (render.Contents, string) {
 	tt := z.Next()
 	this := render.Contents{}
 	var class string
@@ -32,9 +43,5 @@ func parseCodeblock(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		}
 	}
 
-	if class == "language-no-highlight" || class == "" {
-		render.CodeBlock(pdf, this)
-	} else {
-		render.CodeBlock(pdf, this)
-	}
+	return this, class
 }

@@ -8,11 +8,34 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseHeader(pdf *gofpdf.Fpdf, z *html.Tokenizer, startToken html.Token) {
-	var imageTokens []html.Token
-	this := render.Contents{}
+// Header ...
+// TODO: Deal with styles in headers.
+// TODO: Deal with images in headers.
+func Header(pdf *gofpdf.Fpdf, z *html.Tokenizer, startToken html.Token) {
+	level, content, _ := parseHeader(z, startToken)
 
-	headerLevel := startToken.Data
+	switch level {
+	case "h1":
+		render.H1(pdf, content)
+	case "h2":
+		render.H2(pdf, content)
+	case "h3":
+		render.H3(pdf, content)
+	case "h4":
+		render.H4(pdf, content)
+	case "h5":
+		render.H5(pdf, content)
+	case "h6":
+		render.H6(pdf, content)
+	default:
+		log.Printf("Error parsing header with content: %v\n", content)
+		return
+	}
+}
+
+func parseHeader(z *html.Tokenizer, startToken html.Token) (headerLevel string, contents render.Contents, imgTokens []html.Token) {
+	headerLevel = startToken.Data
+	this := render.Contents{}
 
 	for {
 		tt := z.Next()
@@ -35,28 +58,13 @@ func parseHeader(pdf *gofpdf.Fpdf, z *html.Tokenizer, startToken html.Token) {
 		if tt == html.SelfClosingTagToken {
 			T1 := z.Token()
 			if T1.Data == "img" {
-				imageTokens = append(imageTokens, T1)
+				imgTokens = append(imgTokens, T1)
 			} else {
 				continue
 			}
 		}
 	}
 
-	switch headerLevel {
-	case "h1":
-		render.H1(pdf, this)
-	case "h2":
-		render.H2(pdf, this)
-	case "h3":
-		render.H3(pdf, this)
-	case "h4":
-		render.H4(pdf, this)
-	case "h5":
-		render.H5(pdf, this)
-	case "h6":
-		render.H6(pdf, this)
-	default:
-		log.Printf("Error parsing heaader with content: %v\n", this.Content)
-		return
-	}
+	contents = this
+	return
 }

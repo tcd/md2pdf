@@ -33,7 +33,7 @@ func HTML(inputHTML, outputPath string) error {
 				// decide how to deal with these?
 			}
 			if T1.Data == "img" {
-				parseImg(pdf, T1)
+				Image(pdf, T1)
 			}
 		}
 
@@ -46,26 +46,25 @@ func HTML(inputHTML, outputPath string) error {
 				T1.Data == "h4" ||
 				T1.Data == "h5" ||
 				T1.Data == "h6" {
-				parseHeader(pdf, tokenizer, T1)
+				Header(pdf, tokenizer, T1)
 			}
 			if T1.Data == "pre" {
-				parseCodeblock(pdf, tokenizer)
+				Codeblock(pdf, tokenizer)
 			}
 			if T1.Data == "p" {
-				parseP(pdf, tokenizer, false)
+				Paragraph(pdf, tokenizer, false)
 			}
 			if T1.Data == "blockquote" {
-				parseP(pdf, tokenizer, true)
+				Paragraph(pdf, tokenizer, true)
 			}
 			if T1.Data == "ol" || T1.Data == "ul" {
-				parseList(pdf, tokenizer)
+				List(pdf, tokenizer)
 			}
 			if T1.Data == "table" {
-				parseTable(pdf, tokenizer)
+				Table(pdf, tokenizer)
 			}
 		}
 	}
 
 	return pdf.OutputFileAndClose(outputPath)
 }
-

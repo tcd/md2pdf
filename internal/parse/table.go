@@ -6,7 +6,13 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseTable(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+// Table ...
+func Table(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+	tableContent := parseTable(z)
+	render.Table(pdf, tableContent)
+}
+
+func parseTable(z *html.Tokenizer) render.TableContent {
 	tableContent := render.TableContent{}
 
 	for {
@@ -31,7 +37,7 @@ func parseTable(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
 		}
 	}
 
-	render.Table(pdf, tableContent)
+	return tableContent
 }
 
 func parseTableHeaders(z *html.Tokenizer) (headers, alignments []string) {

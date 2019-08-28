@@ -6,8 +6,25 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
-	var imageTokens []html.Token
+// Paragraph ...
+func Paragraph(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
+	contents, imgTokens := parseP(z)
+
+	if blockquote {
+		render.Blockquote(pdf, contents)
+	} else {
+		render.FullP(pdf, contents)
+	}
+
+	if len(imgTokens) > 0 {
+		for _, t := range imgTokens {
+			Image(pdf, t)
+		}
+	}
+}
+
+func parseP(z *html.Tokenizer) (render.Contents, []html.Token) {
+	var imgTokens []html.Token
 	this := render.Contents{}
 
 	for {
@@ -31,22 +48,12 @@ func parseP(pdf *gofpdf.Fpdf, z *html.Tokenizer, blockquote bool) {
 		if tt == html.SelfClosingTagToken {
 			T1 := z.Token()
 			if T1.Data == "img" {
-				imageTokens = append(imageTokens, T1)
+				imgTokens = append(imgTokens, T1)
 			} else {
 				continue
 			}
 		}
 	}
 
-	if blockquote {
-		render.Blockquote(pdf, this)
-	} else {
-		render.FullP(pdf, this)
-	}
-
-	if len(imageTokens) > 0 {
-		for _, t := range imageTokens {
-			parseImg(pdf, t)
-		}
-	}
+	return this, imgTokens
 }

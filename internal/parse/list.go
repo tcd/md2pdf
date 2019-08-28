@@ -6,9 +6,10 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseList(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
-	topLevel := parseEntries(z)
-	render.AnyList(pdf, topLevel)
+// List ...
+func List(pdf *gofpdf.Fpdf, z *html.Tokenizer) {
+	content := parseEntries(z)
+	render.AnyList(pdf, content)
 }
 
 func parseEntries(z *html.Tokenizer) render.List {
@@ -44,15 +45,16 @@ func parseEntry(z *html.Tokenizer) render.ListItem {
 		tt := z.Next()
 		if tt == html.TextToken {
 			content := string(z.Text())
-			if content != "\n" {
-				if len(content) >= 3 {
-					if content[len(content)-2:] == "\n\n" {
-						this.Contents.AddStr(content[:len(content)-2])
-					}
-				} else {
-					this.Contents.AddStr(content)
-				}
-			}
+			this.Contents.AddStr(content)
+			// if content != "\n" {
+			// 	if len(content) >= 3 {
+			// 		if content[len(content)-2:] == "\n\n" {
+			// 			this.Contents.AddStr(content[:len(content)-2])
+			// 		}
+			// 	}
+			// } else {
+			// 	this.Contents.AddStr(content)
+			// }
 		}
 		if tt == html.EndTagToken {
 			T1 := z.Token()
