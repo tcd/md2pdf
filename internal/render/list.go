@@ -119,10 +119,10 @@ func liSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string, lineHt float64) {
 	pdf.SetTextColor(36, 41, 46)
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(lineHt, txt.Content, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(lineHt, txt.Content)
+		pdf.Write(lineHt, txt.Text)
 	}
 }
 
@@ -133,24 +133,24 @@ func liInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
 	_, _, rightMargin, _ := pdf.GetMargins()
-	strWdth := pdf.GetStringWidth(txt.Content)
+	strWdth := pdf.GetStringWidth(txt.Text)
 	if x+strWdth > pageWidth-rightMargin {
 		pdf.Ln(-1)
 	}
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Content, txt.HREF)
+		pdf.WriteLinkString(6, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Content)
+		pdf.Write(6, txt.Text)
 	}
 }
 
 func liStrike(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
-	width := pdf.GetStringWidth(txt.Content)
+	width := pdf.GetStringWidth(txt.Text)
 	var lineHt float64 = 6
 
 	// Where the text starts, also where to start the strikethrough line.
@@ -162,7 +162,7 @@ func liStrike(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(lineHt, txt.Content, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
 		pdf.Write(lineHt, txt.HREF)

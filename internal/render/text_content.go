@@ -2,12 +2,12 @@ package render
 
 // Text models text strings that make up a Paragraph, Blockquote, List Item, or Table Cell.
 type Text struct {
-	Content string `json:"content"`
-	Bold    bool   `json:"bold"`
-	Italic  bool   `json:"italic"`
-	Code    bool   `json:"code"`
-	Strike  bool   `json:"strike"`
-	HREF    string `json:"href"`
+	Text   string `json:"text"`
+	Bold   bool   `json:"bold"`
+	Italic bool   `json:"italic"`
+	Code   bool   `json:"code"`
+	Strike bool   `json:"strike"`
+	HREF   string `json:"href"`
 }
 
 // Contents models the contents of a Paragraph, Blockquote, List Item, or Table Cell.
@@ -23,7 +23,7 @@ func (c *Contents) AddContent(text Text) {
 // AddStr adds a string with no styles to Contents.
 func (c *Contents) AddStr(str string) {
 	text := Text{
-		Content: str,
+		Text: str,
 	}
 	c.Content = append(c.Content, text)
 }
@@ -32,7 +32,7 @@ func (c *Contents) AddStr(str string) {
 func (c Contents) AllContent() []string {
 	allContent := make([]string, len(c.Content))
 	for i, text := range c.Content {
-		allContent[i] = text.Content
+		allContent[i] = text.Text
 	}
 	return allContent
 }

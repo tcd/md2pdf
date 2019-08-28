@@ -12,7 +12,7 @@ func CodeBlock(pdf *gofpdf.Fpdf, contents Contents) {
 		fmt.Println("CodeBlock: invalid argument.")
 	}
 
-	content := contents.Content[0].Content
+	content := contents.Content[0].Text
 
 	oldCellMargin := pdf.GetCellMargin()
 

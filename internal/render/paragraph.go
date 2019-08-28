@@ -20,8 +20,8 @@ func BasicP(pdf *gofpdf.Fpdf, text string) {
 }
 
 // FullP will (when finished) write a paragraph with plain, bold, italic, bold/italic, and linked text.
-func FullP(pdf *gofpdf.Fpdf, content Contents) {
-	if len(content.Content) == 0 {
+func FullP(pdf *gofpdf.Fpdf, contents Contents) {
+	if len(contents.Content) == 0 {
 		return
 	}
 
@@ -29,14 +29,14 @@ func FullP(pdf *gofpdf.Fpdf, content Contents) {
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)
 
-	drawParagraphContent(pdf, content)
+	drawParagraphContent(pdf, contents)
 
 	pdf.Ln(10)
 }
 
 func drawParagraphContent(pdf *gofpdf.Fpdf, c Contents) {
 	for _, txt := range c.Content {
-		if txt.Content == "" {
+		if txt.Text == "" {
 			continue
 		}
 		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
@@ -63,10 +63,10 @@ func pSpan(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	pdf.SetFillColor(255, 255, 255)
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Content, txt.HREF)
+		pdf.WriteLinkString(6, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Content)
+		pdf.Write(6, txt.Text)
 	}
 }
 
@@ -77,17 +77,17 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt Text, styleStr string) {
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
 	_, _, rightMargin, _ := pdf.GetMargins()
-	strWdth := pdf.GetStringWidth(txt.Content)
+	strWdth := pdf.GetStringWidth(txt.Text)
 	if x+strWdth > pageWidth-rightMargin {
 		pdf.Ln(-1)
 	}
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Content, txt.HREF)
+		pdf.WriteLinkString(6, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Content)
+		pdf.Write(6, txt.Text)
 	}
 }
 
@@ -96,7 +96,7 @@ func pStrike(pdf *gofpdf.Fpdf, txt Text) {
 	pdf.SetFont("helvetica", "", 12)
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)
-	width := pdf.GetStringWidth(txt.Content)
+	width := pdf.GetStringWidth(txt.Text)
 	var lineHt float64 = 6
 
 	// Where the text starts, also where to start the strikethrough line.
@@ -108,9 +108,9 @@ func pStrike(pdf *gofpdf.Fpdf, txt Text) {
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(lineHt, txt.Content, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.Write(lineHt, txt.Content)
+		pdf.Write(lineHt, txt.Text)
 	}
 
 	pdf.Line(x, y, x+width, y)

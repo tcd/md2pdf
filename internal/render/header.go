@@ -11,7 +11,7 @@ func H1(f *gofpdf.Fpdf, contents Contents) {
 
 	// f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
 
@@ -32,7 +32,7 @@ func H2(f *gofpdf.Fpdf, contents Contents) {
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
 
@@ -53,7 +53,7 @@ func H3(f *gofpdf.Fpdf, contents Contents) {
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(11)
 }
@@ -67,7 +67,7 @@ func H4(f *gofpdf.Fpdf, contents Contents) {
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
 }
@@ -81,7 +81,7 @@ func H5(f *gofpdf.Fpdf, contents Contents) {
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
 }
@@ -95,7 +95,7 @@ func H6(f *gofpdf.Fpdf, contents Contents) {
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Content)
+		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
 }

@@ -24,8 +24,8 @@ func BasicBlockquote(f *gofpdf.Fpdf, text string) {
 }
 
 // Blockquote does what BasicBlockquote don't.
-func Blockquote(f *gofpdf.Fpdf, content Contents) {
-	allContent := content.AllContent()
+func Blockquote(f *gofpdf.Fpdf, contents Contents) {
+	allContent := contents.AllContent()
 	text := strings.TrimSpace(strings.Join(allContent, ""))
 	BasicBlockquote(f, text)
 }
