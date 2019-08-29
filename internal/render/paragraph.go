@@ -25,6 +25,9 @@ func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 	if len(contents.Content) == 0 {
 		return
 	}
+	if len(contents.AllContent()) == 0 {
+		return
+	}
 
 	pdf.SetFont("helvetica", "", 12)
 	pdf.SetFillColor(255, 255, 255)
