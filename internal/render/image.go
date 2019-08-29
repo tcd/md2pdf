@@ -37,6 +37,7 @@ func Image(f *gofpdf.Fpdf, src, link string) {
 		}
 		localImage(f, src, width, height, format, "")
 	}
+	f.Ln(9)
 }
 
 func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link string) {
@@ -59,16 +60,26 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link str
 
 	x, y := f.GetXY()
 
+	imgHeight := PxToMm(height)
+	imgWidth := PxToMm(width)
+	cbWidth := ContentBoxWidth(f)
+	if imgWidth > cbWidth {
+		imgHeight = imgHeight * (cbWidth / imgWidth)
+		imgWidth = cbWidth
+	} else {
+		imgWidth = PxToMm(width)
+	}
+
 	f.ImageOptions(
-		src,            // path to image
-		x,              // x
-		y,              // y
-		pxToMm(width),  // width
-		pxToMm(height), // height
-		true,           // flow;  If flow is true, the current y value is advanced after placing the image and a page break may be made if necessary
-		opt,            // options
-		0,              // link
-		"",             // linkStr
+		src,       // path to image
+		x,         // x
+		y,         // y
+		imgWidth,  // width
+		imgHeight, // height
+		true,      // flow;  If flow is true, the current y value is advanced after placing the image and a page break may be made if necessary
+		opt,       // options
+		0,         // link
+		"",        // linkStr
 	)
 }
 
@@ -89,16 +100,26 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link stri
 
 	x, y := f.GetXY()
 
+	imgHeight := PxToMm(height)
+	imgWidth := PxToMm(width)
+	cbWidth := ContentBoxWidth(f)
+	if imgWidth > cbWidth {
+		imgHeight = imgHeight * (cbWidth / imgWidth)
+		imgWidth = cbWidth
+	} else {
+		imgWidth = PxToMm(width)
+	}
+
 	f.ImageOptions(
-		src,            // path to image
-		x,              // x
-		y,              // y
-		pxToMm(width),  // width
-		pxToMm(height), // height
-		true,           // flow;
-		opt,            // options
-		0,              // link
-		"",             // linkStr
+		src,       // path to image
+		x,         // x
+		y,         // y
+		imgWidth,  // width
+		imgHeight, // height
+		true,      // flow;
+		opt,       // options
+		0,         // link
+		"",        // linkStr
 	)
 }
 
