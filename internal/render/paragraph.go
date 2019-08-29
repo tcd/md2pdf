@@ -29,13 +29,8 @@ func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 		return
 	}
 
-	pdf.SetFont("helvetica", "", 12)
-	pdf.SetFillColor(255, 255, 255)
-	pdf.SetTextColor(36, 41, 46)
-
 	drawParagraphContent(pdf, contents)
-
-	pdf.Ln(10)
+	pdf.Ln(9)
 }
 
 func drawParagraphContent(pdf *gofpdf.Fpdf, c model.Contents) {
@@ -64,18 +59,22 @@ func drawParagraphContent(pdf *gofpdf.Fpdf, c model.Contents) {
 
 func pSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 	pdf.SetFillColor(255, 255, 255)
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Text, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
 }
 
 func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 	pdf.SetFillColor(255, 255, 255)
 
 	x := pdf.GetX()
@@ -88,10 +87,10 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Text, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
 		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
 }
 
@@ -101,7 +100,8 @@ func pStrike(pdf *gofpdf.Fpdf, txt model.Text) {
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)
 	width := pdf.GetStringWidth(txt.Text)
-	var lineHt float64 = 6
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 
 	// Where the text starts, also where to start the strikethrough line.
 	x := pdf.GetX()
