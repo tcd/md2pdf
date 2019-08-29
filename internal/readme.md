@@ -1,7 +1,5 @@
 # internal
 
-- `content/`
-  - Functions returning sample markdown content for testing, etc.
 - `md2pdf/`
   - Main package
 - `model/`
