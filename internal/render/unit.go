@@ -1,4 +1,4 @@
-package model
+package render
 
 /**
  * These uints are all assuming 72 dpi.
@@ -77,6 +77,25 @@ func (pt PT) ToIN() IN {
 // ToMM converts Points to Millimeters.
 func (pt PT) ToMM() MM {
 	return MM(pt * (25.4 / dpi))
+}
+
+// ============================================================================
+// Ems
+// ============================================================================
+
+// EM represents a length in Ems.
+type EM float64
+
+// ToF returns an em value as a float64.
+func (em EM) ToF() float64 {
+	return float64(em)
+}
+
+// ToPT converts Ems to Points.
+// 1em = 16px = 12pt
+// So, do we divide by 16 or 12?
+func (em EM) ToPT() PT {
+	return PT(em / 16)
 }
 
 // ============================================================================

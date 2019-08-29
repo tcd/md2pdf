@@ -1,6 +1,9 @@
-package model
+package render
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 // HexToRGB takes a hex color value and returns three ints with its red, green, and blue values.
 // Source: https://stackoverflow.com/a/54200713/7687024
@@ -45,6 +48,21 @@ func HexToRGB(s string) (r, g, b int, err error) {
 	g = int(gVal)
 	b = int(bVal)
 	return
+}
+
+// Color value
+type Color struct {
+	R, G, B int
+}
+
+// RGB representation of a color.
+func (c Color) RGB() (int, int, int) {
+	return c.R, c.G, c.B
+}
+
+// Hex code representation of a color.
+func (c Color) Hex() string {
+	return fmt.Sprintf("#%x%x%x", c.R, c.G, c.B)
 }
 
 // DefaultFG rgb values.
