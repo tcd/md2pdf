@@ -10,7 +10,7 @@ func H1(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 24)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
-	lineHt *= 1.5
+	lineHt *= 1.7
 
 	// f.Ln(5)
 	for _, txt := range contents.Content {
@@ -31,7 +31,7 @@ func H2(f *gofpdf.Fpdf, contents model.Contents) {
 	f.SetFont("helvetica", "B", 18)
 	f.SetTextColor(36, 41, 46)
 	_, lineHt := f.GetFontSize()
-	lineHt *= 1.5
+	lineHt *= 1.7
 
 	f.Ln(5)
 	for _, txt := range contents.Content {
