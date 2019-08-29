@@ -72,8 +72,9 @@ func parseP(z *html.Tokenizer) (model.Contents, []html.Token) {
 			T1 := z.Token()
 			if T1.Data == "img" {
 				imgTokens = append(imgTokens, T1)
-			} else {
-				continue
+			}
+			if T1.Data == "br" {
+				this.AddStr("\n")
 			}
 		}
 	}
