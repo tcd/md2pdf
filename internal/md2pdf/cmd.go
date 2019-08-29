@@ -35,6 +35,22 @@ func MdFileToPdfFile(inPath, outPath string) (string, error) {
 	return newFile, nil
 }
 
+// MdURLToPdfFile converts a markdown file at a given URL to a pdf file.
+// The path to the new PDF file is returned along with any encountered errors.
+func MdURLToPdfFile(url, outPath string) (string, error) {
+	bytes, err := bytesFromURL(url)
+	if err != nil {
+		return outPath, err
+	}
+	bytes = mdBytes2htmlbytes(bytes)
+	elements := parse.Parse(bytes)
+	err = elements.RenderToFile(outPath)
+	if err != nil {
+		return outPath, err
+	}
+	return outPath, nil
+}
+
 // Debug outputs not only a PDF, but also HTML and JSON output for debugging.
 func Debug(path, debugDir string) error {
 	if debugDir == "" {
