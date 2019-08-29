@@ -118,3 +118,11 @@ func BlockquoteBG() (r, g, b int) {
 	b = 229
 	return
 }
+
+// HeaderUnderlineFG rgb values.
+func HeaderUnderlineFG() (r, g, b int) {
+	r = 234
+	g = 236
+	b = 239
+	return
+}
