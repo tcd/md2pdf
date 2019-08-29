@@ -60,14 +60,12 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link str
 
 	x, y := f.GetXY()
 
-	imgHeight := PxToMm(height)
-	imgWidth := PxToMm(width)
+	imgHeight := pxToMm(height)
+	imgWidth := pxToMm(width)
 	cbWidth := ContentBoxWidth(f)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
-	} else {
-		imgWidth = PxToMm(width)
 	}
 
 	f.ImageOptions(
@@ -100,14 +98,12 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link stri
 
 	x, y := f.GetXY()
 
-	imgHeight := PxToMm(height)
-	imgWidth := PxToMm(width)
+	imgHeight := pxToMm(height)
+	imgWidth := pxToMm(width)
 	cbWidth := ContentBoxWidth(f)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
-	} else {
-		imgWidth = PxToMm(width)
 	}
 
 	f.ImageOptions(
