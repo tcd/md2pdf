@@ -38,19 +38,27 @@ func MdFileToPdfFile(inPath, outPath string) (string, error) {
 // Debug outputs not only a PDF, but also HTML and JSON output for debugging.
 func Debug(path, debugDir string) error {
 	if debugDir == "" {
-		cwd, err := os.Getwd()
-		if err != nil {
-			return err
-		}
-		debugDir = filepath.Join(cwd, "debug")
+		debugDir = "/Users/clay/go/src/github.com/tcd/md2pdf/out/debug"
+		// cwd, err := os.Getwd()
+		// if err != nil {
+		// 	return err
+		// }
+		// debugDir = filepath.Join(cwd, "debug")
 	}
 	oldFile := absPath(path)
 	baseName := replaceExtension(oldFile, "")
 	outDir := filepath.Join(debugDir, baseName)
 	makeDir(outDir)
+	mdOut := filepath.Join(outDir, baseName) + ".md"
 	htmlOut := filepath.Join(outDir, baseName) + ".html"
 	jsonOut := filepath.Join(outDir, baseName) + ".json"
 	pdfOut := filepath.Join(outDir, baseName) + ".pdf"
+
+	// Copy the markdown file.
+	err := copyFile(path, mdOut)
+	if err != nil {
+		return err
+	}
 
 	// Parse the markdown file.
 	htmlBytes, err := mdFile2htmlBytes(oldFile)
@@ -68,7 +76,7 @@ func Debug(path, debugDir string) error {
 	elements := parse.Parse(htmlBytes)
 
 	// Write the JSON output.
-	bytes, err := json.Marshal(elements)
+	bytes, err := json.MarshalIndent(elements, "", "  ")
 	err = ioutil.WriteFile(jsonOut, bytes, os.FileMode(0644))
 	if err != nil {
 		return err
