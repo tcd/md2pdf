@@ -7,13 +7,13 @@ import (
 
 // https://www.w3.org/wiki/Common_HTML_entities_used_for_typography
 var escapes = map[string]string{
+	"’":      "'",
+	"&#39;":  "'",
+	"&#34;":  `"`,
 	"&quot;": `"`,
 	"&amp;":  "&",
 	"&lt;":   "<",
 	"&gt;":   ">",
-
-	"&#39;": "'",
-	"&#34;": `"`,
 	// "&rdquo;":  `"`,    // ”
 	// "&ldquo;":  `"`,    // “
 	// "&rsquo;":  "'",    // ’
