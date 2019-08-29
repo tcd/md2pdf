@@ -42,14 +42,18 @@ Third is really long... Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   - Second (b)
 - Third
 
-Third is really long... Lorem ipsum dolor sit amet, consectetur adipiscing elit. *Praesent* vel dapibus orci. Donec nec dignissim lectus. Cras nisi diam, hendrerit quis ex ut, porttitor **posuere** augue. Nulla elit ligula, ~~laoreet~~ quis egestas quis, interdum eu sem. Etiam luctus, diam in lacinia facilisis, dui sem iaculis lacus, eget porttitor est quam non sapien. Fusce vestibulum accumsan interdum. Vivamus tristique congue tincidunt. Duis molestie turpis vel varius maximus. Fusce tristique dolor arcu, id feugiat tellus condimentum ac.
+## Ordered Lists
 
-- First
-- Second (main)
-- Third
-  - Third (a)
-  - Third (b)
-
+1. Lorem ipsum dolor sit amet
+2. consectetur adipiscing elit.
+    1. *Praesent* vel dapibus orci. 
+    2. Donec nec dignissim lectus. 
+        1. Cras nisi diam,
+        2. hendrerit quis ex ut,
+        3. porttitor **posuere** augue. 
+3. Nulla elit ligula, ~~laoreet~~ quis egestas quis,  
+    1. interdum eu sem. 
+4. Fin
 
 ## Via Markdown Cheatsheet
 
