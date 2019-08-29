@@ -91,7 +91,7 @@ type List struct {
 
 // Render a list.
 func (ls List) Render(pdf *gofpdf.Fpdf) {
-	render.AnyList(pdf, ls.Content)
+	render.List(pdf, ls.Content)
 }
 
 // Paragraph implements the Renderable interface.

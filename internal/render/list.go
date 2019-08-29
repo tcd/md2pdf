@@ -13,54 +13,33 @@ const (
 	levelThreeMargin = 32.5
 )
 
-// AnyList writes an unordered list with up to three levels of indentation to a gofpdf.Fpdf.
-func AnyList(pdf *gofpdf.Fpdf, list model.ListContent) {
-	pdf.SetLeftMargin(levelOneMargin)
-	pdf.SetRightMargin(21)
-	pdf.SetFont("helvetica", "", 12)
-	_, lineHt := pdf.GetFontSize() // need to call this after we call SetFont.
-	lineHt = lineHt * 1.5
+var margins = map[int]float64{
+	0: 22.5,
+	1: 22.5,
+	2: 27.5,
+	3: 32.5,
+}
 
-	for _, item := range list.Items {
-		levelOneBullett(pdf, lineHt)
-		drawListItemContent(pdf, item.Contents, lineHt)
-		pdf.SetLeftMargin(levelOneMargin)
+// List writes a list with any level of indentation to a gofpdf.Fpdf.
+func List(pdf *gofpdf.Fpdf, list model.ListContent) {
+	level := 1
+	pdf.SetLeftMargin(margins[level])
+	pdf.SetRightMargin(21)
+	_, lineHt := pdf.GetFontSize() // need to call this after we call SetFont.
+	// lineHt = lineHt * 1.5
+
+	for i, item := range list.Items {
+		if list.Ordered {
+			drawNumbering(pdf, lineHt, level, i+1)
+		} else {
+			drawBullet(pdf, lineHt, level)
+		}
+		drawListItemContent(pdf, item.Contents)
+		pdf.SetLeftMargin(margins[level])
 		pdf.Ln(-1) // A negative value indicates the height of the last printed cell.
 		pdf.Ln(2)
-
 		if item.HasChildren() {
-			pdf.SetLeftMargin(levelTwoMargin)
-			lastIndex := len(item.Children.Items) - 1
-			for i, item := range item.Children.Items {
-				levelTwoBullet(pdf, lineHt)
-				drawListItemContent(pdf, item.Contents, lineHt)
-				pdf.SetLeftMargin(levelTwoMargin)
-				if i != lastIndex {
-					pdf.Ln(-1)
-					pdf.Ln(2)
-				}
-				if item.HasChildren() {
-					pdf.Ln(-1)
-					pdf.Ln(2)
-					pdf.SetLeftMargin(levelThreeMargin)
-					lastIndex := len(item.Children.Items) - 1
-					for i, item := range item.Children.Items {
-						levelThreeBullet(pdf, lineHt)
-						drawListItemContent(pdf, item.Contents, lineHt)
-						pdf.SetLeftMargin(levelThreeMargin)
-						if i != lastIndex {
-							pdf.Ln(-1)
-							pdf.Ln(2)
-						}
-					}
-					pdf.SetLeftMargin(levelTwoMargin)
-					pdf.Ln(-1)
-					pdf.Ln(2)
-				}
-			}
-			pdf.SetLeftMargin(levelOneMargin)
-			pdf.Ln(-1)
-			pdf.Ln(2)
+			drawList(pdf, item.Children, level+1)
 		}
 	}
 
@@ -69,31 +48,36 @@ func AnyList(pdf *gofpdf.Fpdf, list model.ListContent) {
 	pdf.Ln(4)
 }
 
-func levelOneBullett(pdf *gofpdf.Fpdf, lineHt float64) {
-	pdf.SetTextColor(36, 41, 46)
-	pdf.SetFont("zapfdingbats", "", 5)
-	bulletChar := "\x6c" // ●
-	pdf.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
-	pdf.SetLeftMargin(pdf.GetX())
+// Draw all items in a ListContent, anc call drawList for any sublists.
+func drawList(pdf *gofpdf.Fpdf, list model.ListContent, level int) {
+	pdf.SetLeftMargin(margins[level])
+	pdf.SetFont("helvetica", "", 12)
+	_, lineHt := pdf.GetFontSize() // need to call this after we call SetFont.
+	// lineHt = lineHt * 1.5
+
+	lastIndex := len(list.Items) - 1
+	for i, item := range list.Items {
+		if list.Ordered {
+			drawNumbering(pdf, lineHt, level, i+1)
+		} else {
+			drawBullet(pdf, lineHt, level)
+		}
+		drawListItemContent(pdf, item.Contents)
+		pdf.SetLeftMargin(margins[level])
+		if i != lastIndex {
+			pdf.Ln(-1)
+			pdf.Ln(2)
+		}
+		if item.HasChildren() {
+			drawList(pdf, item.Children, level+1)
+		}
+	}
+	pdf.SetLeftMargin(margins[level-1])
+	pdf.Ln(-1)
+	pdf.Ln(2)
 }
 
-func levelTwoBullet(pdf *gofpdf.Fpdf, lineHt float64) {
-	pdf.SetTextColor(36, 41, 46)
-	pdf.SetFont("zapfdingbats", "", 5)
-	bulletChar := "\x6d" // ❍
-	pdf.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
-	pdf.SetLeftMargin(pdf.GetX())
-}
-
-func levelThreeBullet(pdf *gofpdf.Fpdf, lineHt float64) {
-	pdf.SetTextColor(36, 41, 46)
-	pdf.SetFont("zapfdingbats", "", 5)
-	bulletChar := "\x6e" // ■
-	pdf.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
-	pdf.SetLeftMargin(pdf.GetX())
-}
-
-func drawListItemContent(pdf *gofpdf.Fpdf, c model.Contents, lineHt float64) {
+func drawListItemContent(pdf *gofpdf.Fpdf, c model.Contents) {
 	for _, txt := range c.Content {
 		var styles strings.Builder // "B" (bold), "I" (italic), "U" (underscore) or any combination.
 		if txt.Bold {
@@ -109,15 +93,17 @@ func drawListItemContent(pdf *gofpdf.Fpdf, c model.Contents, lineHt float64) {
 		} else if txt.Code {
 			liInlineCode(pdf, txt, styleStr)
 		} else {
-			liSpan(pdf, txt, styleStr, lineHt)
+			liSpan(pdf, txt, styleStr)
 		}
 	}
 }
 
-func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, lineHt float64) {
+func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
 	pdf.SetTextColor(36, 41, 46)
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
@@ -130,6 +116,7 @@ func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, lineHt float64) {
 func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
 	pdf.SetFillColor(255, 255, 255)
+	var lineHt float64 = 6
 
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
@@ -141,10 +128,11 @@ func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(3, 102, 214)
-		pdf.WriteLinkString(6, txt.Text, txt.HREF)
+		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.SetTextColor(36, 41, 46)
-		pdf.Write(6, txt.Text)
+		// pdf.SetTextColor(36, 41, 46)
+		pdf.SetTextColor(227, 98, 9)
+		pdf.Write(lineHt, txt.Text)
 	}
 }
 
