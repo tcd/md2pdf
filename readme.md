@@ -20,7 +20,6 @@ cd $GOPATH/github.com/tcd/md2pdf
 make install # GO111MODULE=on go install
 ```
 
-
 ## Usage
 
 ```sh
