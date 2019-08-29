@@ -12,7 +12,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands.
 var rootCmd = &cobra.Command{
-	Use:   "md2pdf path/to/markdownfile.md",
+	Use:   "md2pdf [FILE]",
 	Short: "Generate PDFs from markdown files",
 	Long:  `Generate PDFs from markdown files`,
 	Args:  cobra.ExactArgs(1),
@@ -37,6 +37,6 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "Write the resulting PDF to the named output file")
-	// rootCmd.PersistentFlags().BoolP("silent", "s", false, "Only output error messages")
-	// rootCmd.Flags().BoolP("version", "v", false, "Print version information")
+	rootCmd.PersistentFlags().BoolP("silent", "s", false, "Silence all output messages")
+	rootCmd.Flags().BoolP("version", "v", false, "Print version information")
 }

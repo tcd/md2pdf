@@ -10,7 +10,7 @@ import (
 
 // debugCmd represents the debug command
 var debugCmd = &cobra.Command{
-	Use:    "debug [path/to/file]",
+	Use:    "debug [FILE]",
 	Short:  "Output HTML & JSON information in addition to a PDF.",
 	Hidden: true,
 	Args:   cobra.ExactArgs(1),
