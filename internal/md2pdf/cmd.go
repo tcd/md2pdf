@@ -38,7 +38,11 @@ func MdFileToPdfFile(inPath, outPath string) (string, error) {
 // Debug outputs not only a PDF, but also HTML and JSON output for debugging.
 func Debug(path, debugDir string) error {
 	if debugDir == "" {
-		debugDir = "/Users/clay/go/src/github.com/tcd/md2pdf/out/debug"
+		cwd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		debugDir = filepath.Join(cwd, "debug")
 	}
 	oldFile := absPath(path)
 	baseName := replaceExtension(oldFile, "")
