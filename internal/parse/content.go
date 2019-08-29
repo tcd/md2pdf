@@ -55,7 +55,10 @@ func parseContent(
 			parseContent(z, T2, this, topLevel)
 		}
 		if tt == html.TextToken {
-			this.Text = string(z.Text())
+			content := string(z.Text())
+			if content != "\n" {
+				this.Text = content
+			}
 		}
 		if tt == html.SelfClosingTagToken {
 			continue
