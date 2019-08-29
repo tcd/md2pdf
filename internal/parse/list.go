@@ -7,15 +7,15 @@ import (
 )
 
 // List gathers the data needed to render a list.
-func List(z *html.Tokenizer) renderable.List {
+func List(z *html.Tokenizer, startToken html.Token) renderable.List {
 	return renderable.List{
-		Content: parseEntries(z),
+		Content: parseEntries(z, startToken),
 	}
 }
 
-func parseEntries(z *html.Tokenizer) model.ListContent {
+func parseEntries(z *html.Tokenizer, startToken html.Token) model.ListContent {
 	this := model.ListContent{}
-	if z.Token().Data == "ol" {
+	if startToken.Data == "ol" {
 		this.Ordered = true
 	}
 
@@ -52,6 +52,8 @@ func parseEntry(z *html.Tokenizer) model.ListItem {
 				} else {
 					this.Contents.AddStr(content)
 				}
+			} else if content != "\n" {
+				this.Contents.AddStr(content)
 			}
 		}
 		if tt == html.EndTagToken {
@@ -67,7 +69,7 @@ func parseEntry(z *html.Tokenizer) model.ListItem {
 				parseContent(z, T1, blankContent, &this.Contents)
 			}
 			if T1.Data == "ul" || T1.Data == "ol" {
-				nestedList := parseEntries(z)
+				nestedList := parseEntries(z, T1)
 				this.Children = nestedList
 			}
 		}

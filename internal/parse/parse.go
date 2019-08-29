@@ -59,7 +59,7 @@ func Parse(inputHTML []byte) renderable.Elements {
 				elements.Add(bq)
 			}
 			if T1.Data == "ol" || T1.Data == "ul" {
-				ls := List(tokenizer)
+				ls := List(tokenizer, T1)
 				elements.Add(ls)
 			}
 			if T1.Data == "table" {
