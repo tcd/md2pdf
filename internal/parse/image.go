@@ -12,6 +12,14 @@ func Image(token html.Token) renderable.Image {
 	}
 }
 
+// LinkedImage gathers the data needed to render an image with an embedded link.
+func LinkedImage(token html.Token, href string) renderable.Image {
+	return renderable.Image{
+		Src:  parseImg(token),
+		Link: href,
+	}
+}
+
 func parseImg(token html.Token) string {
 	var src string
 	for _, a := range token.Attr {
