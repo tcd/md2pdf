@@ -81,7 +81,7 @@ type Image struct {
 
 // Render an image.
 func (img Image) Render(pdf *gofpdf.Fpdf) {
-	render.Image(pdf, img.Src)
+	render.Image(pdf, img.Src, img.Link)
 }
 
 // List implements the Renderable interface.
