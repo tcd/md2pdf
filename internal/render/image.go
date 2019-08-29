@@ -16,7 +16,7 @@ import (
 )
 
 // Image writes a JPEG, PNG or GIF to a gofpdf.Fpdf.
-func Image(f *gofpdf.Fpdf, src string) {
+func Image(f *gofpdf.Fpdf, src, link string) {
 	isRemote, err := regexp.MatchString(`^(https://|http://|www)`, strings.ToLower(src))
 	if err != nil {
 		log.Println(err)
@@ -28,18 +28,18 @@ func Image(f *gofpdf.Fpdf, src string) {
 			log.Println(err)
 			return
 		}
-		remoteImage(f, src, width, height, format)
+		remoteImage(f, src, width, height, format, "")
 	} else {
 		width, height, format, err := localImageInfo(src)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		localImage(f, src, width, height, format)
+		localImage(f, src, width, height, format, "")
 	}
 }
 
-func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
+func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link string) {
 	res, err := http.Get(src)
 	if err != nil {
 		log.Println("Unable to fetch image: ", src)
@@ -72,7 +72,7 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
 	)
 }
 
-func localImage(f *gofpdf.Fpdf, src string, width, height int, format string) {
+func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link string) {
 	file, err := os.Open(src)
 	if err != nil {
 		log.Println(err)
