@@ -35,22 +35,6 @@ func MdFileToPdfFile(inPath, outPath string) (string, error) {
 	return newFile, nil
 }
 
-// MdFileToUnnamedPdf converts a markdown file to a PDF file.
-// The path to the new PDF file is returned along with any encountered errors.
-func MdFileToUnnamedPdf(path string) (string, error) {
-	oldFile, newFile := parsePaths(path, ".pdf")
-	bytes, err := mdFile2htmlBytes(oldFile)
-	if err != nil {
-		return newFile, err
-	}
-	elements := parse.Parse(bytes)
-	err = elements.RenderToFile(newFile)
-	if err != nil {
-		return newFile, err
-	}
-	return newFile, err
-}
-
 // Debug outputs not only a PDF, but also HTML and JSON output for debugging.
 func Debug(path, debugDir string) error {
 	if debugDir == "" {

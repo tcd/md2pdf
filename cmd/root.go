@@ -17,12 +17,13 @@ var rootCmd = &cobra.Command{
 	Long:  `Generate PDFs from markdown files`,
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		output, _ := cmd.Flags().GetString("output")
-		if len(output) > 0 {
-			rootFuncCustomOutput(args[0], output)
+		outPath, _ := cmd.Flags().GetString("output")
+		newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
+		if err != nil {
+			log.Fatal(err)
 		}
-
-		rootFuncDefault(args[0])
+		fmt.Println("PDF generated:", newFile)
+		os.Exit(0)
 	},
 }
 
@@ -38,22 +39,4 @@ func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "Write the resulting PDF to the named output file")
 	// rootCmd.PersistentFlags().BoolP("silent", "s", false, "Only output error messages")
 	// rootCmd.Flags().BoolP("version", "v", false, "Print version information")
-}
-
-func rootFuncDefault(path string) {
-	newFile, err := m2p.MdFileToUnnamedPdf(path)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("PDF generated:", newFile)
-	os.Exit(0)
-}
-
-func rootFuncCustomOutput(inPath, outPath string) {
-	newFile, err := m2p.MdFileToPdfFile(inPath, outPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("PDF generated:", newFile)
-	os.Exit(0)
 }
