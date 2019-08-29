@@ -22,12 +22,7 @@ var rootCmd = &cobra.Command{
 			rootFuncCustomOutput(args[0], output)
 		}
 
-		html, _ := cmd.Flags().GetBool("html")
-		if html {
-			rootFuncHTML(args[0])
-		} else {
-			rootFuncDefault(args[0])
-		}
+		rootFuncDefault(args[0])
 	},
 }
 
@@ -42,38 +37,23 @@ func Execute() {
 func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "Write the resulting PDF to the named output file")
 	// rootCmd.PersistentFlags().BoolP("silent", "s", false, "Only output error messages")
-	rootCmd.PersistentFlags().Bool("html", false, "Generate HTML output instead of PDF")
 	// rootCmd.Flags().BoolP("version", "v", false, "Print version information")
 }
 
 func rootFuncDefault(path string) {
-	oldFile, newFile := parsePaths(path, ".pdf")
-	err := m2p.Md2PDF(oldFile, newFile)
+	newFile, err := m2p.MdFileToUnnamedPdf(path)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("PDF generated: ", newFile)
-	os.Exit(0)
-}
-
-func rootFuncHTML(path string) {
-	oldFile, newFile := parsePaths(path, ".html")
-	err := m2p.Md2HTMLFile(oldFile, newFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("HTML generated: ", newFile)
+	fmt.Println("PDF generated:", newFile)
 	os.Exit(0)
 }
 
 func rootFuncCustomOutput(inPath, outPath string) {
-	oldFile := absPath(inPath)
-	newFile := absPath(outPath)
-	ensureDir(newFile)
-	err := m2p.Md2PDF(oldFile, newFile)
+	newFile, err := m2p.MdFileToPdfFile(inPath, outPath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("PDF generated: ", newFile)
+	fmt.Println("PDF generated:", newFile)
 	os.Exit(0)
 }
