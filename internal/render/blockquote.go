@@ -12,8 +12,8 @@ func BasicBlockquote(f *gofpdf.Fpdf, text string) {
 	oldCellMargin := f.GetCellMargin()
 
 	f.SetFont("helvetica", "", 12)
-	f.SetTextColor(106, 115, 125)
-	f.SetDrawColor(223, 226, 229)
+	f.SetTextColor(BlockquoteFG())
+	f.SetDrawColor(BlockquoteBorder())
 	f.SetLineWidth(1)
 	f.SetCellMargin(4)
 

@@ -23,8 +23,8 @@ func CodeBlock(pdf *gofpdf.Fpdf, contents model.Contents) {
 	oldCellMargin := pdf.GetCellMargin()
 
 	pdf.SetFont("courier", "", 11)
-	pdf.SetFillColor(246, 248, 250)
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetFillColor(LightCodeBlockBG())
+	pdf.SetTextColor(DefaultFG())
 	pdf.SetCellMargin(4)
 
 	pdf.CellFormat(0, 4, "", "", 1, "TL", true, 0, "")

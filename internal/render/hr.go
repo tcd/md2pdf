@@ -7,7 +7,7 @@ func HR(f *gofpdf.Fpdf) {
 	x := f.GetX()
 	y := f.GetY()
 	f.SetLineWidth(1)
-	f.SetDrawColor(191, 191, 191)
+	f.SetDrawColor(HrFG())
 	f.Line(x, y, x+pageWidth, y)
 	f.Ln(2)
 }

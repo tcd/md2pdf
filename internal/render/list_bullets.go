@@ -16,7 +16,7 @@ func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
 	default:
 		bulletChar = "\x6c" // ●
 	}
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetTextColor(DefaultFG())
 	pdf.SetFont("zapfdingbats", "", 6)
 	pdf.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
 	pdf.SetLeftMargin(pdf.GetX())
@@ -34,7 +34,7 @@ func drawNumbering(pdf *gofpdf.Fpdf, lineHt float64, level, number int) {
 	default:
 		numberList = levelOneNumbers
 	}
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetTextColor(DefaultFG())
 	pdf.SetFont("helvetica", "", 12)
 	pdf.CellFormat(5, lineHt, numberList[number], "", 0, "RM", false, 0, "")
 	pdf.SetLeftMargin(pdf.GetX())

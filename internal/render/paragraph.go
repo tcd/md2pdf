@@ -14,8 +14,8 @@ func BasicP(pdf *gofpdf.Fpdf, text string) {
 		return
 	}
 	pdf.SetFont("helvetica", "", 12)
-	pdf.SetFillColor(255, 255, 255)
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetFillColor(DefaultBG())
+	pdf.SetTextColor(DefaultFG())
 	pdf.Write(6, text)
 	pdf.Ln(10)
 }
@@ -61,12 +61,12 @@ func pSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
-	pdf.SetFillColor(255, 255, 255)
+	pdf.SetFillColor(DefaultBG())
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.SetTextColor(36, 41, 46)
+		pdf.SetTextColor(DefaultFG())
 		pdf.Write(lineHt, txt.Text)
 	}
 }
@@ -75,7 +75,7 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
-	pdf.SetFillColor(255, 255, 255)
+	pdf.SetFillColor(DefaultBG())
 
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
@@ -86,10 +86,10 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	}
 
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.SetTextColor(36, 41, 46)
+		pdf.SetTextColor(CodeOrangeFG())
 		pdf.Write(lineHt, txt.Text)
 	}
 }
@@ -97,8 +97,8 @@ func pInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 // Strike writes a line of text with a line through it.
 func pStrike(pdf *gofpdf.Fpdf, txt model.Text) {
 	pdf.SetFont("helvetica", "", 12)
-	pdf.SetFillColor(255, 255, 255)
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetFillColor(DefaultBG())
+	pdf.SetTextColor(DefaultFG())
 	width := pdf.GetStringWidth(txt.Text)
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
@@ -108,10 +108,10 @@ func pStrike(pdf *gofpdf.Fpdf, txt model.Text) {
 	y := (pdf.GetY() + (lineHt / 2))
 
 	pdf.SetLineWidth(0.25)
-	pdf.SetDrawColor(36, 41, 46)
+	pdf.SetDrawColor(DefaultFG())
 
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
 		pdf.Write(lineHt, txt.Text)

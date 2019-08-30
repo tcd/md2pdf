@@ -100,23 +100,21 @@ func drawListItemContent(pdf *gofpdf.Fpdf, c model.Contents) {
 
 func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
-	pdf.SetFillColor(255, 255, 255)
-	pdf.SetTextColor(36, 41, 46)
+	pdf.SetFillColor(DefaultBG())
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.SetTextColor(36, 41, 46)
+		pdf.SetTextColor(DefaultFG())
 		pdf.Write(lineHt, txt.Text)
 	}
 }
 
 func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
-	pdf.SetFillColor(255, 255, 255)
-	var lineHt float64 = 6
+	pdf.SetFillColor(DefaultBG())
 
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
@@ -127,18 +125,18 @@ func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	}
 
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		// pdf.SetTextColor(36, 41, 46)
-		pdf.SetTextColor(227, 98, 9)
+		pdf.SetTextColor(CodeOrangeFG())
 		pdf.Write(lineHt, txt.Text)
 	}
 }
 
 func liStrike(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("helvetica", styleStr, 12)
-	pdf.SetFillColor(255, 255, 255)
+	pdf.SetFillColor(DefaultBG())
+	pdf.SetDrawColor(DefaultFG())
 	width := pdf.GetStringWidth(txt.Text)
 	var lineHt float64 = 6
 
@@ -147,13 +145,11 @@ func liStrike(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	y := (pdf.GetY() + (lineHt / 2))
 
 	pdf.SetLineWidth(0.25)
-	pdf.SetDrawColor(36, 41, 46)
-
 	if txt.HREF != "" {
-		pdf.SetTextColor(3, 102, 214)
+		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
 	} else {
-		pdf.SetTextColor(36, 41, 46)
+		pdf.SetTextColor(DefaultFG())
 		pdf.Write(lineHt, txt.HREF)
 	}
 

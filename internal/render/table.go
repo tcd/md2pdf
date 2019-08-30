@@ -17,10 +17,10 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 
 	f.SetFont("helvetica", "B", 12) // Header Font
 	f.SetCellMargin(lrMargin)       // left & right cell margins
-	f.SetTextColor(36, 41, 46)      // text color
-	f.SetDrawColor(223, 226, 229)   // border color
+	f.SetTextColor(DefaultFG())     // text color
+	f.SetDrawColor(BlockquoteBG())  // border color
 	f.SetLineWidth(0.3)             // outline width
-	f.SetFillColor(246, 248, 250)   // background color for every other cell
+	f.SetFillColor(TableCellBG())   // background color for every other cell
 
 	widths = table.Widths(f, lrMargin)
 
