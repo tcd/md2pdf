@@ -30,7 +30,7 @@ func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 	}
 
 	drawParagraphContent(pdf, contents)
-	pdf.Ln(9)
+	pdf.Ln(10)
 }
 
 func drawParagraphContent(pdf *gofpdf.Fpdf, c model.Contents) {

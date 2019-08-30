@@ -32,7 +32,7 @@ func H2(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.6
 
-	f.Ln(4)
+	f.Ln(3)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
@@ -58,7 +58,7 @@ func H3(f *gofpdf.Fpdf, contents model.Contents) {
 		f.Write(lineHt, txt.Text)
 	}
 	f.Ln(-1)
-	f.Ln(5)
+	f.Ln(4)
 }
 
 // H4 write a 4th level header to a gofpdf.Fpdf.
@@ -68,7 +68,7 @@ func H4(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(5)
+	f.Ln(4)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
@@ -83,7 +83,7 @@ func H5(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(5)
+	f.Ln(4)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
@@ -98,7 +98,7 @@ func H6(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(5)
+	f.Ln(4)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
