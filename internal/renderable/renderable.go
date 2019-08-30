@@ -34,7 +34,7 @@ func (cb Codeblock) Render(pdf *gofpdf.Fpdf) {
 	if cb.Class == "language-no-highlight" || cb.Class == "" {
 		render.CodeBlock(pdf, cb.Content)
 	} else {
-		render.CodeBlock(pdf, cb.Content)
+		render.HighlightedCodeblock(pdf, cb.Content, cb.Class)
 	}
 }
 
