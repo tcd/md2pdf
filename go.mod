@@ -3,6 +3,7 @@ module github.com/tcd/md2pdf
 go 1.12
 
 require (
+	github.com/alecthomas/chroma v0.6.6
 	github.com/jung-kurt/gofpdf v1.10.0
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/spf13/cobra v0.0.5
