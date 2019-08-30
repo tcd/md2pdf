@@ -34,17 +34,5 @@ func (e Elements) RenderToWriter(w io.Writer) error {
 	for _, r := range e.Elements {
 		r.Render(pdf)
 	}
-	// err = pdf.OutputAndClose(w)
-	return pdf.Output(w)
-}
-
-// Render a PDF from Elements.
-func (e Elements) Render(w io.Writer) error {
-	pdf := gofpdf.New("P", "mm", "Letter", "")
-	render.Setup(pdf)
-	for _, r := range e.Elements {
-		r.Render(pdf)
-	}
-	// err = pdf.OutputAndClose(w)
 	return pdf.Output(w)
 }
