@@ -12,6 +12,9 @@ type VersionInfo struct {
 }
 
 func (v VersionInfo) String() string {
+	if v.Major == "" {
+		return "md2pdf dev"
+	}
 	return fmt.Sprintf("md2pdf v%s.%s.%s (%s %s)", v.Major, v.Minor, v.Patch, v.Hash, v.Date)
 }
 
