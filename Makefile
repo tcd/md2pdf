@@ -8,7 +8,7 @@ run:
 	@./scripts/generate.sh
 
 build:
-	GO111MODULE=on $(GO) build -o build/$(PROJECT_NAME)
+	@./scripts/build.sh
 
 clean:
 	$(GO) clean ./...
