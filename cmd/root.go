@@ -49,7 +49,7 @@ var rootCmd = &cobra.Command{
 		}
 
 		// Handle single file
-		if len(args) == 0 {
+		if len(args) == 1 {
 			newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
 			logFatal(err)
 			log.Println("PDF generated:", newFile)
