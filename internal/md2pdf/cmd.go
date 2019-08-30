@@ -51,15 +51,31 @@ func MdURLToPdfFile(url, outPath string) (string, error) {
 	return outPath, nil
 }
 
+// MdBytesToPdfFile can be used to render markdown input from stdin.
+// The path to the new PDF file is returned along with any encountered errors.
+func MdBytesToPdfFile(mdBytes []byte, outPath string) (string, error) {
+	if outPath == "" {
+		outPath = "no-name.pdf"
+	}
+	newFile := absPath(outPath)
+	ensureDir(newFile)
+	htmlBytes := mdBytes2htmlbytes(mdBytes)
+	elements := parse.Parse(htmlBytes)
+	err := elements.RenderToFile(newFile)
+	if err != nil {
+		return "", err
+	}
+	return newFile, nil
+}
+
 // Debug outputs not only a PDF, but also HTML and JSON output for debugging.
 func Debug(path, debugDir string) error {
 	if debugDir == "" {
-		debugDir = "/Users/clay/go/src/github.com/tcd/md2pdf/out/debug"
-		// cwd, err := os.Getwd()
-		// if err != nil {
-		// 	return err
-		// }
-		// debugDir = filepath.Join(cwd, "debug")
+		cwd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		debugDir = filepath.Join(cwd, "debug")
 	}
 	oldFile := absPath(path)
 	baseName := replaceExtension(oldFile, "")

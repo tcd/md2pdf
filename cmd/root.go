@@ -14,36 +14,49 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "md2pdf [FILE]",
 	Short: "Generate PDFs from markdown files",
+	Args:  cobra.ExactArgs(1),
 	PreRun: func(cmd *cobra.Command, args []string) {
+		// Run silently for --silent
 		silent, err := cmd.Flags().GetBool("silent")
-		if err != nil {
-			log.Fatal(err)
-		}
+		logFatal(err)
 		if silent {
 			log.SetOutput(ioutil.Discard)
 		}
-	},
-	Run: func(cmd *cobra.Command, args []string) {
+
+		// Print Version for --version
 		version, err := cmd.Flags().GetBool("version")
-		if err != nil {
-			log.Fatal(err)
-		}
+		logFatal(err)
 		if version {
 			log.Println(m2p.Version)
 			os.Exit(0)
 		}
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		outPath, _ := cmd.Flags().GetString("output")
 
+		// Read from stdin if --stdin
+		stdin, err := cmd.Flags().GetBool("stdin")
+		logFatal(err)
+		if stdin {
+			bytes, err := ioutil.ReadAll(os.Stdin)
+			logFatal(err)
+			if string(bytes) != "" {
+				newFile, err := m2p.MdBytesToPdfFile(bytes, outPath)
+				logFatal(err)
+				log.Println("PDF generated:", newFile)
+				os.Exit(0)
+			}
+		}
+
+		// Handle single file
 		if len(args) == 0 {
-			cmd.Help()
+			newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
+			logFatal(err)
+			log.Println("PDF generated:", newFile)
 			os.Exit(0)
 		}
 
-		outPath, _ := cmd.Flags().GetString("output")
-		newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println("PDF generated:", newFile)
+		cmd.Help()
 		os.Exit(0)
 	},
 }
@@ -59,4 +72,5 @@ func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "Write the resulting PDF to the named output file")
 	rootCmd.PersistentFlags().BoolP("silent", "s", false, "Silence all output messages")
 	rootCmd.Flags().BoolP("version", "v", false, "Print version information")
+	rootCmd.Flags().Bool("stdin", false, "Read markdown content from stdin instead of a file")
 }
