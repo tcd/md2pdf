@@ -18,7 +18,7 @@ func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
 	}
 	pdf.SetTextColor(DefaultFG())
 	pdf.SetFont("zapfdingbats", "", 6)
-	pdf.CellFormat(5, lineHt, bulletChar, "", 0, "RM", false, 0, "")
+	pdf.CellFormat(6, lineHt, bulletChar, "", 0, "RM", false, 0, "")
 	pdf.SetLeftMargin(pdf.GetX())
 }
 
