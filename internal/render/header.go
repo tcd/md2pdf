@@ -68,7 +68,7 @@ func H4(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(4)
+	f.Ln(2)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
@@ -83,7 +83,7 @@ func H5(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(4)
+	f.Ln(2)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
@@ -98,7 +98,7 @@ func H6(f *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := f.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(4)
+	f.Ln(2)
 	for _, txt := range contents.Content {
 		f.Write(lineHt, txt.Text)
 	}
