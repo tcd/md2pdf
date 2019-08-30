@@ -11,7 +11,6 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 	oldCellMargin := f.GetCellMargin()
 	oldLineWidth := f.GetLineWidth()
 
-	var widths []float64
 	var tbMargin float64 = 2 // top & bottom cell margins
 	var lrMargin float64 = 3 // left & right cell margins
 
@@ -22,19 +21,19 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 	f.SetLineWidth(0.3)             // outline width
 	f.SetFillColor(TableCellBG())   // background color for every other cell
 
-	widths = table.Widths(f, lrMargin)
+	widths := table.Widths(f, lrMargin)
 
 	for i, header := range table.Headers() {
 		f.CellFormat(
-			widths[i]+lrMargin, // width
-			10,                 // height
-			header,             // textStr
-			"1",                // borderStr; 1 for full border.
-			0,                  // ln; position after the call.
-			"CM",               // alignStr; "L", "C" or "R" + "T", "M", "B" or "A" (left, center, right + top, middle, bottom, baseline)
-			false,              // fill
-			0,                  // link
-			"",                 // linkStr
+			widths[i]+lrMargin,   // width
+			10,                   // height
+			header.JoinContent(), // textStr
+			"1",                  // borderStr; 1 for full border.
+			0,                    // ln; position after the call.
+			"CM",                 // alignStr; "L", "C" or "R" + "T", "M", "B" or "A" (left, center, right + top, middle, bottom, baseline)
+			false,                // fill
+			0,                    // link
+			"",                   // linkStr
 		)
 	}
 	f.Ln(-1)
@@ -55,11 +54,11 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 
 		for i, txt := range row {
 			var lines [][]byte
-			if f.GetStringWidth(txt) < widths[i] {
+			if f.GetStringWidth(txt.JoinContent()) < widths[i] {
 				lines = make([][]byte, 1)
-				lines[0] = []byte(txt)
+				lines[0] = []byte(txt.JoinContent())
 			} else {
-				lines = f.SplitLines([]byte(txt), widths[i]-lrMargin*2)
+				lines = f.SplitLines([]byte(txt.JoinContent()), widths[i]-lrMargin*2)
 			}
 			h := float64(len(lines))*lineHt + tbMargin*2*float64(len(lines))
 			if h > height {
@@ -81,7 +80,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 				f.Rect(x, y, width, height, "D")
 			}
 			f.SetX(x)
-			f.MultiCell(width, lineHt+(tbMargin*2), txt, "", alignments[i], false)
+			f.MultiCell(width, lineHt+(tbMargin*2), txt.JoinContent(), "", alignments[i], false)
 			x += width
 			f.SetXY(x, y)
 		}

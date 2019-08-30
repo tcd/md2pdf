@@ -1,37 +1,39 @@
 package model
 
-import "github.com/jung-kurt/gofpdf"
+import (
+	"github.com/jung-kurt/gofpdf"
+)
 
 // TableContent represents the contents of a table element.
 type TableContent struct {
-	Rows       [][]string `json:"rows"`
-	Alignments []string   `json:"alignments"` // "L", "C", or "R"
+	Rows       [][]Contents `json:"rows"`
+	Alignments []string     `json:"alignments"` // "L", "C", or "R"
 }
 
 // AddRow to TableContent.
-func (tc *TableContent) AddRow(cols []string) {
+func (tc *TableContent) AddRow(cols []Contents) {
 	tc.Rows = append(tc.Rows, cols)
 }
 
 // AddRows to TableContent.
-func (tc *TableContent) AddRows(cols ...[]string) {
+func (tc *TableContent) AddRows(cols ...[]Contents) {
 	tc.Rows = append(tc.Rows, cols...)
 }
 
 // Headers returns the first slice of string in Rows.
-func (tc TableContent) Headers() []string {
+func (tc TableContent) Headers() []Contents {
 	if len(tc.Rows) != 0 {
 		return tc.Rows[0]
 	}
-	return []string{}
+	return []Contents{}
 }
 
 // Body returns all rows after the first.
-func (tc TableContent) Body() [][]string {
+func (tc TableContent) Body() [][]Contents {
 	if len(tc.Rows) > 0 {
 		return tc.Rows[1:]
 	}
-	return [][]string{}
+	return [][]Contents{}
 }
 
 // ColCount returns the number of header columns.
@@ -41,58 +43,69 @@ func (tc TableContent) ColCount() int {
 
 // GetColumn returns one string for every cell in a column at the given index.
 // First column is 0, not 1.
-func (tc TableContent) GetColumn(index int) []string {
-	columns := make([]string, len(tc.Rows))
+func (tc TableContent) GetColumn(index int) []Contents {
+	columns := make([]Contents, len(tc.Rows))
 	for i, row := range tc.Rows {
 		if len(row) > index {
 			columns[i] = row[index]
 		} else {
-			columns[i] = ""
+			columns[i] = Contents{}
 		}
 	}
 	return columns
 }
 
 // longestWidths returns the width of the longest cell in each column.
-func (tc TableContent) longestWidths(f *gofpdf.Fpdf) []float64 {
+func (tc TableContent) longestWidths(pdf *gofpdf.Fpdf) []float64 {
 	widths := make([]float64, tc.ColCount())
 	for i := 0; i < tc.ColCount(); i++ {
 		col := tc.GetColumn(i)
 		longest := ""
 		for _, cell := range col {
-			if len(cell) > len(longest) {
-				longest = cell
+			if len(cell.JoinContent()) > len(longest) {
+				longest = cell.JoinContent()
 			}
 		}
-		widths[i] = f.GetStringWidth(longest) * 1.5
+		widths[i] = pdf.GetStringWidth(longest) * 1.5
 	}
 	return widths
 }
 
 // headerWidths returns the width needed to hold the header cell in each column.
-func (tc TableContent) headerWidths(f *gofpdf.Fpdf) []float64 {
+func (tc TableContent) headerWidths(pdf *gofpdf.Fpdf) []float64 {
 	widths := make([]float64, tc.ColCount())
 	for i, header := range tc.Headers() {
-		widths[i] = f.GetStringWidth(header) * 1.5
+		widths[i] = pdf.GetStringWidth(header.JoinContent()) * 1.5
 	}
 	return widths
 }
 
 // Widths returns the width needed to hold the longest cell in each column.
-func (tc TableContent) Widths(f *gofpdf.Fpdf, cellMargin float64) []float64 {
-	pageWidth, _ := f.GetPageSize()
-	leftM, _, rightM, _ := f.GetMargins()
+func (tc TableContent) Widths(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
 	colCount := tc.ColCount()
 	cellPadding := (cellMargin * 2)
-	tableWidth := (pageWidth - leftM - rightM - (cellPadding * float64(colCount)))
-
-	widths := tc.longestWidths(f)
+	tableWidth := (ContentBoxWidth(pdf) - (cellPadding * float64(colCount)))
+	widths := tc.longestWidths(pdf)
 	if sum(widths...) <= tableWidth {
 		return widths
 	}
 
-	hWidths := tc.headerWidths(f)
 	finalWs := make([]float64, colCount)
+
+	if len(widths) == 2 {
+		portions := percentages(widths...)
+		// larger := portions[0]
+		if portions[0] > portions[1] {
+			finalWs[0] = tableWidth * portions[0]
+			finalWs[1] = tableWidth - finalWs[0]
+		} else {
+			finalWs[1] = tableWidth * portions[1]
+			finalWs[0] = tableWidth - finalWs[1]
+		}
+		return finalWs
+	}
+
+	hWidths := tc.headerWidths(pdf)
 
 	for i := range finalWs {
 		var finalWidth float64
@@ -135,4 +148,11 @@ func percentages(items ...float64) []float64 {
 // Return a new slice with one item removed.
 func remove(slice []float64, s int) []float64 {
 	return append(slice[:s], slice[s+1:]...)
+}
+
+// ContentBoxWidth returns the width of a width minus left and right margins.
+func ContentBoxWidth(fpdf *gofpdf.Fpdf) float64 {
+	tWidth, _ := fpdf.GetPageSize()
+	leftM, _, rightM, _ := fpdf.GetMargins()
+	return (tWidth - leftM - rightM)
 }

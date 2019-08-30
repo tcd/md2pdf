@@ -1,5 +1,7 @@
 package model
 
+import "strings"
+
 // Contents models the contents of a Paragraph, Blockquote, List Item, or Table Cell.
 type Contents struct {
 	Content []Text `json:"content"`
@@ -32,4 +34,9 @@ func (c Contents) AllContent() []string {
 		allContent[i] = text.Text
 	}
 	return allContent
+}
+
+// JoinContent returns the values of all Text.Text contained in Contents.
+func (c Contents) JoinContent() string {
+	return strings.Join(c.AllContent(), "")
 }
