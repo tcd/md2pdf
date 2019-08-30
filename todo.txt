@@ -1,15 +1,16 @@
+x 2019-08-30 2019-08-14 Add syntax highlighting in codeblocks.
+x 2019-08-30 2019-08-16 Add formatting to lists (bold, code, italic, links, strikethrough)
 2019-08-08 Add formatting to headers (bold, code, italic, links, strikethrough)
 2019-08-14 Draw images inside of links.
-2019-08-14 Add syntax highlighting in codeblocks.
+2019-08-15 Support links in images.
 2019-08-14 Support internal links.
 2019-08-14 Ignore html inside codeblocks.
 2019-08-15 Break pages in a more pleasing way.
-2019-08-15 Support links in images.
 2019-08-15 Figure out a good way to deal with images wrapped in paragraphs.
 2019-08-16 Add formatting to tables (bold, code, italic, links, strikethrough)
-2019-08-16 Add formatting to lists (bold, code, italic, links, strikethrough)
 2019-08-20 Handle markdown files with no top level header (h1).
 2019-08-23 Handle parsing list item contents wrapped in paragraphs.
 2019-08-23 Increase vertical margin for table body cells.
 2019-08-28 Read markdown from stdin.
 2019-08-28 Fetch markdown from a URL.
+2019-08-30 File error with gofpdf for splitting lines containing `⋅`.
