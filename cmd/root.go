@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -14,15 +14,36 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "md2pdf [FILE]",
 	Short: "Generate PDFs from markdown files",
-	Long:  `Generate PDFs from markdown files`,
-	Args:  cobra.ExactArgs(1),
+	PreRun: func(cmd *cobra.Command, args []string) {
+		silent, err := cmd.Flags().GetBool("silent")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if silent {
+			log.SetOutput(ioutil.Discard)
+		}
+	},
 	Run: func(cmd *cobra.Command, args []string) {
+		version, err := cmd.Flags().GetBool("version")
+		if err != nil {
+			log.Fatal(err)
+		}
+		if version {
+			log.Println(m2p.Version)
+			os.Exit(0)
+		}
+
+		if len(args) == 0 {
+			cmd.Help()
+			os.Exit(0)
+		}
+
 		outPath, _ := cmd.Flags().GetString("output")
 		newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("PDF generated:", newFile)
+		log.Println("PDF generated:", newFile)
 		os.Exit(0)
 	},
 }
@@ -30,8 +51,7 @@ var rootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }
 

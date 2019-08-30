@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 	m2p "github.com/tcd/md2pdf/internal/md2pdf"
@@ -12,7 +12,7 @@ var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Print version information about md2pdf",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(m2p.Version)
+		log.Println(m2p.Version)
 	},
 }
 
