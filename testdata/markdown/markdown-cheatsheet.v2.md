@@ -22,7 +22,7 @@ Note that there is also a [Cheatsheet specific to Markdown Here](./Markdown-Here
 
 ## Headers
 
-```no-highlight
+```markdown
 # H1
 ## H2
 ### H3
@@ -58,7 +58,7 @@ Alt-H2
 
 ## Emphasis
 
-```no-highlight
+```markdown
 Emphasis, aka italics, with *asterisks* or _underscores_.
 
 Strong emphasis, aka bold, with **asterisks** or __underscores__.
@@ -81,21 +81,17 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 ## Lists
 
-(In this example, leading and trailing spaces are shown with with dots: ⋅)
-
-```no-highlight
+```markdown
 1. First ordered list item
 2. Another item
-⋅⋅* Unordered sub-list. 
+  * Unordered sub-list. 
 1. Actual numbers don't matter, just that it's a number
-⋅⋅1. Ordered sub-list
+  1. Ordered sub-list
 4. And another item.
-
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
-
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+  You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+  To have a line break without a paragraph, you will need to use two trailing spaces.
+  Note that this line is separate, but within the same paragraph.
+  (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
 
 * Unordered list can use asterisks
 - Or minuses
@@ -125,7 +121,7 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 
 There are two ways to create links.
 
-```no-highlight
+```markdown
 [I'm an inline-style link](https://www.google.com)
 
 [I'm an inline-style link with title](https://www.google.com "Google's Homepage")
@@ -175,7 +171,7 @@ Some text to show that the reference links can follow later.
 
 ## Images
 
-```no-highlight
+```markdown
 Here's our logo (hover to see the title text):
 
 Inline-style: 
@@ -203,7 +199,7 @@ Reference-style:
 
 Code blocks are part of the Markdown spec, but syntax highlighting isn't. However, many renderers -- like Github's and *Markdown Here* -- support syntax highlighting. Which languages are supported and how those language names should be written will vary from renderer to renderer. *Markdown Here* supports highlighting for dozens of languages (and not-really-languages, like diffs and HTTP headers); to see the complete list, and how to write the language names, see the [highlight.js demo page](http://softwaremaniacs.org/media/soft/highlight/test.html).
 
-```no-highlight
+```markdown
 Inline `code` has `back-ticks around` it.
 ```
 
@@ -263,7 +259,7 @@ But let's throw in a <b>tag</b>.
 
 Tables aren't part of the core Markdown spec, but they are part of GFM and *Markdown Here* supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
 
-```no-highlight
+```markdown
 Colons can be used to align columns.
 
 | Tables        | Are           | Cool  |
@@ -301,7 +297,7 @@ Markdown | Less | Pretty
 
 ## Blockquotes
 
-```no-highlight
+```markdown
 > Blockquotes are very handy in email to emulate reply text.
 > This line is part of the same quote.
 
@@ -323,7 +319,7 @@ Quote break.
 
 You can also use raw HTML in your Markdown, and it'll mostly work pretty well. 
 
-```no-highlight
+```html
 <dl>
   <dt>Definition list</dt>
   <dd>Is something people use sometimes.</dd>
@@ -345,7 +341,7 @@ You can also use raw HTML in your Markdown, and it'll mostly work pretty well.
 
 ## Horizontal Rule
 
-```
+```markdown
 Three or more...
 
 ---
@@ -384,7 +380,7 @@ You'll soon learn to get what you want. "Markdown Toggle" is your friend.
 
 Here are some things to try out:
 
-```
+```markdown
 Here's a line for us to start with.
 
 This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
@@ -408,7 +404,7 @@ This line is only separated by a single newline, so it's a separate line in the 
 
 They can't be added directly but you can add an image with a link to the video like this:
 
-```no-highlight
+```html
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
 " target="_blank"><img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" 
 alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
@@ -416,7 +412,7 @@ alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" /></a>
 
 Or, in pure Markdown, but losing the image sizing and border:
 
-```no-highlight
+```markdown
 [![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 ```
 
