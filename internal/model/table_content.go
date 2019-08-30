@@ -94,14 +94,8 @@ func (tc TableContent) Widths(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
 
 	if len(widths) == 2 {
 		portions := percentages(widths...)
-		// larger := portions[0]
-		if portions[0] > portions[1] {
-			finalWs[0] = tableWidth * portions[0]
-			finalWs[1] = tableWidth - finalWs[0]
-		} else {
-			finalWs[1] = tableWidth * portions[1]
-			finalWs[0] = tableWidth - finalWs[1]
-		}
+		finalWs[0] = tableWidth * portions[0]
+		finalWs[1] = tableWidth * portions[1]
 		return finalWs
 	}
 
