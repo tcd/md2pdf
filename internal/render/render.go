@@ -27,6 +27,13 @@ func SetMetaData(f *gofpdf.Fpdf, author, title string) {
 	f.SetCreationDate(time.Now())
 }
 
+func dummyPDF() *gofpdf.Fpdf {
+	pdf := gofpdf.New("P", "mm", "Letter", "")
+	pdf.SetMargins(20, 15, 20)
+	pdf.AddPage()
+	return pdf
+}
+
 // ContentBox returns the width and height of a page minus margins.
 func ContentBox(fpdf *gofpdf.Fpdf) (width, height float64) {
 	tWidth, tHeight := fpdf.GetPageSize()
