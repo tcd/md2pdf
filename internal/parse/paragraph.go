@@ -11,6 +11,7 @@ func AddParagraph(e *renderable.Elements, z *html.Tokenizer) {
 	contents, imgTokens := parseP(z)
 
 	e.Add(renderable.Paragraph{
+		Type:    "paragraph",
 		Content: contents,
 	})
 
@@ -26,6 +27,7 @@ func AddParagraph(e *renderable.Elements, z *html.Tokenizer) {
 func Paragraph(z *html.Tokenizer) renderable.Paragraph {
 	contents, _ := parseP(z)
 	return renderable.Paragraph{
+		Type:    "paragraph",
 		Content: contents,
 	}
 	// if len(imgTokens) > 0 {
@@ -39,6 +41,7 @@ func Paragraph(z *html.Tokenizer) renderable.Paragraph {
 func Blockquote(z *html.Tokenizer) renderable.Blockquote {
 	contents, _ := parseP(z)
 	return renderable.Blockquote{
+		Type:    "blockquote",
 		Content: contents,
 	}
 }

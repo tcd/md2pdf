@@ -8,13 +8,15 @@ import (
 // Image gathers the data needed to render an image.
 func Image(token html.Token) renderable.Image {
 	return renderable.Image{
-		Src: parseImg(token),
+		Type: "image",
+		Src:  parseImg(token),
 	}
 }
 
 // LinkedImage gathers the data needed to render an image with an embedded link.
 func LinkedImage(token html.Token, href string) renderable.Image {
 	return renderable.Image{
+		Type: "image",
 		Src:  parseImg(token),
 		Link: href,
 	}

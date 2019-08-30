@@ -9,6 +9,7 @@ import (
 // List gathers the data needed to render a list.
 func List(z *html.Tokenizer, startToken html.Token) renderable.List {
 	return renderable.List{
+		Type:    "list",
 		Content: parseEntries(z, startToken),
 	}
 }

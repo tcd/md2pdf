@@ -12,6 +12,7 @@ func Header(z *html.Tokenizer, startToken html.Token) renderable.Header {
 	level, content, _ := parseHeader(z, startToken)
 
 	return renderable.Header{
+		Type:    "header",
 		Level:   level,
 		Content: content,
 	}

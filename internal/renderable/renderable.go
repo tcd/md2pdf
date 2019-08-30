@@ -15,6 +15,7 @@ type Renderable interface {
 
 // Blockquote implements the Renderable interface.
 type Blockquote struct {
+	Type    string
 	Content model.Contents
 }
 
@@ -25,6 +26,7 @@ func (b Blockquote) Render(pdf *gofpdf.Fpdf) {
 
 // Codeblock implements the Renderable interface.
 type Codeblock struct {
+	Type    string
 	Class   string
 	Content model.Contents
 }
@@ -40,6 +42,7 @@ func (cb Codeblock) Render(pdf *gofpdf.Fpdf) {
 
 // Header implements the Renderable interface.
 type Header struct {
+	Type    string
 	Level   string
 	Content model.Contents
 }
@@ -66,7 +69,9 @@ func (h Header) Render(pdf *gofpdf.Fpdf) {
 }
 
 // HR implements the Renderable interface.
-type HR struct{}
+type HR struct {
+	Type string
+}
 
 // Render a horizontal rule.
 func (hr HR) Render(pdf *gofpdf.Fpdf) {
@@ -75,6 +80,7 @@ func (hr HR) Render(pdf *gofpdf.Fpdf) {
 
 // Image implements the Renderable interface.
 type Image struct {
+	Type string
 	Src  string
 	Link string
 }
@@ -86,6 +92,7 @@ func (img Image) Render(pdf *gofpdf.Fpdf) {
 
 // List implements the Renderable interface.
 type List struct {
+	Type    string
 	Content model.ListContent
 }
 
@@ -96,6 +103,7 @@ func (ls List) Render(pdf *gofpdf.Fpdf) {
 
 // Paragraph implements the Renderable interface.
 type Paragraph struct {
+	Type    string
 	Content model.Contents
 }
 
@@ -106,6 +114,7 @@ func (p Paragraph) Render(pdf *gofpdf.Fpdf) {
 
 // Table implements the Renderable interface.
 type Table struct {
+	Type    string
 	Content model.TableContent
 }
 
