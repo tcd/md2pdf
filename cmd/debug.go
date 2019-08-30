@@ -15,7 +15,6 @@ var debugCmd = &cobra.Command{
 	Hidden: true,
 	Args:   cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		log.SetFlags(log.Llongfile)
 		err := m2p.Debug(args[0], "")
 		if err != nil {
 			log.Fatal(err)
