@@ -13,7 +13,8 @@ const (
 
 // Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
 func Setup(f *gofpdf.Fpdf) {
-	f.SetMargins(20, 15, 20)
+	f.SetMargins(20, 15, 20)    // left, top, right margins
+	f.SetAutoPageBreak(true, 5) // bottom margin
 	f.AddPage()
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
@@ -29,8 +30,7 @@ func SetMetaData(f *gofpdf.Fpdf, author, title string) {
 
 func dummyPDF() *gofpdf.Fpdf {
 	pdf := gofpdf.New("P", "mm", "Letter", "")
-	pdf.SetMargins(20, 15, 20)
-	pdf.AddPage()
+	Setup(pdf)
 	return pdf
 }
 
