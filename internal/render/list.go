@@ -7,12 +7,6 @@ import (
 	"github.com/tcd/md2pdf/internal/model"
 )
 
-const (
-	levelOneMargin   = 22.5
-	levelTwoMargin   = 27.5
-	levelThreeMargin = 32.5
-)
-
 var margins = map[int]float64{
 	0: 22.5,
 	1: 22.5,
@@ -25,8 +19,9 @@ func List(pdf *gofpdf.Fpdf, list model.ListContent) {
 	level := 1
 	pdf.SetLeftMargin(margins[level])
 	pdf.SetRightMargin(21)
+	pdf.SetFont("helvetica", "", 12)
 	_, lineHt := pdf.GetFontSize() // need to call this after we call SetFont.
-	// lineHt = lineHt * 1.5
+	lineHt *= 1.5
 
 	for i, item := range list.Items {
 		if list.Ordered {
@@ -36,7 +31,7 @@ func List(pdf *gofpdf.Fpdf, list model.ListContent) {
 		}
 		drawListItemContent(pdf, item.Contents)
 		pdf.SetLeftMargin(margins[level])
-		pdf.Ln(-1) // A negative value indicates the height of the last printed cell.
+		pdf.Ln(-1)
 		pdf.Ln(2)
 		if item.HasChildren() {
 			drawList(pdf, item.Children, level+1)
@@ -53,7 +48,7 @@ func drawList(pdf *gofpdf.Fpdf, list model.ListContent, level int) {
 	pdf.SetLeftMargin(margins[level])
 	pdf.SetFont("helvetica", "", 12)
 	_, lineHt := pdf.GetFontSize() // need to call this after we call SetFont.
-	// lineHt = lineHt * 1.5
+	lineHt *= 1.5
 
 	lastIndex := len(list.Items) - 1
 	for i, item := range list.Items {
@@ -115,6 +110,8 @@ func liSpan(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 func liInlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFont("courier", styleStr, 12)
 	pdf.SetFillColor(DefaultBG())
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 
 	x := pdf.GetX()
 	pageWidth, _ := pdf.GetPageSize()
@@ -138,7 +135,8 @@ func liStrike(pdf *gofpdf.Fpdf, txt model.Text, styleStr string) {
 	pdf.SetFillColor(DefaultBG())
 	pdf.SetDrawColor(DefaultFG())
 	width := pdf.GetStringWidth(txt.Text)
-	var lineHt float64 = 6
+	_, lineHt := pdf.GetFontSize()
+	lineHt *= 1.5
 
 	// Where the text starts, also where to start the strikethrough line.
 	x := pdf.GetX()
