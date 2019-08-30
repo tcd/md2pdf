@@ -8,7 +8,7 @@ import (
 	"github.com/tcd/md2pdf/internal/render"
 )
 
-// Renderable implementers can return data that can be used to draw them to a gofpdf.Fpdf.
+// Renderable implementers can draw content to a gofpdf.Fpdf.
 type Renderable interface {
 	Render(*gofpdf.Fpdf)
 }
