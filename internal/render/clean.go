@@ -35,7 +35,7 @@ func cleanString(str string) string {
 	for k, v := range escapes {
 		newStr = strings.ReplaceAll(newStr, k, v)
 	}
-	re := regexp.MustCompile(`\t+`)
-	newStr = re.ReplaceAllString(newStr, " ")
+	re := regexp.MustCompile(`\t`)
+	newStr = re.ReplaceAllString(newStr, "    ")
 	return newStr
 }
