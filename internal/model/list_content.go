@@ -11,6 +11,14 @@ func (ls *ListContent) AddItems(listItem ...ListItem) {
 	ls.Items = append(ls.Items, listItem...)
 }
 
+// NewItem creates a new ListItem whose contents are comprised of
+// the given Text arguments and adds that ListItem to a List's Items.
+func (ls *ListContent) NewItem(texts ...Text) {
+	newItem := ListItem{}
+	newItem.AddContent(texts...)
+	ls.AddItems(newItem)
+}
+
 // ListItem is a single list bullet, and may contain a nested list.
 type ListItem struct {
 	Contents `json:"contents"`
