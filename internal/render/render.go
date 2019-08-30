@@ -13,8 +13,8 @@ const (
 
 // Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
 func Setup(f *gofpdf.Fpdf) {
-	f.SetMargins(20, 15, 20)    // left, top, right margins
-	f.SetAutoPageBreak(true, 5) // bottom margin
+	f.SetMargins(20, 20, 20)     // left, top, right margins
+	f.SetAutoPageBreak(true, 20) // bottom margin
 	f.AddPage()
 	f.SetFillColor(255, 255, 255)
 	f.SetTextColor(36, 41, 46)
