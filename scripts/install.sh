@@ -17,4 +17,4 @@ flags="
 "
 
 GO111MODULE=on
-go build -ldflags="$flags" -o=build/md2pdf
+go install -ldflags="$flags"

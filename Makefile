@@ -20,7 +20,7 @@ test:
 
 # Install md2pdf to $GOBIN.
 install:
-	GO111MODULE=on $(GO) install
+	@./scripts/install.sh
 
 # Remove md2pdf from $GOBIN.
 uninstall:

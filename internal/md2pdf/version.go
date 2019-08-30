@@ -4,15 +4,15 @@ import "fmt"
 
 // VersionInfo about a build of md2pdf.
 type VersionInfo struct {
-	Major  string
-	Minor  string
-	Patch  string
-	Commit string
-	Date   string
+	Major string
+	Minor string
+	Patch string
+	Hash  string
+	Date  string
 }
 
 func (v VersionInfo) String() string {
-	return fmt.Sprintf("md2pdf %s.%s.%s (%s)", v.Major, v.Minor, v.Patch, v.Date)
+	return fmt.Sprintf("md2pdf v%s.%s.%s (%s %s)", v.Major, v.Minor, v.Patch, v.Hash, v.Date)
 }
 
 var (
@@ -22,6 +22,8 @@ var (
 	VersionMinor string
 	// VersionPatch is set during build
 	VersionPatch string
+	// VersionHash is set during build
+	VersionHash string
 	// VersionDate is set during build
 	VersionDate string
 )
@@ -31,5 +33,6 @@ var Version = VersionInfo{
 	Major: VersionMajor,
 	Minor: VersionMinor,
 	Patch: VersionPatch,
+	Hash:  VersionHash,
 	Date:  VersionDate,
 }
