@@ -53,7 +53,7 @@ func parseEntry(z *html.Tokenizer) model.ListItem {
 				} else {
 					this.Contents.AddStr(content)
 				}
-			} else if content != "\n" {
+			} else if content != "\n" && content != "\n\n" {
 				this.Contents.AddStr(content)
 			}
 		}
