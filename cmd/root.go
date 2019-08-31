@@ -14,7 +14,6 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "md2pdf [FILE]",
 	Short: "Generate PDFs from markdown files",
-	Args:  cobra.ExactArgs(1),
 	PreRun: func(cmd *cobra.Command, args []string) {
 		// Run silently for --silent
 		silent, err := cmd.Flags().GetBool("silent")
