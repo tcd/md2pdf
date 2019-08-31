@@ -1,4 +1,4 @@
-package render
+package lib
 
 import "testing"
 
@@ -17,7 +17,7 @@ func TestCleanString(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		got := cleanString(c.in)
+		got := CleanString(c.in)
 		if got != c.want {
 			t.Errorf("Reverse(%q) == %q, want %q", c.in, got, c.want)
 			t.Errorf("cleanString:\n\thave %q\n\twant %q", got, c.want)

@@ -3,12 +3,12 @@ package render
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"log"
 	"strings"
 
 	"github.com/alecthomas/chroma/quick"
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/lib"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
@@ -65,20 +65,20 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 
 	// Get top left corner, avoid page breaking inside a block.
 	x1, y1 := pdf.GetXY()
-	if y1+blockHt > ContentBoxHeight(pdf) {
+	if y1+blockHt > lib.ContentBoxHeight(pdf) {
 		pdf.AddPage()
 		x1, y1 = pdf.GetXY()
 	}
 	// Draw the background.
-	pdf.Rect(x1, y1, ContentBoxWidth(pdf), blockHt, "F")
+	pdf.Rect(x1, y1, lib.ContentBoxWidth(pdf), blockHt, "F")
 
 	// Write out the content for real this time.
 	pdf.SetXY(x1, y1)
 	pdf.Ln(lineHt)
 	for _, token := range tokens {
-		r, g, b, _ := HexToRGB(styleMap[token.Type])
+		r, g, b, _ := lib.HexToRGB(styleMap[token.Type])
 		pdf.SetTextColor(r, g, b)
-		pdf.Write(lineHt, cleanString(token.Value))
+		pdf.Write(lineHt, lib.CleanString(token.Value))
 	}
 	pdf.Ln(lineHt)
 
@@ -186,49 +186,4 @@ var styleMap = map[string]string{
 	"NameVariableClass":    "#9cdcfe",
 	"NameVariableGlobal":   "#9cdcfe",
 	"NameVariableInstance": "#9cdcfe",
-}
-
-// HexToRGB takes a hex color value and returns three ints with its red, green, and blue values.
-// Source: https://stackoverflow.com/a/54200713/7687024
-func HexToRGB(s string) (r, g, b int, err error) {
-	var errInvalidFormat = errors.New("invalid format")
-
-	if len(s) == 0 {
-		return r, g, b, errInvalidFormat
-	}
-	if s[0] != '#' {
-		return r, g, b, errInvalidFormat
-	}
-
-	hexToByte := func(b byte) byte {
-		switch {
-		case b >= '0' && b <= '9':
-			return b - '0'
-		case b >= 'a' && b <= 'f':
-			return b - 'a' + 10
-		case b >= 'A' && b <= 'F':
-			return b - 'A' + 10
-		}
-		err = errInvalidFormat
-		return 0
-	}
-
-	var rVal, gVal, bVal uint8
-	switch len(s) {
-	case 7:
-		rVal = hexToByte(s[1])<<4 + hexToByte(s[2])
-		gVal = hexToByte(s[3])<<4 + hexToByte(s[4])
-		bVal = hexToByte(s[5])<<4 + hexToByte(s[6])
-	case 4:
-		rVal = hexToByte(s[1]) * 17
-		gVal = hexToByte(s[2]) * 17
-		bVal = hexToByte(s[3]) * 17
-	default:
-		err = errInvalidFormat
-	}
-
-	r = int(rVal)
-	g = int(gVal)
-	b = int(bVal)
-	return
 }

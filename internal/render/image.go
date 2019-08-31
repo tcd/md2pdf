@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/lib"
 )
 
 // Image writes a JPEG, PNG or GIF to a gofpdf.Fpdf.
@@ -60,9 +61,9 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link str
 
 	x, y := f.GetXY()
 
-	imgHeight := pxToMm(height)
-	imgWidth := pxToMm(width)
-	cbWidth := ContentBoxWidth(f)
+	imgHeight := lib.PxToMm(height)
+	imgWidth := lib.PxToMm(width)
+	cbWidth := lib.ContentBoxWidth(f)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
@@ -98,9 +99,9 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link stri
 
 	x, y := f.GetXY()
 
-	imgHeight := pxToMm(height)
-	imgWidth := pxToMm(width)
-	cbWidth := ContentBoxWidth(f)
+	imgHeight := lib.PxToMm(height)
+	imgWidth := lib.PxToMm(width)
+	cbWidth := lib.ContentBoxWidth(f)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
@@ -172,10 +173,4 @@ func newImageOpts(format string) (gofpdf.ImageOptions, error) {
 	}
 
 	return opt, err
-}
-
-// pxToMm converts pixels to millimeters.
-func pxToMm(pixels int) float64 {
-	px := float64(pixels)
-	return (px * (25.4 / 72))
 }

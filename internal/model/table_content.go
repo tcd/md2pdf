@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/lib"
 )
 
 // TableContent represents the contents of a table element.
@@ -84,7 +85,7 @@ func (tc TableContent) headerWidths(pdf *gofpdf.Fpdf) []float64 {
 func (tc TableContent) Widths(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
 	colCount := tc.ColCount()
 	cellPadding := (cellMargin * 2)
-	tableWidth := (ContentBoxWidth(pdf) - (cellPadding * float64(colCount)))
+	tableWidth := (lib.ContentBoxWidth(pdf) - (cellPadding * float64(colCount)))
 	widths := tc.longestWidths(pdf)
 	if sum(widths...) <= tableWidth {
 		return widths
@@ -142,11 +143,4 @@ func percentages(items ...float64) []float64 {
 // Return a new slice with one item removed.
 func remove(slice []float64, s int) []float64 {
 	return append(slice[:s], slice[s+1:]...)
-}
-
-// ContentBoxWidth returns the width of a width minus left and right margins.
-func ContentBoxWidth(fpdf *gofpdf.Fpdf) float64 {
-	tWidth, _ := fpdf.GetPageSize()
-	leftM, _, rightM, _ := fpdf.GetMargins()
-	return (tWidth - leftM - rightM)
 }

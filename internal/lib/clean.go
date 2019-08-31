@@ -1,4 +1,4 @@
-package render
+package lib
 
 import (
 	"regexp"
@@ -28,9 +28,13 @@ var escapes = map[string]string{
 	// "&frac12;": "1/2",  // ½
 	// "&frac14;": "1/4",  // ¼
 	// "&frac34;": "3/4",  // ¾
+	"\u003c": "<",
+	"\u003e": ">",
 }
 
-func cleanString(str string) string {
+// CleanString places escape characters with their real values
+// and replaces tabs with a number of spaces.
+func CleanString(str string) string {
 	newStr := str[:]
 	for k, v := range escapes {
 		newStr = strings.ReplaceAll(newStr, k, v)
