@@ -41,6 +41,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 	f.SetFont("helvetica", "", 12) // Body Font
 
 	fill := false
+	_, lineHt := f.GetFontSize()
 	alignments := table.Alignments
 	_, pageHeight := f.GetPageSize()
 	_, _, _, bottomMargin := f.GetMargins()
@@ -50,15 +51,15 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 		startX, y := f.GetXY()
 		x := startX
 		height := 0.00
-		_, lineHt := f.GetFontSize()
 
-		for i, txt := range row {
+		// Determine the height needed for a cell.
+		for i, cell := range row {
 			var lines [][]byte
-			if f.GetStringWidth(txt.JoinContent()) < widths[i] {
+			if f.GetStringWidth(cell.JoinContent()) < widths[i] {
 				lines = make([][]byte, 1)
-				lines[0] = []byte(txt.JoinContent())
+				lines[0] = []byte(cell.JoinContent())
 			} else {
-				lines = f.SplitLines([]byte(txt.JoinContent()), widths[i]-lrMargin*2)
+				lines = f.SplitLines([]byte(cell.JoinContent()), widths[i]-lrMargin*2)
 			}
 			h := float64(len(lines))*lineHt + tbMargin*2*float64(len(lines))
 			if h > height {
@@ -72,7 +73,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 			y = f.GetY()
 		}
 
-		for i, txt := range row {
+		for i, cell := range row {
 			width := widths[i] + lrMargin
 			if fill {
 				f.Rect(x, y, width, height, "FD")
@@ -80,7 +81,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 				f.Rect(x, y, width, height, "D")
 			}
 			f.SetX(x)
-			f.MultiCell(width, lineHt+(tbMargin*2), txt.JoinContent(), "", alignments[i], false)
+			f.MultiCell(width, lineHt+(tbMargin*2), cell.JoinContent(), "", alignments[i], false)
 			x += width
 			f.SetXY(x, y)
 		}
