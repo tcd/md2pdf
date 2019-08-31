@@ -6,102 +6,102 @@ import (
 )
 
 // H1 write a 1st level header to a gofpdf.Fpdf.
-func H1(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 24)
-	f.SetTextColor(DefaultFG())
-	_, lineHt := f.GetFontSize()
+func H1(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 24)
+	pdf.SetTextColor(DefaultFG())
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.7
 
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
+	pdf.Ln(-1)
 
-	x := f.GetX()
-	y := f.GetY()
-	f.SetLineWidth(0.09)
-	f.SetDrawColor(HrFG())
-	f.Line(x, y, x+pageWidth, y)
-	f.Ln(5)
+	x := pdf.GetX()
+	y := pdf.GetY()
+	pdf.SetLineWidth(0.09)
+	pdf.SetDrawColor(HrFG())
+	pdf.Line(x, y, x+pageWidth, y)
+	pdf.Ln(5)
 }
 
 // H2 write a 2nd level header to a gofpdf.Fpdf.
-func H2(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 18)
-	f.SetTextColor(DefaultFG())
-	_, lineHt := f.GetFontSize()
+func H2(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 18)
+	pdf.SetTextColor(DefaultFG())
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.6
 
-	f.Ln(3)
+	pdf.Ln(3)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
+	pdf.Ln(-1)
 
-	x := f.GetX()
-	y := f.GetY()
-	f.SetLineWidth(0.09)
-	f.SetDrawColor(HrFG())
-	f.Line(x, y, x+pageWidth, y)
-	f.Ln(5)
+	x := pdf.GetX()
+	y := pdf.GetY()
+	pdf.SetLineWidth(0.09)
+	pdf.SetDrawColor(HrFG())
+	pdf.Line(x, y, x+pageWidth, y)
+	pdf.Ln(5)
 }
 
 // H3 write a 3rd level header to a gofpdf.Fpdf.
-func H3(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 15)
-	f.SetTextColor(DefaultFG())
-	_, lineHt := f.GetFontSize()
+func H3(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 15)
+	pdf.SetTextColor(DefaultFG())
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(3)
+	pdf.Ln(3)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
-	f.Ln(4)
+	pdf.Ln(-1)
+	pdf.Ln(4)
 }
 
 // H4 write a 4th level header to a gofpdf.Fpdf.
-func H4(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 12)
-	f.SetTextColor(DefaultFG())
-	_, lineHt := f.GetFontSize()
+func H4(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 12)
+	pdf.SetTextColor(DefaultFG())
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(2)
+	pdf.Ln(2)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
-	f.Ln(3)
+	pdf.Ln(-1)
+	pdf.Ln(3)
 }
 
 // H5 write a 5th level header to a gofpdf.Fpdf.
-func H5(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 10.5)
-	f.SetTextColor(DefaultFG())
-	_, lineHt := f.GetFontSize()
+func H5(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 10.5)
+	pdf.SetTextColor(DefaultFG())
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(2)
+	pdf.Ln(2)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
-	f.Ln(3)
+	pdf.Ln(-1)
+	pdf.Ln(3)
 }
 
 // H6 write a 6th level header to a gofpdf.Fpdf.
-func H6(f *gofpdf.Fpdf, contents model.Contents) {
-	f.SetFont("helvetica", "B", 10.5)
-	f.SetTextColor(106, 115, 125)
-	_, lineHt := f.GetFontSize()
+func H6(pdf *gofpdf.Fpdf, contents model.Contents) {
+	pdf.SetFont("helvetica", "B", 10.5)
+	pdf.SetTextColor(106, 115, 125)
+	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
 
-	f.Ln(2)
+	pdf.Ln(2)
 	for _, txt := range contents.Content {
-		f.Write(lineHt, txt.Text)
+		pdf.Write(lineHt, txt.Text)
 	}
-	f.Ln(-1)
-	f.Ln(3)
+	pdf.Ln(-1)
+	pdf.Ln(3)
 }

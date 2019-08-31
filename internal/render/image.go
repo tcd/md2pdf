@@ -17,7 +17,7 @@ import (
 )
 
 // Image writes a JPEG, PNG or GIF to a gofpdf.Fpdf.
-func Image(f *gofpdf.Fpdf, src, link string) {
+func Image(pdf *gofpdf.Fpdf, src, link string) {
 	isRemote, err := regexp.MatchString(`^(https://|http://|www)`, strings.ToLower(src))
 	if err != nil {
 		log.Println(err)
@@ -29,19 +29,19 @@ func Image(f *gofpdf.Fpdf, src, link string) {
 			log.Println(err)
 			return
 		}
-		remoteImage(f, src, width, height, format, "")
+		remoteImage(pdf, src, width, height, format, "")
 	} else {
 		width, height, format, err := localImageInfo(src)
 		if err != nil {
 			log.Println(err)
 			return
 		}
-		localImage(f, src, width, height, format, "")
+		localImage(pdf, src, width, height, format, "")
 	}
-	f.Ln(9)
+	pdf.Ln(9)
 }
 
-func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link string) {
+func remoteImage(pdf *gofpdf.Fpdf, src string, width, height int, format, link string) {
 	res, err := http.Get(src)
 	if err != nil {
 		log.Println("Unable to fetch image: ", src)
@@ -56,20 +56,20 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link str
 		return
 	}
 
-	_ = f.RegisterImageOptionsReader(src, opt, res.Body)
+	_ = pdf.RegisterImageOptionsReader(src, opt, res.Body)
 	res.Body.Close()
 
-	x, y := f.GetXY()
+	x, y := pdf.GetXY()
 
 	imgHeight := lib.PxToMm(height)
 	imgWidth := lib.PxToMm(width)
-	cbWidth := lib.ContentBoxWidth(f)
+	cbWidth := lib.ContentBoxWidth(pdf)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
 	}
 
-	f.ImageOptions(
+	pdf.ImageOptions(
 		src,       // path to image
 		x,         // x
 		y,         // y
@@ -82,7 +82,7 @@ func remoteImage(f *gofpdf.Fpdf, src string, width, height int, format, link str
 	)
 }
 
-func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link string) {
+func localImage(pdf *gofpdf.Fpdf, src string, width, height int, format, link string) {
 	file, err := os.Open(src)
 	if err != nil {
 		log.Println(err)
@@ -95,19 +95,19 @@ func localImage(f *gofpdf.Fpdf, src string, width, height int, format, link stri
 		return
 	}
 
-	_ = f.RegisterImageOptionsReader(src, opt, file)
+	_ = pdf.RegisterImageOptionsReader(src, opt, file)
 
-	x, y := f.GetXY()
+	x, y := pdf.GetXY()
 
 	imgHeight := lib.PxToMm(height)
 	imgWidth := lib.PxToMm(width)
-	cbWidth := lib.ContentBoxWidth(f)
+	cbWidth := lib.ContentBoxWidth(pdf)
 	if imgWidth > cbWidth {
 		imgHeight = imgHeight * (cbWidth / imgWidth)
 		imgWidth = cbWidth
 	}
 
-	f.ImageOptions(
+	pdf.ImageOptions(
 		src,       // path to image
 		x,         // x
 		y,         // y

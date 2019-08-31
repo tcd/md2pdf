@@ -8,25 +8,25 @@ import (
 )
 
 // BasicBlockquote writes text to a blockquote without rendering any enclosed elements.
-func BasicBlockquote(f *gofpdf.Fpdf, text string) {
-	oldCellMargin := f.GetCellMargin()
+func BasicBlockquote(pdf *gofpdf.Fpdf, text string) {
+	oldCellMargin := pdf.GetCellMargin()
 
-	f.SetFont("helvetica", "", 12)
-	f.SetTextColor(BlockquoteFG())
-	f.SetDrawColor(BlockquoteBorder())
-	f.SetLineWidth(1)
-	f.SetCellMargin(4)
+	pdf.SetFont("helvetica", "", 12)
+	pdf.SetTextColor(BlockquoteFG())
+	pdf.SetDrawColor(BlockquoteBorder())
+	pdf.SetLineWidth(1)
+	pdf.SetCellMargin(4)
 
-	_, lineHeight := f.GetFontSize()
-	f.MultiCell(0, lineHeight*1.5, text, "LM", "", false)
-	f.Ln(5)
+	_, lineHeight := pdf.GetFontSize()
+	pdf.MultiCell(0, lineHeight*1.5, text, "LM", "", false)
+	pdf.Ln(5)
 
-	f.SetCellMargin(oldCellMargin)
+	pdf.SetCellMargin(oldCellMargin)
 }
 
 // Blockquote does what BasicBlockquote don't.
-func Blockquote(f *gofpdf.Fpdf, contents model.Contents) {
+func Blockquote(pdf *gofpdf.Fpdf, contents model.Contents) {
 	allContent := contents.AllContent()
 	text := strings.TrimSpace(strings.Join(allContent, ""))
-	BasicBlockquote(f, text)
+	BasicBlockquote(pdf, text)
 }
