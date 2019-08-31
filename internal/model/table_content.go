@@ -86,40 +86,40 @@ func (tc TableContent) Widths(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
 	colCount := tc.ColCount()
 	cellPadding := (cellMargin * 2)
 	tableWidth := (lib.ContentBoxWidth(pdf) - (cellPadding * float64(colCount)))
+	headerWidths := tc.headerWidths(pdf)
 	widths := tc.longestWidths(pdf)
 	if sum(widths...) <= tableWidth {
 		return widths
 	}
 
-	finalWs := make([]float64, colCount)
+	finalWidths := make([]float64, colCount)
 
 	if len(widths) == 2 {
+		remainingWidth := tableWidth - sum(headerWidths...)
 		portions := percentages(widths...)
-		finalWs[0] = tableWidth * portions[0]
-		finalWs[1] = tableWidth * portions[1]
-		return finalWs
+		finalWidths[0] = (remainingWidth * portions[0]) + headerWidths[0] + cellMargin
+		finalWidths[1] = (remainingWidth * portions[1]) + headerWidths[1] + cellMargin
+		return finalWidths
 	}
 
-	hWidths := tc.headerWidths(pdf)
-
-	for i := range finalWs {
+	for i := range finalWidths {
 		var finalWidth float64
 		portions := percentages(widths...)
 		if portions[i] == 1 {
-			finalWs[i] = tableWidth + cellPadding
+			finalWidths[i] = tableWidth + cellPadding
 			continue
 		}
-		if widths[i] < tableWidth && tableWidth*portions[i] < hWidths[i] {
-			finalWidth = hWidths[i] + cellPadding
-			tableWidth = tableWidth - (hWidths[i] + cellPadding)
+		if widths[i] < tableWidth && tableWidth*portions[i] < headerWidths[i] {
+			finalWidth = headerWidths[i] + cellPadding
+			tableWidth = tableWidth - (headerWidths[i] + cellPadding)
 			widths[i] = 0
 		} else {
 			finalWidth = (tableWidth * (portions[i] + cellPadding))
 		}
-		finalWs[i] = finalWidth
+		finalWidths[i] = finalWidth
 	}
 
-	return finalWs
+	return finalWidths
 }
 
 // Return the sum of any number of `float64`s.
