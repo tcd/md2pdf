@@ -1,6 +1,8 @@
 package render
 
 import (
+	"strings"
+
 	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
 )
@@ -12,9 +14,7 @@ func H1(pdf *gofpdf.Fpdf, contents model.Contents) {
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.7
 
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 24)
 	pdf.Ln(-1)
 
 	hr(pdf, 0.09)
@@ -29,9 +29,7 @@ func H2(pdf *gofpdf.Fpdf, contents model.Contents) {
 	lineHt *= 1.6
 
 	pdf.Ln(3)
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 18)
 	pdf.Ln(-1)
 
 	hr(pdf, 0.09)
@@ -46,9 +44,7 @@ func H3(pdf *gofpdf.Fpdf, contents model.Contents) {
 	lineHt *= 1.5
 
 	pdf.Ln(3)
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 15)
 	pdf.Ln(-1)
 	pdf.Ln(4)
 }
@@ -61,9 +57,7 @@ func H4(pdf *gofpdf.Fpdf, contents model.Contents) {
 	lineHt *= 1.5
 
 	pdf.Ln(2)
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 12)
 	pdf.Ln(-1)
 	pdf.Ln(3)
 }
@@ -76,9 +70,7 @@ func H5(pdf *gofpdf.Fpdf, contents model.Contents) {
 	lineHt *= 1.5
 
 	pdf.Ln(2)
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 10.5)
 	pdf.Ln(-1)
 	pdf.Ln(3)
 }
@@ -91,9 +83,31 @@ func H6(pdf *gofpdf.Fpdf, contents model.Contents) {
 	lineHt *= 1.5
 
 	pdf.Ln(2)
-	for _, txt := range contents.Content {
-		pdf.Write(lineHt, txt.Text)
-	}
+	drawHeaderContent(pdf, contents, 10.5)
 	pdf.Ln(-1)
 	pdf.Ln(3)
+}
+
+// Like drawContent, but everything is bold by default.
+func drawHeaderContent(pdf *gofpdf.Fpdf, c model.Contents, fontSize float64) {
+	for _, txt := range c.Content {
+		if txt.Text == "" {
+			continue
+		}
+
+		var styles strings.Builder
+		styles.WriteRune('B')
+		if txt.Italic {
+			styles.WriteRune('I')
+		}
+		styleStr := styles.String()
+
+		if txt.Code {
+			inlineCode(pdf, txt, styleStr, fontSize)
+		} else if txt.Strike {
+			strike(pdf, txt, styleStr, fontSize)
+		} else {
+			span(pdf, txt, styleStr, fontSize)
+		}
+	}
 }
