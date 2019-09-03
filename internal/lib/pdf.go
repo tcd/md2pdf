@@ -14,14 +14,30 @@ func ContentBox(fpdf *gofpdf.Fpdf) (width, height float64) {
 
 // ContentBoxWidth returns the width of a width minus left and right margins.
 func ContentBoxWidth(fpdf *gofpdf.Fpdf) float64 {
-	tWidth, _ := fpdf.GetPageSize()
-	leftM, _, rightM, _ := fpdf.GetMargins()
-	return (tWidth - leftM - rightM)
+	pageWidth, _ := fpdf.GetPageSize()
+	leftMargin, _, rightMargin, _ := fpdf.GetMargins()
+	return (pageWidth - leftMargin - rightMargin)
 }
 
 // ContentBoxHeight returns the height of a page minus top and bottom margins.
 func ContentBoxHeight(fpdf *gofpdf.Fpdf) float64 {
-	_, tHeight := fpdf.GetPageSize()
-	_, topM, _, bottomM := fpdf.GetMargins()
-	return (tHeight - topM - bottomM)
+	_, pageHeight := fpdf.GetPageSize()
+	_, topMargin, _, bottomMargin := fpdf.GetMargins()
+	return (pageHeight - topMargin - bottomMargin)
+}
+
+// ContentBoxBottom returns the page height minus the bottom margin.
+// Anything written below this needs to break to a new page.
+func ContentBoxBottom(fpdf *gofpdf.Fpdf) float64 {
+	_, pageHeight := fpdf.GetPageSize()
+	_, _, _, bottomMargin := fpdf.GetMargins()
+	return (pageHeight - bottomMargin)
+}
+
+// ContentBoxRight returns the page width minus the right margin.
+// Anything written beyond this needs to wrap to a new line.
+func ContentBoxRight(fpdf *gofpdf.Fpdf) float64 {
+	pageWidth, _ := fpdf.GetPageSize()
+	_, _, rightMargin, _ := fpdf.GetMargins()
+	return (pageWidth - rightMargin)
 }
