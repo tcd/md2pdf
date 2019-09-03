@@ -32,3 +32,21 @@ Alt-H1
 
 Alt-H2
 ------
+
+
+---
+
+## Styled Headers
+
+# ~~Headers~~
+
+## Headers are already **bold**
+
+### But we should be able to *make them italic*
+
+### And ~~Strike Through Them~~!
+
+## Even Put [Links](https://github.com/tcd/md2pdf) in Them
+
+<!-- Lol, it says bold but it should be italic. -->
+## But Are We *Bold* Enough to Use `INLINE CODE?`
