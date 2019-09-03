@@ -17,11 +17,7 @@ func H1(pdf *gofpdf.Fpdf, contents model.Contents) {
 	}
 	pdf.Ln(-1)
 
-	x := pdf.GetX()
-	y := pdf.GetY()
-	pdf.SetLineWidth(0.09)
-	pdf.SetDrawColor(HrFG())
-	pdf.Line(x, y, x+pageWidth, y)
+	hr(pdf, 0.09)
 	pdf.Ln(5)
 }
 
@@ -38,11 +34,7 @@ func H2(pdf *gofpdf.Fpdf, contents model.Contents) {
 	}
 	pdf.Ln(-1)
 
-	x := pdf.GetX()
-	y := pdf.GetY()
-	pdf.SetLineWidth(0.09)
-	pdf.SetDrawColor(HrFG())
-	pdf.Line(x, y, x+pageWidth, y)
+	hr(pdf, 0.09)
 	pdf.Ln(5)
 }
 

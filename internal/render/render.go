@@ -7,10 +7,6 @@ import (
 	"github.com/jung-kurt/gofpdf"
 )
 
-const (
-	pageWidth = 176 // (216 - 40 for margins)
-)
-
 // Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
 func Setup(f *gofpdf.Fpdf) {
 	f.SetMargins(20, 20, 20)     // left, top, right margins
