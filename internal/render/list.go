@@ -27,7 +27,7 @@ func List(pdf *gofpdf.Fpdf, list model.ListContent) {
 		} else {
 			drawBullet(pdf, lineHt, level)
 		}
-		drawContent(pdf, item.Contents)
+		drawContent(pdf, item.Contents, 12)
 		pdf.SetLeftMargin(margins[level])
 		pdf.Ln(-1)
 		pdf.Ln(2)
@@ -55,7 +55,7 @@ func drawList(pdf *gofpdf.Fpdf, list model.ListContent, level int) {
 		} else {
 			drawBullet(pdf, lineHt, level)
 		}
-		drawContent(pdf, item.Contents)
+		drawContent(pdf, item.Contents, 12)
 		pdf.SetLeftMargin(margins[level])
 		if i != lastIndex {
 			pdf.Ln(-1)

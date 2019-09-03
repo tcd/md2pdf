@@ -26,6 +26,6 @@ func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 	if len(contents.AllContent()) == 0 {
 		return
 	}
-	drawContent(pdf, contents)
+	drawContent(pdf, contents, 12)
 	pdf.Ln(10)
 }
