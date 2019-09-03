@@ -2,9 +2,14 @@ package render
 
 import (
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/lib"
 )
 
 func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
+	// Make sure there's enough room to draw the bullet and the list item contents.
+	if pdf.GetY()+lineHt > lib.ContentBoxBottom(pdf) {
+		pdf.AddPage()
+	}
 	var bulletChar string
 	switch level {
 	case 1:
@@ -14,7 +19,7 @@ func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
 	case 3:
 		bulletChar = "\x6e" // ■
 	default:
-		bulletChar = "\x6c" // ●
+		bulletChar = "\x6e" // ■
 	}
 	pdf.SetTextColor(DefaultFG())
 	pdf.SetFont("zapfdingbats", "", 6)
