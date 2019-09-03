@@ -36,7 +36,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 			"",                   // linkStr
 		)
 	}
-	f.Ln(-1)
+	f.Ln(-1) // Move to next row
 
 	f.SetFont("helvetica", "", 12) // Body Font
 
@@ -75,6 +75,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 
 		for i, cell := range row {
 			width := widths[i] + lrMargin
+			// Draw the cell, fill every other row.
 			if fill {
 				f.Rect(x, y, width, height, "FD")
 			} else {
@@ -86,7 +87,7 @@ func Table(f *gofpdf.Fpdf, table model.TableContent) {
 			f.SetXY(x, y)
 		}
 		f.SetXY(startX, y+height-8.1)
-		f.Ln(-1)
+		f.Ln(-1) // Move to next row
 		fill = !fill
 	}
 	f.Ln(5)
