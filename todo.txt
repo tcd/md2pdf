@@ -1,7 +1,7 @@
 x 2019-08-30 2019-08-14 Add syntax highlighting in codeblocks.
 x 2019-08-30 2019-08-16 Add formatting to lists (bold, code, italic, links, strikethrough)
 x 2019-08-30 2019-08-28 Read markdown from stdin.
-2019-08-08 Add formatting to headers (bold, code, italic, links, strikethrough)
+x 2019-09-03 2019-08-08 Add formatting to headers (bold, code, italic, links, strikethrough)
 2019-08-14 Draw images inside of links.
 2019-08-15 Support links in images.
 2019-08-14 Support internal links.
