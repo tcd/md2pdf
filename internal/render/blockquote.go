@@ -1,8 +1,6 @@
 package render
 
 import (
-	"strings"
-
 	"github.com/jung-kurt/gofpdf"
 	"github.com/tcd/md2pdf/internal/model"
 )
@@ -26,7 +24,9 @@ func BasicBlockquote(pdf *gofpdf.Fpdf, text string) {
 
 // Blockquote does what BasicBlockquote don't.
 func Blockquote(pdf *gofpdf.Fpdf, contents model.Contents) {
-	allContent := contents.AllContent()
-	text := strings.TrimSpace(strings.Join(allContent, ""))
-	BasicBlockquote(pdf, text)
+	BasicBlockquote(pdf, contents.JoinContent())
+}
+
+func mockBlockquote(pdf *gofpdf.Fpdf, text string) {
+
 }
