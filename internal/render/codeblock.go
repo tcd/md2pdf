@@ -44,7 +44,10 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 	}
 
 	oldCellMargin := pdf.GetCellMargin()
+	_, _, _, oldBottomMargin := pdf.GetMargins()
+
 	pdf.SetCellMargin(5)
+	pdf.SetAutoPageBreak(true, 0)
 	pdf.SetFont("courier", "", 11)
 	pdf.SetFillColor(30, 30, 30)
 	_, lineHt := pdf.GetFontSize()
@@ -83,6 +86,7 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 	pdf.Ln(lineHt)
 
 	pdf.SetCellMargin(oldCellMargin)
+	pdf.SetAutoPageBreak(true, oldBottomMargin)
 	pdf.Ln(6)
 }
 
