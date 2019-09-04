@@ -8,6 +8,7 @@ import (
 )
 
 func drawContent(pdf *gofpdf.Fpdf, c model.Contents, fontSize float64) {
+	r, g, b := pdf.GetFillColor()
 	for _, txt := range c.Content {
 		if txt.Text == "" {
 			continue
@@ -29,6 +30,7 @@ func drawContent(pdf *gofpdf.Fpdf, c model.Contents, fontSize float64) {
 			span(pdf, txt, styleStr, fontSize)
 		}
 	}
+	pdf.SetFillColor(r, g, b)
 }
 
 func span(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, fontSize float64) {
