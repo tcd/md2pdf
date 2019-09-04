@@ -54,7 +54,8 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 	lineHt *= 1.25
 
 	// Draw out the text on a temporary PDF to see how much space it takes up.
-	testPDF := dummyPDF()
+	testPDF := gofpdf.New("P", "mm", "Letter", "")
+	Setup(testPDF)
 	testPDF.SetFont("courier", "", 11)
 	y1 := testPDF.GetY()
 	testPDF.Ln(lineHt)

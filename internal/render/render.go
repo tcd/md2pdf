@@ -24,12 +24,6 @@ func SetMetaData(f *gofpdf.Fpdf, author, title string) {
 	f.SetCreationDate(time.Now())
 }
 
-func dummyPDF() *gofpdf.Fpdf {
-	pdf := gofpdf.New("P", "mm", "Letter", "")
-	Setup(pdf)
-	return pdf
-}
-
 // DefaultFG rgb values (36, 41, 46)
 func DefaultFG() (r, g, b int) {
 	r = 36
