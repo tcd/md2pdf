@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
+	"github.com/tcd/md2pdf/internal/lib"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
@@ -55,10 +56,8 @@ func inlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, fontSize floa
 
 	// Go to the next line before writing if the code span is too long.
 	x := pdf.GetX()
-	pageWidth, _ := pdf.GetPageSize()
-	_, _, rightMargin, _ := pdf.GetMargins()
 	strWdth := pdf.GetStringWidth(txt.Text)
-	if x+strWdth > pageWidth-rightMargin {
+	if x+strWdth > lib.ContentBoxRight(pdf) {
 		pdf.Ln(-1)
 	}
 
@@ -82,8 +81,8 @@ func strike(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, fontSize float64)
 	// Where the text starts, also where to start the strikethrough line.
 	x := pdf.GetX()
 	y := (pdf.GetY() + (lineHt / 2))
-
 	pdf.SetLineWidth(0.25)
+
 	if txt.HREF != "" {
 		pdf.SetTextColor(LinkFG())
 		pdf.WriteLinkString(lineHt, txt.Text, txt.HREF)
