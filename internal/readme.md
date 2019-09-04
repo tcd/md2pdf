@@ -1,5 +1,7 @@
 # internal
 
+- `lib/`
+  - Utility functions shared across other internal packages.
 - `md2pdf/`
   - Main package
 - `model/`
