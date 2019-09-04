@@ -11,11 +11,6 @@ type TableContent struct {
 	Alignments []string     `json:"alignments"` // "L", "C", or "R"
 }
 
-// AddRow to TableContent.
-func (tc *TableContent) AddRow(cols []Contents) {
-	tc.Rows = append(tc.Rows, cols)
-}
-
 // AddRows to TableContent.
 func (tc *TableContent) AddRows(cols ...[]Contents) {
 	tc.Rows = append(tc.Rows, cols...)

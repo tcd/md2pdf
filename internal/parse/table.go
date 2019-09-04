@@ -23,7 +23,7 @@ func parseTable(z *html.Tokenizer) model.TableContent {
 			T1 := z.Token()
 			if T1.Data == "thead" {
 				headers, alignments := parseTableHeaders(z)
-				tableContent.AddRow(headers)
+				tableContent.AddRows(headers)
 				tableContent.Alignments = alignments
 			}
 			if T1.Data == "tbody" {
