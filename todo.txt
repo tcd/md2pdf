@@ -14,3 +14,4 @@ x 2019-09-03 2019-08-08 Add formatting to headers (bold, code, italic, links, st
 2019-08-23 Increase vertical margin for table body cells.
 2019-08-28 Fetch markdown from a URL.
 2019-08-30 File error with gofpdf for splitting lines containing `⋅`.
+2019-09-04 Vertically center table cell content.
