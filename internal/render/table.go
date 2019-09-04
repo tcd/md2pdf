@@ -106,12 +106,11 @@ func mockTable(f *gofpdf.Fpdf, table model.TableContent) tableData {
 
 		// Determine the height needed for a cell.
 		for i, cell := range row {
-			var lines [][]byte
+			var lines []string
 			if pdf.GetStringWidth(cell.JoinContent()) < widths[i] {
-				lines = make([][]byte, 1)
-				lines[0] = []byte(cell.JoinContent())
+				lines = []string{cell.JoinContent()}
 			} else {
-				lines = pdf.SplitLines([]byte(cell.JoinContent()), widths[i]-lrMargin*2)
+				lines = pdf.SplitText(cell.JoinContent(), widths[i]-lrMargin*2)
 			}
 			h := float64(len(lines))*lineHt + tbMargin*2*float64(len(lines))
 			if h > height {
