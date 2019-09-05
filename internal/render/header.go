@@ -18,7 +18,7 @@ func H1(pdf *gofpdf.Fpdf, contents model.Contents) {
 	pdf.Ln(-1)
 
 	hr(pdf, 0.09)
-	pdf.Ln(5)
+	pdf.Ln(6)
 }
 
 // H2 write a 2nd level header to a gofpdf.Fpdf.
@@ -33,7 +33,7 @@ func H2(pdf *gofpdf.Fpdf, contents model.Contents) {
 	pdf.Ln(-1)
 
 	hr(pdf, 0.09)
-	pdf.Ln(5)
+	pdf.Ln(7)
 }
 
 // H3 write a 3rd level header to a gofpdf.Fpdf.

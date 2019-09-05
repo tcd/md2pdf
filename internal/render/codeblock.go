@@ -88,7 +88,7 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 
 	pdf.SetCellMargin(oldCellMargin)
 	pdf.SetAutoPageBreak(true, oldBottomMargin)
-	pdf.Ln(6)
+	pdf.Ln(5)
 }
 
 func generateTokens(code, class string) ([]chromaToken, error) {

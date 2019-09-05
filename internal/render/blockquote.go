@@ -19,7 +19,7 @@ func BasicBlockquote(pdf *gofpdf.Fpdf, text string) {
 
 	_, lineHeight := pdf.GetFontSize()
 	pdf.MultiCell(0, lineHeight*1.5, text, "LM", "", false)
-	pdf.Ln(5)
+	pdf.Ln(4)
 
 	pdf.SetCellMargin(oldCellMargin)
 }
@@ -42,7 +42,7 @@ func Blockquote(pdf *gofpdf.Fpdf, contents model.Contents) {
 
 	pdf.SetLeftMargin(oldLeftMargin)
 	pdf.Ln(-1)
-	pdf.Ln(5)
+	pdf.Ln(4)
 }
 
 // Returns the height needed to hold blockquote contents.
