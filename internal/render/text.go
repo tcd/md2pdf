@@ -4,7 +4,6 @@ import (
 	"strings"
 
 	"github.com/jung-kurt/gofpdf"
-	"github.com/tcd/md2pdf/internal/lib"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
@@ -53,13 +52,6 @@ func inlineCode(pdf *gofpdf.Fpdf, txt model.Text, styleStr string, fontSize floa
 	pdf.SetFont("courier", styleStr, fontSize)
 	_, lineHt := pdf.GetFontSize()
 	lineHt *= 1.5
-
-	// Go to the next line before writing if the code span is too long.
-	x := pdf.GetX()
-	strWdth := pdf.GetStringWidth(txt.Text)
-	if x+strWdth > lib.ContentBoxRight(pdf) {
-		pdf.Ln(-1)
-	}
 
 	if txt.HREF != "" {
 		pdf.SetTextColor(LinkFG())
