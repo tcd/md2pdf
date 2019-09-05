@@ -36,11 +36,9 @@ Parse markdown files and output PDFs that resemble GitHub's markdown rendering.
 
 ### What Isn't Supported?
 
-- No Emoji 😔
+- [No Emoji 😔](https://github.com/jung-kurt/gofpdf/issues/255)
 - No SVG 
 - No Inline HTML
-- No Definition Lists
-- No Task Lists
 
 ## Installation
 
