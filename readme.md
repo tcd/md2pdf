@@ -10,7 +10,37 @@
 
 ## About
 
-The current goal of this project is to produce output that resembles GitHub's markdown rendering.
+Parse markdown files and output PDFs that resemble GitHub's markdown rendering.
+
+### What's Supported?
+
+- Paragraphs
+- Blockquotes
+- Codeblocks
+    - Syntax highlighting provided by [Chroma](https://github.com/alecthomas/chroma)
+- All kinds of emphasis:
+    - **Bold**
+    - *Italic*
+    - `Code`
+    - ~~Strike~~
+    - [Links](https://github.com/tcd/md2pdf)
+- Images
+    - jpeg, png, and gif\*
+      - Only the first frame of a gif is drawn to the pdf :pensive:
+- Headers
+- Horizontal Rules
+- Links
+    - Links on images
+    - External Links
+- Tables
+
+### What Isn't Supported?
+
+- No Emoji 😔
+- No SVG 
+- No Inline HTML
+- No Definition Lists
+- No Task Lists
 
 ## Installation
 
