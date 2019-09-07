@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -34,7 +35,7 @@ var rootCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		outPath, _ := cmd.Flags().GetString("output")
 
-		// Read from stdin if --stdin
+		// Read from stdin
 		stdin, err := cmd.Flags().GetBool("stdin")
 		logFatal(err)
 		if stdin {
@@ -43,7 +44,7 @@ var rootCmd = &cobra.Command{
 			if string(bytes) != "" {
 				newFile, err := m2p.MdBytesToPdfFile(bytes, outPath)
 				logFatal(err)
-				log.Println("PDF generated:", newFile)
+				fmt.Println("PDF generated:", newFile)
 				os.Exit(0)
 			}
 		}
@@ -52,7 +53,7 @@ var rootCmd = &cobra.Command{
 		if len(args) == 1 {
 			newFile, err := m2p.MdFileToPdfFile(args[0], outPath)
 			logFatal(err)
-			log.Println("PDF generated:", newFile)
+			fmt.Println("PDF generated:", newFile)
 			os.Exit(0)
 		}
 
