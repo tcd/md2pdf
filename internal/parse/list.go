@@ -2,13 +2,13 @@ package parse
 
 import (
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // List gathers the data needed to render a list.
-func List(z *html.Tokenizer, startToken html.Token) renderable.List {
-	return renderable.List{
+func List(z *html.Tokenizer, startToken html.Token) renderer.List {
+	return renderer.List{
 		Type:    "list",
 		Content: parseEntries(z, startToken),
 	}

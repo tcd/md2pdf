@@ -2,15 +2,15 @@ package parse
 
 import (
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // Codeblock gathers the data needed to render a codeblock.
-func Codeblock(z *html.Tokenizer) renderable.Codeblock {
+func Codeblock(z *html.Tokenizer) renderer.Codeblock {
 	content, class := parseCodeblock(z)
 
-	return renderable.Codeblock{
+	return renderer.Codeblock{
 		Type:    "codeblock",
 		Class:   class,
 		Content: content,

@@ -1,21 +1,21 @@
 package parse
 
 import (
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // Image gathers the data needed to render an image.
-func Image(token html.Token) renderable.Image {
-	return renderable.Image{
+func Image(token html.Token) renderer.Image {
+	return renderer.Image{
 		Type: "image",
 		Src:  parseImg(token),
 	}
 }
 
 // LinkedImage gathers the data needed to render an image with an embedded link.
-func LinkedImage(token html.Token, href string) renderable.Image {
-	return renderable.Image{
+func LinkedImage(token html.Token, href string) renderer.Image {
+	return renderer.Image{
 		Type: "image",
 		Src:  parseImg(token),
 		Link: href,

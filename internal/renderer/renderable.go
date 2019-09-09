@@ -1,4 +1,4 @@
-package renderable
+package renderer
 
 import (
 	"log"
@@ -8,12 +8,12 @@ import (
 	"github.com/tcd/md2pdf/internal/render"
 )
 
-// Renderable implementers can draw content to a gofpdf.Fpdf.
-type Renderable interface {
+// Renderer implementers can draw content to a gofpdf.Fpdf.
+type Renderer interface {
 	Render(*gofpdf.Fpdf)
 }
 
-// Blockquote implements the Renderable interface.
+// Blockquote implements the Renderer interface.
 type Blockquote struct {
 	Type    string
 	Content model.Contents
@@ -24,7 +24,7 @@ func (b Blockquote) Render(pdf *gofpdf.Fpdf) {
 	render.Blockquote(pdf, b.Content)
 }
 
-// Codeblock implements the Renderable interface.
+// Codeblock implements the Renderer interface.
 type Codeblock struct {
 	Type    string
 	Class   string
@@ -40,7 +40,7 @@ func (cb Codeblock) Render(pdf *gofpdf.Fpdf) {
 	}
 }
 
-// Header implements the Renderable interface.
+// Header implements the Renderer interface.
 type Header struct {
 	Type    string
 	Level   string
@@ -68,7 +68,7 @@ func (h Header) Render(pdf *gofpdf.Fpdf) {
 	}
 }
 
-// HR implements the Renderable interface.
+// HR implements the Renderer interface.
 type HR struct {
 	Type string
 }
@@ -78,7 +78,7 @@ func (hr HR) Render(pdf *gofpdf.Fpdf) {
 	render.HR(pdf)
 }
 
-// Image implements the Renderable interface.
+// Image implements the Renderer interface.
 type Image struct {
 	Type string
 	Src  string
@@ -90,7 +90,7 @@ func (img Image) Render(pdf *gofpdf.Fpdf) {
 	render.Image(pdf, img.Src, img.Link)
 }
 
-// List implements the Renderable interface.
+// List implements the Renderer interface.
 type List struct {
 	Type    string
 	Content model.ListContent
@@ -101,7 +101,7 @@ func (ls List) Render(pdf *gofpdf.Fpdf) {
 	render.List(pdf, ls.Content)
 }
 
-// Paragraph implements the Renderable interface.
+// Paragraph implements the Renderer interface.
 type Paragraph struct {
 	Type    string
 	Content model.Contents
@@ -112,7 +112,7 @@ func (p Paragraph) Render(pdf *gofpdf.Fpdf) {
 	render.FullP(pdf, p.Content)
 }
 
-// Table implements the Renderable interface.
+// Table implements the Renderer interface.
 type Table struct {
 	Type    string
 	Content model.TableContent

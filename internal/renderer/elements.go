@@ -1,4 +1,4 @@
-package renderable
+package renderer
 
 import (
 	"io"
@@ -7,13 +7,13 @@ import (
 	"github.com/tcd/md2pdf/internal/render"
 )
 
-// Elements slice of Renderables that can be rendered to a PDF.
+// Elements slice of Renderer that can be rendered to a PDF.
 type Elements struct {
-	Elements []Renderable `json:"elements"`
+	Elements []Renderer `json:"elements"`
 }
 
 // Add one or more elements.
-func (e *Elements) Add(elements ...Renderable) {
+func (e *Elements) Add(elements ...Renderer) {
 	e.Elements = append(e.Elements, elements...)
 }
 

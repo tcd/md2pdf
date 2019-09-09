@@ -2,16 +2,16 @@ package parse
 
 import (
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // Header gathers the data needed to render a header.
 // TODO: Deal with images in headers.
-func Header(z *html.Tokenizer, startToken html.Token) renderable.Header {
+func Header(z *html.Tokenizer, startToken html.Token) renderer.Header {
 	level, content, _ := parseHeader(z, startToken)
 
-	return renderable.Header{
+	return renderer.Header{
 		Type:    "header",
 		Level:   level,
 		Content: content,

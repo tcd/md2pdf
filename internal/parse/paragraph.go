@@ -2,15 +2,15 @@ package parse
 
 import (
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // AddParagraph adds a Paragraph Element and any contained Image Elements.
-func AddParagraph(e *renderable.Elements, z *html.Tokenizer) {
+func AddParagraph(e *renderer.Elements, z *html.Tokenizer) {
 	contents, imgTokens := parseP(z)
 
-	e.Add(renderable.Paragraph{
+	e.Add(renderer.Paragraph{
 		Type:    "paragraph",
 		Content: contents,
 	})
@@ -24,9 +24,9 @@ func AddParagraph(e *renderable.Elements, z *html.Tokenizer) {
 }
 
 // Paragraph gathers the data needed to render a paragraph.
-func Paragraph(z *html.Tokenizer) renderable.Paragraph {
+func Paragraph(z *html.Tokenizer) renderer.Paragraph {
 	contents, _ := parseP(z)
-	return renderable.Paragraph{
+	return renderer.Paragraph{
 		Type:    "paragraph",
 		Content: contents,
 	}
@@ -38,9 +38,9 @@ func Paragraph(z *html.Tokenizer) renderable.Paragraph {
 }
 
 // Blockquote gathers the data needed to render a blockquote.
-func Blockquote(z *html.Tokenizer) renderable.Blockquote {
+func Blockquote(z *html.Tokenizer) renderer.Blockquote {
 	contents, _ := parseP(z)
-	return renderable.Blockquote{
+	return renderer.Blockquote{
 		Type:    "blockquote",
 		Content: contents,
 	}
