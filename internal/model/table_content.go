@@ -89,6 +89,28 @@ func (tc TableContent) Widths(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
 
 	finalWidths := make([]float64, colCount)
 
+	for i := range finalWidths {
+		remainingWidth := tableWidth - sum(headerWidths...)
+		portions := percentages(widths...)
+		finalWidths[i] = (remainingWidth * portions[i]) + headerWidths[i] + cellMargin
+	}
+	return finalWidths
+}
+
+// WidthsAlt is an older version of Widths.
+// Still trying to figure out the best way to implement this.
+func (tc TableContent) WidthsAlt(pdf *gofpdf.Fpdf, cellMargin float64) []float64 {
+	colCount := tc.ColCount()
+	cellPadding := (cellMargin * 2)
+	tableWidth := (lib.ContentBoxWidth(pdf) - (cellPadding * float64(colCount)))
+	headerWidths := tc.headerWidths(pdf)
+	widths := tc.longestWidths(pdf)
+	if sum(widths...) <= tableWidth {
+		return widths
+	}
+
+	finalWidths := make([]float64, colCount)
+
 	if len(widths) == 2 {
 		remainingWidth := tableWidth - sum(headerWidths...)
 		portions := percentages(widths...)
