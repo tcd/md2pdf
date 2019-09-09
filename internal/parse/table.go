@@ -2,13 +2,13 @@ package parse
 
 import (
 	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // Table gathers the data needed to render a table.
-func Table(z *html.Tokenizer) renderable.Table {
-	return renderable.Table{
+func Table(z *html.Tokenizer) renderer.Table {
+	return renderer.Table{
 		Type:    "table",
 		Content: parseTable(z),
 	}

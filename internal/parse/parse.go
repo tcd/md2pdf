@@ -3,13 +3,13 @@ package parse
 import (
 	"bytes"
 
-	"github.com/tcd/md2pdf/internal/renderable"
+	"github.com/tcd/md2pdf/internal/renderer"
 	"golang.org/x/net/html"
 )
 
 // Parse gathers the data needed to render a PDF.
-func Parse(inputHTML []byte) renderable.Elements {
-	elements := renderable.Elements{}
+func Parse(inputHTML []byte) renderer.Elements {
+	elements := renderer.Elements{}
 	// doc := strings.NewReader(inputHTML)
 	doc := bytes.NewReader(inputHTML)
 	tokenizer := html.NewTokenizer(doc)
@@ -25,7 +25,7 @@ func Parse(inputHTML []byte) renderable.Elements {
 			T1 := tokenizer.Token()
 
 			if T1.Data == "hr" {
-				elements.Add(renderable.HR{})
+				elements.Add(renderer.HR{})
 			}
 			if T1.Data == "img" {
 				img := Image(T1)
