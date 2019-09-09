@@ -21,18 +21,6 @@ var margins = map[int]float64{
 	10: 87.5,
 }
 
-// 20 is the default margin;
-// Start at 22.5 and increment by 7.5.
-// func margins(level int) float64 {
-// 	if level == 0 {
-// 		return 20.0
-// 	}
-// 	if level == 1 {
-// 		return 22.5
-// 	}
-// 	return 22.5 + 7.5*float64(level)
-// }
-
 // List writes a list with any level of indentation to a gofpdf.Fpdf.
 func List(pdf *gofpdf.Fpdf, list model.ListContent) {
 	level := 1
