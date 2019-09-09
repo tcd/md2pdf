@@ -10,7 +10,6 @@ import (
 // Parse gathers the data needed to render a PDF.
 func Parse(inputHTML []byte) renderer.Elements {
 	elements := renderer.Elements{}
-	// doc := strings.NewReader(inputHTML)
 	doc := bytes.NewReader(inputHTML)
 	tokenizer := html.NewTokenizer(doc)
 
@@ -50,8 +49,6 @@ func Parse(inputHTML []byte) renderer.Elements {
 				elements.Add(cb)
 			}
 			if T1.Data == "p" {
-				// p := Paragraph(tokenizer)
-				// elements.Add(p)
 				AddParagraph(&elements, tokenizer)
 			}
 			if T1.Data == "blockquote" {
