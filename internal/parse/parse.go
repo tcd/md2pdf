@@ -3,7 +3,7 @@ package parse
 import (
 	"bytes"
 
-	"github.com/tcd/md2pdf/internal/renderer"
+	renderer "github.com/tcd/md2pdf/internal/r1"
 	"golang.org/x/net/html"
 )
 
