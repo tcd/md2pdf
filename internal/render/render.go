@@ -48,7 +48,7 @@ func LinkFG() (r, g, b int) {
 	return
 }
 
-// CodeSpanBG rgb values: (243, 243, 243)
+// CodeSpanBG rgb values (243, 243, 243)
 func CodeSpanBG() (r, g, b int) {
 	r = 243
 	g = 243
@@ -56,7 +56,7 @@ func CodeSpanBG() (r, g, b int) {
 	return
 }
 
-// LightCodeBlockBG rgb values: (246, 248, 250)
+// LightCodeBlockBG rgb values (246, 248, 250)
 func LightCodeBlockBG() (r, g, b int) {
 	r = 246
 	g = 248
@@ -64,7 +64,7 @@ func LightCodeBlockBG() (r, g, b int) {
 	return
 }
 
-// TableCellBG rgb values: (246, 248, 250)
+// TableCellBG rgb values (246, 248, 250)
 func TableCellBG() (r, g, b int) {
 	r = 246
 	g = 248
@@ -72,7 +72,7 @@ func TableCellBG() (r, g, b int) {
 	return
 }
 
-// BlockquoteFG rgb values: (106, 115, 125)
+// BlockquoteFG rgb values (106, 115, 125)
 func BlockquoteFG() (r, g, b int) {
 	r = 106
 	g = 115
@@ -80,7 +80,7 @@ func BlockquoteFG() (r, g, b int) {
 	return
 }
 
-// BlockquoteBorder rgb values: (223, 226, 229)
+// BlockquoteBorder rgb values (223, 226, 229)
 func BlockquoteBorder() (r, g, b int) {
 	r = 223
 	g = 226
@@ -88,7 +88,7 @@ func BlockquoteBorder() (r, g, b int) {
 	return
 }
 
-// BlockquoteBG rgb values: (223, 226, 229)
+// BlockquoteBG rgb values (223, 226, 229)
 func BlockquoteBG() (r, g, b int) {
 	r = 223
 	g = 226
@@ -96,7 +96,7 @@ func BlockquoteBG() (r, g, b int) {
 	return
 }
 
-// HeaderUnderlineFG rgb values: (234, 236, 239)
+// HeaderUnderlineFG rgb values (234, 236, 239)
 func HeaderUnderlineFG() (r, g, b int) {
 	r = 234
 	g = 236
@@ -104,7 +104,7 @@ func HeaderUnderlineFG() (r, g, b int) {
 	return
 }
 
-// HrFG rgb values: (191, 191, 191)
+// HrFG rgb values (191, 191, 191)
 func HrFG() (r, g, b int) {
 	r = 191
 	g = 191
@@ -112,7 +112,7 @@ func HrFG() (r, g, b int) {
 	return
 }
 
-// CodeOrangeFG rgb values: (227, 98, 9)
+// CodeOrangeFG rgb values (227, 98, 9)
 func CodeOrangeFG() (r, g, b int) {
 	r = 227
 	g = 98
