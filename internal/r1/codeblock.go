@@ -7,74 +7,75 @@ import (
 	"strings"
 
 	"github.com/alecthomas/chroma/quick"
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 	"github.com/tcd/md2pdf/internal/lib"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
-// CodeBlock writes a `<pre>` style code block to a gofpdf.Fpdf.
-func CodeBlock(pdf *gofpdf.Fpdf, contents model.Contents) {
+// codeBlock writes a `<pre>` style code block to a gofpdf.Fpdf.
+func codeBlock(pdf *gofpdf.Fpdf, contents model.Contents) {
 	if len(contents.Content) != 1 {
 		log.Println("CodeBlock: invalid argument.")
 	}
 
 	content := contents.Content[0].Text
 
-	oldCellMargin := pdf.GetCellMargin()
+	// oldCellMargin := pdf.GetCellMargin()
 
 	pdf.SetFont("courier", "", 11)
-	pdf.SetFillColor(LightCodeBlockBG())
+	pdf.SetRGBFillColor(LightCodeBlockBG())
 	pdf.SetTextColor(DefaultFG())
-	pdf.SetCellMargin(4)
+	// pdf.SetCellMargin(4)
 
-	pdf.CellFormat(0, 4, "", "", 1, "TL", true, 0, "")
-	pdf.MultiCell(0, 5, content, "", "", true)
-	pdf.CellFormat(0, 4, "", "", 0, "TL", true, 0, "")
+	// pdf.CellFormat(0, 4, "", "", 1, "TL", true, 0, "")
+	pdf.MultiCell(0, 5, content)
+	// pdf.CellFormat(0, 4, "", "", 0, "TL", true, 0, "")
+	pdf.Cell(0, 4, "")
 	pdf.Ln(10)
 
-	pdf.SetCellMargin(oldCellMargin)
+	// pdf.SetCellMargin(oldCellMargin)
 }
 
-// HighlightedCodeblock draws a codeblock with syntax highlighting provided by Chroma.
-func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class string) {
+// highlightedCodeblock draws a codeblock with syntax highlighting provided by Chroma.
+func highlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class string) {
 	code := contents.Content[0].Text
 	tokens, err := generateTokens(code, class)
 	if err != nil {
 		log.Println(err)
 	}
 
-	oldCellMargin := pdf.GetCellMargin()
-	_, _, _, oldBottomMargin := pdf.GetMargins()
+	// oldCellMargin := pdf.GetCellMargin()
+	// _, _, _, oldBottomMargin := pdf.GetMargins()
 
-	pdf.SetCellMargin(5)
-	pdf.SetAutoPageBreak(true, 0)
+	// pdf.SetCellMargin(5)
+	// pdf.SetAutoPageBreak(true, 0)
 	pdf.SetFont("courier", "", 11)
-	pdf.SetFillColor(30, 30, 30)
-	_, lineHt := pdf.GetFontSize()
-	lineHt *= 1.25
+	pdf.SetRGBFillColor(CodeOrangeFG())
+	// _, lineHt := pdf.GetFontSize()
+	// lineHt *= 1.25
+	lineHt := 6.00
 
 	// Draw out the text on a temporary PDF to see how much space it takes up.
-	testPDF := gofpdf.New("P", "mm", "Letter", "")
-	Setup(testPDF)
-	testPDF.SetFont("courier", "", 11)
-	y1 := testPDF.GetY()
+	testPDF := newPdf()
+	// testPDF.SetFont("courier", "", 11)
+	y1 := testPDF.Y()
 	testPDF.Ln(lineHt)
 	for _, token := range tokens {
-		testPDF.Write(lineHt, token.Value)
+		testPDF.WriteText(lineHt, token.Value)
 	}
 	testPDF.Ln(lineHt)
-	y2 := testPDF.GetY()
+	y2 := testPDF.Y()
 	blockHt := y2 - y1
 	testPDF.Close()
 
 	// Get top left corner, avoid page breaking inside a block.
-	x1, y1 := pdf.GetXY()
+	x1, y1 := pdf.XY()
 	if y1+blockHt > lib.ContentBoxHeight(pdf) {
 		pdf.AddPage()
-		x1, y1 = pdf.GetXY()
+		x1, y1 = pdf.XY()
 	}
 	// Draw the background.
-	pdf.Rect(x1, y1, lib.ContentBoxWidth(pdf), blockHt, "F")
+	// pdf.Rect(x1, y1, lib.ContentBoxWidth(pdf), blockHt, "F")
 
 	// Write out the content for real this time.
 	pdf.SetXY(x1, y1)
@@ -82,12 +83,12 @@ func HighlightedCodeblock(pdf *gofpdf.Fpdf, contents model.Contents, class strin
 	for _, token := range tokens {
 		r, g, b, _ := lib.HexToRGB(styleMap[token.Type])
 		pdf.SetTextColor(r, g, b)
-		pdf.Write(lineHt, lib.CleanString(token.Value))
+		pdf.WriteText(lineHt, lib.CleanString(token.Value))
 	}
 	pdf.Ln(lineHt)
 
-	pdf.SetCellMargin(oldCellMargin)
-	pdf.SetAutoPageBreak(true, oldBottomMargin)
+	// pdf.SetCellMargin(oldCellMargin)
+	// pdf.SetAutoPageBreak(true, oldBottomMargin)
 	pdf.Ln(5)
 }
 

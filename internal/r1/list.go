@@ -1,7 +1,7 @@
 package render
 
 import (
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
@@ -21,24 +21,24 @@ var margins = map[int]float64{
 	10: 87.5,
 }
 
-// List writes a list with any level of indentation to a gofpdf.Fpdf.
-func List(pdf *gofpdf.Fpdf, list model.ListContent) {
+// list writes a list with any level of indentation to a gofpdf.Fpdf.
+func list(pdf *gofpdf.Fpdf, list model.ListContent) {
 	level := 1
-	pdf.SetLeftMargin(margins[level])
-	pdf.SetRightMargin(21)
+	pdf.SetMarginLeft(margins[level])
+	pdf.SetMarginRight(21)
 
 	drawList(pdf, list, level)
 
-	pdf.SetLeftMargin(20)
-	pdf.SetRightMargin(20)
-	pdf.SetFont("helvetica", "", 12)
+	pdf.SetMarginLeft(20)
+	pdf.SetMarginRight(20)
+	// pdf.SetFont("helvetica", "", 12)
 	pdf.Ln(1)
 }
 
 // Draw all items in a ListContent, anc call drawList for any sublists.
 func drawList(pdf *gofpdf.Fpdf, list model.ListContent, level int) {
-	pdf.SetLeftMargin(margins[level])
-	pdf.SetFont("helvetica", "", 12)
+	pdf.SetMarginLeft(margins[level])
+	// pdf.SetFont("helvetica", "", 12)
 	_, oldLineHt := pdf.GetFontSize()
 	lineHt := oldLineHt * 1.5
 
@@ -49,13 +49,13 @@ func drawList(pdf *gofpdf.Fpdf, list model.ListContent, level int) {
 			drawBullet(pdf, lineHt, level)
 		}
 		drawContent(pdf, item.Contents, 12)
-		pdf.SetLeftMargin(margins[level])
+		pdf.SetMarginLeft(margins[level])
 		pdf.Ln(-1)
 		if item.HasChildren() {
 			drawList(pdf, item.Children, level+1)
 		}
 	}
-	pdf.SetLeftMargin(margins[level-1])
+	pdf.SetMarginLeft(margins[level-1])
 	if level != 1 {
 		pdf.Ln(0)
 	}

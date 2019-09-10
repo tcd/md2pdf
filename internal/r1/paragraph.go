@@ -1,7 +1,7 @@
 package render
 
 import (
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 	"github.com/tcd/md2pdf/internal/model"
 )
 
@@ -11,10 +11,10 @@ func BasicP(pdf *gofpdf.Fpdf, text string) {
 	if len(text) == 0 {
 		return
 	}
-	pdf.SetFont("helvetica", "", 12)
-	pdf.SetFillColor(DefaultBG())
+	// pdf.SetFont("helvetica", "", 12)
+	pdf.SetRGBFillColor(DefaultBG())
 	pdf.SetTextColor(DefaultFG())
-	pdf.Write(6, text)
+	pdf.WriteText(6, text)
 	pdf.Ln(10)
 }
 
@@ -26,6 +26,7 @@ func FullP(pdf *gofpdf.Fpdf, contents model.Contents) {
 	if len(contents.AllContent()) == 0 {
 		return
 	}
+	pdf.SetTextColor(DefaultFG())
 	drawContent(pdf, contents, 12)
 	pdf.Ln(10)
 }

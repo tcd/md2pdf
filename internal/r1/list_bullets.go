@@ -1,13 +1,13 @@
 package render
 
 import (
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 	"github.com/tcd/md2pdf/internal/lib"
 )
 
 func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
 	// Make sure there's enough room to draw the bullet and the list item contents.
-	if pdf.GetY()+lineHt > lib.ContentBoxBottom(pdf) {
+	if pdf.Y()+lineHt > lib.ContentBoxBottom(pdf) {
 		pdf.AddPage()
 	}
 	var bulletChar string
@@ -22,9 +22,9 @@ func drawBullet(pdf *gofpdf.Fpdf, lineHt float64, level int) {
 		bulletChar = "\x6e" // ■
 	}
 	pdf.SetTextColor(DefaultFG())
-	pdf.SetFont("zapfdingbats", "", 6)
-	pdf.CellFormat(6, lineHt, bulletChar, "", 0, "RM", false, 0, "")
-	pdf.SetLeftMargin(pdf.GetX())
+	// pdf.SetFont("zapfdingbats", "", 6)
+	pdf.Cell(6, lineHt, bulletChar)
+	pdf.SetMarginLeft(pdf.X())
 }
 
 func drawNumbering(pdf *gofpdf.Fpdf, lineHt float64, level, number int) {
@@ -40,9 +40,9 @@ func drawNumbering(pdf *gofpdf.Fpdf, lineHt float64, level, number int) {
 		numberList = levelOneNumbers
 	}
 	pdf.SetTextColor(DefaultFG())
-	pdf.SetFont("helvetica", "", 12)
-	pdf.CellFormat(5, lineHt, numberList[number], "", 0, "RM", false, 0, "")
-	pdf.SetLeftMargin(pdf.GetX())
+	// pdf.SetFont("helvetica", "", 12)
+	pdf.Cell(5, lineHt, numberList[number])
+	pdf.SetMarginLeft(pdf.X())
 }
 
 func loweralpha() string {

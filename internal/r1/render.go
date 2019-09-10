@@ -2,27 +2,54 @@
 package render
 
 import (
-	"time"
+	"log"
 
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 )
 
-// Setup sets default GitHub-Flavored styles to a gofpdf.Fpdf.
-func Setup(f *gofpdf.Fpdf) {
-	f.SetMargins(20, 20, 20)     // left, top, right margins
-	f.SetAutoPageBreak(true, 20) // bottom margin
-	f.AddPage()
-	f.SetFillColor(255, 255, 255)
-	f.SetTextColor(36, 41, 46)
+func newPdf() *gofpdf.Fpdf {
+	pdf, err := gofpdf.New(
+		gofpdf.PdfOptionPageSize(gofpdf.PageSizeLetter.W, gofpdf.PageSizeLetter.H),
+		gofpdf.PdfOptionUnit(gofpdf.Unit_MM),
+		gofpdf.PdfOptionMargin(20, 20, 20, 20),
+	)
+	if err != nil {
+		log.Println(err)
+	}
+	if err := pdf.AddTTFFont("helvetica", "/Users/clay/go/src/github.com/tcd/md2pdf/static/fonts/fonts/helvetica.ttf"); err != nil {
+		log.Println(err)
+	}
+	if err := pdf.AddTTFFont("courier", "/Users/clay/go/src/github.com/tcd/md2pdf/static/fonts/fonts/helvetica.ttf"); err != nil {
+		log.Println(err)
+	}
+	if err := pdf.SetFont("helvetica", "", 12); err != nil {
+		log.Println(err)
+	}
+
+	pdf.AddPage()
+	pdf.SetTextColor(36, 41, 46)
+	// pdf.SetTextColor(36, 41, 46)
+	return pdf
 }
 
-// SetMetaData for a pdf.
-func SetMetaData(f *gofpdf.Fpdf, author, title string) {
-	f.SetTitle(title, true)
-	f.SetAuthor(author, true)
-	f.SetCreator(author, true)
-	f.SetCreationDate(time.Now())
-}
+// Courier (fixed-width)
+// Helvetica or Arial (synonymous; sans serif)
+// Times (serif)
+// Symbol (symbolic)
+// ZapfDingbats (symbolic)
+// font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+var (
+	// MonospaceFont name.
+	MonospaceFont = "courier"
+	// SansSerifFont name.
+	SansSerifFont = "helvetica"
+	// SerifFont name.
+	SerifFont = "helvetica"
+	// SymbolicFont name.
+	SymbolicFont = "zapfdingbats"
+	// DefaultFont name.
+	DefaultFont = SansSerifFont
+)
 
 // DefaultFG rgb values (36, 41, 46)
 func DefaultFG() (r, g, b uint8) {
