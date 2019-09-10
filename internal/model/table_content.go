@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/jung-kurt/gofpdf"
+	gofpdf "github.com/tcd/gofpdf-1"
 	"github.com/tcd/md2pdf/internal/lib"
 )
 
@@ -62,7 +62,8 @@ func (tc TableContent) longestWidths(pdf *gofpdf.Fpdf) []float64 {
 				longest = cell.JoinContent()
 			}
 		}
-		widths[i] = pdf.GetStringWidth(longest) * 1.5
+		// widths[i] = pdf.GetStringWidth(longest) * 1.5
+		widths[i], _ = pdf.MeasureTextWidth(longest, gofpdf.TextOption{})
 	}
 	return widths
 }
@@ -71,7 +72,8 @@ func (tc TableContent) longestWidths(pdf *gofpdf.Fpdf) []float64 {
 func (tc TableContent) headerWidths(pdf *gofpdf.Fpdf) []float64 {
 	widths := make([]float64, tc.ColCount())
 	for i, header := range tc.Headers() {
-		widths[i] = pdf.GetStringWidth(header.JoinContent()) * 1.5
+		// widths[i] = pdf.GetStringWidth(header.JoinContent()) * 1.5
+		widths[i], _ = pdf.MeasureTextWidth(header.JoinContent(), gofpdf.TextOption{})
 	}
 	return widths
 }
