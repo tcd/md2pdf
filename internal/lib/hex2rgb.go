@@ -4,7 +4,7 @@ import "errors"
 
 // HexToRGB takes a hex color value and returns three ints with its red, green, and blue values.
 // Source: https://stackoverflow.com/a/54200713/7687024
-func HexToRGB(s string) (r, g, b int, err error) {
+func HexToRGB(s string) (r, g, b uint8, err error) {
 	var errInvalidFormat = errors.New("invalid format")
 
 	if len(s) == 0 {
@@ -27,22 +27,18 @@ func HexToRGB(s string) (r, g, b int, err error) {
 		return 0
 	}
 
-	var rVal, gVal, bVal uint8
 	switch len(s) {
 	case 7:
-		rVal = hexToByte(s[1])<<4 + hexToByte(s[2])
-		gVal = hexToByte(s[3])<<4 + hexToByte(s[4])
-		bVal = hexToByte(s[5])<<4 + hexToByte(s[6])
+		r = hexToByte(s[1])<<4 + hexToByte(s[2])
+		g = hexToByte(s[3])<<4 + hexToByte(s[4])
+		b = hexToByte(s[5])<<4 + hexToByte(s[6])
 	case 4:
-		rVal = hexToByte(s[1]) * 17
-		gVal = hexToByte(s[2]) * 17
-		bVal = hexToByte(s[3]) * 17
+		r = hexToByte(s[1]) * 17
+		g = hexToByte(s[2]) * 17
+		b = hexToByte(s[3]) * 17
 	default:
 		err = errInvalidFormat
 	}
 
-	r = int(rVal)
-	g = int(gVal)
-	b = int(bVal)
 	return
 }

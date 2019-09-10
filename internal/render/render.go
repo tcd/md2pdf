@@ -25,7 +25,7 @@ func SetMetaData(f *gofpdf.Fpdf, author, title string) {
 }
 
 // DefaultFG rgb values (36, 41, 46)
-func DefaultFG() (r, g, b int) {
+func DefaultFG() (r, g, b uint8) {
 	r = 36
 	g = 41
 	b = 46
@@ -33,7 +33,7 @@ func DefaultFG() (r, g, b int) {
 }
 
 // DefaultBG rgb values (255, 255, 255)
-func DefaultBG() (r, g, b int) {
+func DefaultBG() (r, g, b uint8) {
 	r = 255
 	g = 255
 	b = 255
@@ -41,7 +41,7 @@ func DefaultBG() (r, g, b int) {
 }
 
 // LinkFG rgb values (3, 102, 214)
-func LinkFG() (r, g, b int) {
+func LinkFG() (r, g, b uint8) {
 	r = 3
 	g = 102
 	b = 214
@@ -49,7 +49,7 @@ func LinkFG() (r, g, b int) {
 }
 
 // CodeSpanBG rgb values: (243, 243, 243)
-func CodeSpanBG() (r, g, b int) {
+func CodeSpanBG() (r, g, b uint8) {
 	r = 243
 	g = 243
 	b = 243
@@ -57,7 +57,7 @@ func CodeSpanBG() (r, g, b int) {
 }
 
 // LightCodeBlockBG rgb values: (246, 248, 250)
-func LightCodeBlockBG() (r, g, b int) {
+func LightCodeBlockBG() (r, g, b uint8) {
 	r = 246
 	g = 248
 	b = 250
@@ -65,7 +65,7 @@ func LightCodeBlockBG() (r, g, b int) {
 }
 
 // TableCellBG rgb values: (246, 248, 250)
-func TableCellBG() (r, g, b int) {
+func TableCellBG() (r, g, b uint8) {
 	r = 246
 	g = 248
 	b = 250
@@ -73,7 +73,7 @@ func TableCellBG() (r, g, b int) {
 }
 
 // BlockquoteFG rgb values: (106, 115, 125)
-func BlockquoteFG() (r, g, b int) {
+func BlockquoteFG() (r, g, b uint8) {
 	r = 106
 	g = 115
 	b = 125
@@ -81,7 +81,7 @@ func BlockquoteFG() (r, g, b int) {
 }
 
 // BlockquoteBorder rgb values: (223, 226, 229)
-func BlockquoteBorder() (r, g, b int) {
+func BlockquoteBorder() (r, g, b uint8) {
 	r = 223
 	g = 226
 	b = 229
@@ -89,7 +89,7 @@ func BlockquoteBorder() (r, g, b int) {
 }
 
 // BlockquoteBG rgb values: (223, 226, 229)
-func BlockquoteBG() (r, g, b int) {
+func BlockquoteBG() (r, g, b uint8) {
 	r = 223
 	g = 226
 	b = 229
@@ -97,7 +97,7 @@ func BlockquoteBG() (r, g, b int) {
 }
 
 // HeaderUnderlineFG rgb values: (234, 236, 239)
-func HeaderUnderlineFG() (r, g, b int) {
+func HeaderUnderlineFG() (r, g, b uint8) {
 	r = 234
 	g = 236
 	b = 239
@@ -105,7 +105,7 @@ func HeaderUnderlineFG() (r, g, b int) {
 }
 
 // HrFG rgb values: (191, 191, 191)
-func HrFG() (r, g, b int) {
+func HrFG() (r, g, b uint8) {
 	r = 191
 	g = 191
 	b = 191
@@ -113,7 +113,7 @@ func HrFG() (r, g, b int) {
 }
 
 // CodeOrangeFG rgb values: (227, 98, 9)
-func CodeOrangeFG() (r, g, b int) {
+func CodeOrangeFG() (r, g, b uint8) {
 	r = 227
 	g = 98
 	b = 9
