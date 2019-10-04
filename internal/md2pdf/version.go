@@ -15,20 +15,17 @@ func (v VersionInfo) String() string {
 	if v.Major == "" {
 		return "md2pdf dev"
 	}
-	return fmt.Sprintf("md2pdf v%s.%s.%s (%s %s)", v.Major, v.Minor, v.Patch, v.Hash, v.Date)
+	// return fmt.Sprintf("md2pdf v%s.%s.%s (%s %s)", v.Major, v.Minor, v.Patch, v.Hash, v.Date)
+	return fmt.Sprintf("md2pdf %s.%s.%s", v.Major, v.Minor, v.Patch)
 }
 
+// these variables are set at build time
 var (
-	// VersionMajor is set during build
 	VersionMajor string
-	// VersionMinor is set during build
 	VersionMinor string
-	// VersionPatch is set during build
 	VersionPatch string
-	// VersionHash is set during build
-	VersionHash string
-	// VersionDate is set during build
-	VersionDate string
+	VersionHash  string
+	VersionDate  string
 )
 
 // Version is for use in the version subcommand.
