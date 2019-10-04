@@ -28,7 +28,7 @@ var rootCmd = &cobra.Command{
 		version, err := cmd.Flags().GetBool("version")
 		logFatal(err)
 		if version {
-			log.Println(m2p.Version)
+			fmt.Println(m2p.Version)
 			os.Exit(0)
 		}
 	},
