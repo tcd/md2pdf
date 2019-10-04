@@ -42,6 +42,13 @@ Parse markdown files and output PDFs that resemble GitHub's markdown rendering.
 
 ## Installation
 
+### Homebrew
+
+```sh
+brew tap tcd/taps
+brew install tcd/taps/md2pdf
+```
+
 ### Building from Source
 
 ```bash
