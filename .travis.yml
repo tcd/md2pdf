@@ -1,0 +1,8 @@
+language: go
+
+go:
+- "1.12"
+
+go_import_path: github.com/tcd/md2pdf
+
+script: go test -v ./...
