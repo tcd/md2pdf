@@ -1,8 +1,9 @@
 language: go
-
 go:
 - "1.12"
-
+env:
+  - GO111MODULE=on
 go_import_path: github.com/tcd/md2pdf
-
-script: go test -v ./...
+script:
+  - env GO111MODULE=on go build
+  - env GO111MODULE=on go test -v ./...
