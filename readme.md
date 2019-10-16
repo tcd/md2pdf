@@ -1,6 +1,7 @@
 # md2pdf
 
 <!-- [![Golang Documentation](https://godoc.org/github.com/tcd/md2pdf?status.svg)](https://godoc.org/github.com/tcd/md2pdf) -->
+[![Build Status](https://travis-ci.org/tcd/md2pdf.svg?branch=master)](https://travis-ci.org/tcd/md2pdf)
 [![GitHub issues](https://img.shields.io/github/issues/tcd/md2pdf.svg)](https://github.com/tcd/md2pdf/issues)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftcd%2Fmd2pdf.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftcd%2Fmd2pdf?ref=badge_shield)
 [![License](https://img.shields.io/github/license/tcd/md2pdf.svg)](https://github.com/tcd/md2pdf/blob/master/LICENSE)
