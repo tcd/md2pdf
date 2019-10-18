@@ -9,7 +9,6 @@ import (
 // Table gathers the data needed to render a table.
 func Table(z *html.Tokenizer) renderer.Table {
 	return renderer.Table{
-		Type:    "table",
 		Content: parseTable(z),
 	}
 }

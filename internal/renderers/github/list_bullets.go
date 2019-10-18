@@ -1,4 +1,4 @@
-package render
+package github
 
 import (
 	"github.com/jung-kurt/gofpdf"

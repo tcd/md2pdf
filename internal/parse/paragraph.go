@@ -7,41 +7,25 @@ import (
 )
 
 // AddParagraph adds a Paragraph Element and any contained Image Elements.
-func AddParagraph(e *renderer.Elements, z *html.Tokenizer) {
+func AddParagraph(r *renderer.Renderables, z *html.Tokenizer) {
 	contents, imgTokens := parseP(z)
 
-	e.Add(renderer.Paragraph{
-		Type:    "paragraph",
+	r.Add(renderer.Paragraph{
 		Content: contents,
 	})
 
 	if len(imgTokens) > 0 {
 		for _, t := range imgTokens {
 			img := Image(t)
-			e.Add(img)
+			r.Add(img)
 		}
 	}
-}
-
-// Paragraph gathers the data needed to render a paragraph.
-func Paragraph(z *html.Tokenizer) renderer.Paragraph {
-	contents, _ := parseP(z)
-	return renderer.Paragraph{
-		Type:    "paragraph",
-		Content: contents,
-	}
-	// if len(imgTokens) > 0 {
-	// 	for _, t := range imgTokens {
-	// 		Image(pdf, t)
-	// 	}
-	// }
 }
 
 // Blockquote gathers the data needed to render a blockquote.
 func Blockquote(z *html.Tokenizer) renderer.Blockquote {
 	contents, _ := parseP(z)
 	return renderer.Blockquote{
-		Type:    "blockquote",
 		Content: contents,
 	}
 }

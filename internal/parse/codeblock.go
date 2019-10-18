@@ -11,7 +11,6 @@ func Codeblock(z *html.Tokenizer) renderer.Codeblock {
 	content, class := parseCodeblock(z)
 
 	return renderer.Codeblock{
-		Type:    "codeblock",
 		Class:   class,
 		Content: content,
 	}

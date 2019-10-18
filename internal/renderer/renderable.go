@@ -1,124 +1,96 @@
 package renderer
 
-import (
-	"log"
+import "github.com/tcd/md2pdf/internal/model"
 
-	"github.com/jung-kurt/gofpdf"
-	"github.com/tcd/md2pdf/internal/model"
-	"github.com/tcd/md2pdf/internal/render"
+type RenderableType int
+
+const (
+	UnknownType RenderableType = iota
+	BlockquoteType
+	CodeblockType
+	HeaderType
+	HRType
+	ImageType
+	ListType
+	ParagraphType
+	TableType
 )
 
-// Renderer implementers can draw content to a gofpdf.Fpdf.
-type Renderer interface {
-	Render(*gofpdf.Fpdf)
+func (rt RenderableType) String() string {
+	var s string
+	switch rt {
+	case BlockquoteType:
+		s = "blockquote"
+	case CodeblockType:
+		s = "codeblock"
+	case HeaderType:
+		s = "header"
+	case HRType:
+		s = "hr"
+	case ImageType:
+		s = "image"
+	case ListType:
+		s = "list"
+	case ParagraphType:
+		s = "paragraph"
+	case TableType:
+		s = "table"
+	default:
+		s = ""
+	}
+	return s
 }
 
-// Blockquote implements the Renderer interface.
-type Blockquote struct {
-	Type    string
-	Content model.Contents
+type Renderable interface {
+	Type() RenderableType
 }
 
-// Render a blockquote.
-func (b Blockquote) Render(pdf *gofpdf.Fpdf) {
-	render.Blockquote(pdf, b.Content)
+type Renderables struct {
+	Renderables []Renderable `json:"renderables"`
 }
 
-// Codeblock implements the Renderer interface.
+// Add one or more elements.
+func (rbs *Renderables) Add(r ...Renderable) {
+	rbs.Renderables = append(rbs.Renderables, r...)
+}
+
+type Blockquote struct{ Content model.Contents }
+
+func (b Blockquote) Type() RenderableType { return BlockquoteType }
+
 type Codeblock struct {
-	Type    string
 	Class   string
 	Content model.Contents
 }
 
-// Render a codeblock.
-func (cb Codeblock) Render(pdf *gofpdf.Fpdf) {
-	if cb.Class == "language-no-highlight" || cb.Class == "" {
-		render.CodeBlock(pdf, cb.Content)
-	} else {
-		render.HighlightedCodeblock(pdf, cb.Content, cb.Class)
-	}
-}
+func (c Codeblock) Type() RenderableType { return CodeblockType }
 
-// Header implements the Renderer interface.
 type Header struct {
-	Type    string
 	Level   string
 	Content model.Contents
 }
 
-// Render a header.
-func (h Header) Render(pdf *gofpdf.Fpdf) {
-	switch h.Level {
-	case "h1":
-		render.H1(pdf, h.Content)
-	case "h2":
-		render.H2(pdf, h.Content)
-	case "h3":
-		render.H3(pdf, h.Content)
-	case "h4":
-		render.H4(pdf, h.Content)
-	case "h5":
-		render.H5(pdf, h.Content)
-	case "h6":
-		render.H6(pdf, h.Content)
-	default:
-		log.Printf("Error rendering header with content: %v\n", h.Content)
-		return
-	}
-}
+func (h Header) Type() RenderableType { return HeaderType }
 
-// HR implements the Renderer interface.
-type HR struct {
-	Type string
-}
+type HR struct{}
 
-// Render a horizontal rule.
-func (hr HR) Render(pdf *gofpdf.Fpdf) {
-	render.HR(pdf)
-}
+func (h HR) Type() RenderableType { return HRType }
 
-// Image implements the Renderer interface.
 type Image struct {
-	Type string
 	Src  string
 	Link string
 }
 
-// Render an image.
-func (img Image) Render(pdf *gofpdf.Fpdf) {
-	render.Image(pdf, img.Src, img.Link)
-}
+func (i Image) Type() RenderableType { return ImageType }
 
-// List implements the Renderer interface.
-type List struct {
-	Type    string
-	Content model.ListContent
-}
+type List struct{ Content model.ListContent }
 
-// Render a list.
-func (ls List) Render(pdf *gofpdf.Fpdf) {
-	render.List(pdf, ls.Content)
-}
+func (l List) Type() RenderableType { return ListType }
 
-// Paragraph implements the Renderer interface.
-type Paragraph struct {
-	Type    string
-	Content model.Contents
-}
+type Paragraph struct{ Content model.Contents }
 
-// Render a paragraph.
-func (p Paragraph) Render(pdf *gofpdf.Fpdf) {
-	render.FullP(pdf, p.Content)
-}
+func (p Paragraph) Type() RenderableType { return ParagraphType }
 
-// Table implements the Renderer interface.
-type Table struct {
-	Type    string
-	Content model.TableContent
-}
+type Table struct{ Content model.TableContent }
 
-// Render a table.
-func (t Table) Render(pdf *gofpdf.Fpdf) {
-	render.Table(pdf, t.Content)
-}
+func (t Table) Type() RenderableType { return TableType }

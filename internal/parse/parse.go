@@ -8,8 +8,8 @@ import (
 )
 
 // Parse gathers the data needed to render a PDF.
-func Parse(inputHTML []byte) renderer.Elements {
-	elements := renderer.Elements{}
+func Parse(inputHTML []byte) renderer.Renderables {
+	rbs := renderer.Renderables{}
 	doc := bytes.NewReader(inputHTML)
 	tokenizer := html.NewTokenizer(doc)
 
@@ -24,11 +24,11 @@ func Parse(inputHTML []byte) renderer.Elements {
 			T1 := tokenizer.Token()
 
 			if T1.Data == "hr" {
-				elements.Add(renderer.HR{})
+				rbs.Add(renderer.HR{})
 			}
 			if T1.Data == "img" {
 				img := Image(T1)
-				elements.Add(img)
+				rbs.Add(img)
 			}
 		}
 
@@ -42,29 +42,29 @@ func Parse(inputHTML []byte) renderer.Elements {
 				T1.Data == "h5" ||
 				T1.Data == "h6" {
 				header := Header(tokenizer, T1)
-				elements.Add(header)
+				rbs.Add(header)
 			}
 			if T1.Data == "pre" {
 				cb := Codeblock(tokenizer)
-				elements.Add(cb)
+				rbs.Add(cb)
 			}
 			if T1.Data == "p" {
-				AddParagraph(&elements, tokenizer)
+				AddParagraph(&rbs, tokenizer)
 			}
 			if T1.Data == "blockquote" {
 				bq := Blockquote(tokenizer)
-				elements.Add(bq)
+				rbs.Add(bq)
 			}
 			if T1.Data == "ol" || T1.Data == "ul" {
 				ls := List(tokenizer, T1)
-				elements.Add(ls)
+				rbs.Add(ls)
 			}
 			if T1.Data == "table" {
 				table := Table(tokenizer)
-				elements.Add(table)
+				rbs.Add(table)
 			}
 		}
 	}
 
-	return elements
+	return rbs
 }
