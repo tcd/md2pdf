@@ -9,7 +9,7 @@ import (
 
 	"github.com/tcd/md2pdf/internal/parse"
 	"github.com/tcd/md2pdf/internal/renderer"
-	"github.com/tcd/md2pdf/internal/renderers/github"
+	rdr "github.com/tcd/md2pdf/internal/renderers/github"
 )
 
 // MdFileToPdfFile converts a markdown file to a PDF file.
@@ -30,7 +30,7 @@ func MdFileToPdfFile(inPath, outPath string) (string, error) {
 		return "", err
 	}
 	rbs := parse.Parse(bytes)
-	var r github.Renderer
+	var r rdr.Renderer
 	err = renderer.RenderToFile(r, rbs, newFile)
 	if err != nil {
 		return "", err
@@ -47,7 +47,7 @@ func MdURLToPdfFile(url, outPath string) (string, error) {
 	}
 	bytes = mdBytes2htmlbytes(bytes)
 	rbs := parse.Parse(bytes)
-	var r github.Renderer
+	var r rdr.Renderer
 	err = renderer.RenderToFile(r, rbs, outPath)
 	if err != nil {
 		return outPath, err
@@ -65,7 +65,7 @@ func MdBytesToPdfFile(mdBytes []byte, outPath string) (string, error) {
 	ensureDir(newFile)
 	htmlBytes := mdBytes2htmlbytes(mdBytes)
 	rbs := parse.Parse(htmlBytes)
-	var r github.Renderer
+	var r rdr.Renderer
 	err := renderer.RenderToFile(r, rbs, newFile)
 	if err != nil {
 		return "", err
@@ -120,7 +120,7 @@ func Debug(path, debugDir string) error {
 	}
 
 	// Write the PDF output.
-	var r github.Renderer
+	var r rdr.Renderer
 	err = renderer.RenderToFile(r, rbs, pdfOut)
 	if err != nil {
 		return err

@@ -5,14 +5,14 @@ import (
 
 	"github.com/tcd/md2pdf/internal/parse"
 	"github.com/tcd/md2pdf/internal/renderer"
-	"github.com/tcd/md2pdf/internal/renderers/github"
+	rdr "github.com/tcd/md2pdf/internal/renderers/github"
 )
 
 func md2pdf(mdBytes []byte) ([]byte, error) {
 	htmlBytes := mdBytes2htmlbytes(mdBytes)
 	rbs := parse.Parse(htmlBytes)
 	var buf bytes.Buffer
-	var r github.Renderer
+	var r rdr.Renderer
 	err := renderer.RenderToWriter(r, rbs, &buf)
 
 	if err != nil {
