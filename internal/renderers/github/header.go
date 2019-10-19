@@ -100,12 +100,13 @@ func drawHeaderContent(pdf *gofpdf.Fpdf, c model.Contents, fontSize float64) {
 		if txt.Italic {
 			styles.WriteRune('I')
 		}
+		if txt.Strike {
+			styles.WriteRune('S')
+		}
 		styleStr := styles.String()
 
 		if txt.Code {
 			inlineCode(pdf, txt, styleStr, fontSize)
-		} else if txt.Strike {
-			strike(pdf, txt, styleStr, fontSize)
 		} else {
 			span(pdf, txt, styleStr, fontSize)
 		}
