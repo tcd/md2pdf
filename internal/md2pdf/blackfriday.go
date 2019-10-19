@@ -17,6 +17,7 @@ func mdBytes2htmlbytes(input []byte) []byte {
 	)
 }
 
+// Given a path to a markdown file, returns byte slice of html content.
 func mdFile2htmlBytes(path string) ([]byte, error) {
 	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
